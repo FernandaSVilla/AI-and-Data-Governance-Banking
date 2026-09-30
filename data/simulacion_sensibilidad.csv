@@ -1,0 +1,8 @@
+variante,ratio_tpr_eval,ratio_access,auc_A,auc_B
+base,0.996,0.583,0.74,0.73
+sin entrada tardía,1.0,0.454,0.742,0.738
+toda entrada tardía,1.003,0.742,0.74,0.727
+umbral 8 %,1.014,0.593,0.74,0.73
+umbral 20 %,0.989,0.579,0.74,0.73
+grupo B 5 %,1.004,0.585,0.74,0.732
+señal más ruidosa,0.998,0.584,0.703,0.69

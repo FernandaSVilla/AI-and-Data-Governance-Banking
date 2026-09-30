@@ -1,0 +1,16 @@
+codigo,tipo,I1_pagina_cpb,I2_menciona_asilo,I3_lista_documentos_cpb,I4_admite_doc_proteccion,I5_canal_contratacion_cpb,I6_alta_digital_admite_doc_proteccion,I7_formulario_publico,I8_denegacion_por_escrito,I9_via_reclamacion,I10_gratuidad_vulnerables
+Digital 1,banco digital,Sí,Sí,No consta,No consta,Teléfono u oficina,No,No consta,No consta,Sí,Sí
+Digital 2,banco digital,Sí,Sí,Sí,Sí,Oficina,No,No consta,No consta,No consta,No consta
+Digital 3,banco digital,Sí,Sí,No consta,No consta,App,No consta,No consta,Sí,Sí,Sí
+Gran grupo 1,gran grupo,Sí,Sí,Sí,Sí,Oficina,No,No consta,No consta,Sí,Sí
+Gran grupo 2,gran grupo,Sí,No consta,Sí,Sí,Oficina,No,No consta,No consta,Sí,Sí
+Gran grupo 3,gran grupo,Sí,No consta,No consta,No consta,No consta,No consta,No consta,No consta,No consta,No consta
+Gran grupo 4,gran grupo,Sí,Sí,Sí,No consta,No consta,No,No consta,No consta,Sí,Sí
+Mediana 1,entidad mediana,Sí,Sí,No consta,No consta,No consta,No consta,No consta,No consta,No consta,Sí
+Mediana 2,entidad mediana,Sí,Sí,Sí,Sí,Oficina y formulario web,No,Sí,No consta,No consta,Sí
+Mediana 3,entidad mediana,Sí,Sí,No consta,No consta,Oficina,No,No consta,No consta,No consta,Sí
+Mediana 4,entidad mediana,Sí,Sí,No consta,No consta,Oficina,No,No consta,No consta,Sí,Sí
+Mediana 5,entidad mediana,Sí,Sí,No consta,No consta,Oficina,No,No consta,No consta,No consta,Sí
+Mediana 6,entidad mediana,Sí,Sí,Sí,Sí,Oficina,No,No consta,No consta,Sí,Sí
+Mediana 7,entidad mediana,Sí,Sí,No consta,No consta,No consta,No,Sí,No consta,Sí,Sí
+Mediana 8,entidad mediana,Sí,Sí,No consta,No consta,No consta,No consta,No consta,No consta,No consta,Sí

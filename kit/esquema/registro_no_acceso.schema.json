@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/FernandaSVilla/AI-and-Data-Governance-Banking/main/kit/esquema/registro_no_acceso.schema.json",
+  "title": "Registro normalizado de intentos de alta y no acceso",
+  "description": "Un registro por intento de alta (solicitud de cuenta), completado o no. Minimización de datos: no contiene nombre, número de documento, nacionalidad, edad ni otras categorías especiales de datos. Modo básico: id_intento, fecha, canal, perfil_entrada y resultado. Modo completo: además, la causa de no acceso y los campos de trazabilidad.",
+  "type": "object",
+  "required": [
+    "id_intento",
+    "fecha",
+    "canal",
+    "perfil_entrada",
+    "resultado"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id_intento": {
+      "type": "string",
+      "description": "Identificador seudonimizado del intento."
+    },
+    "fecha": {
+      "type": "string",
+      "format": "date"
+    },
+    "canal": {
+      "type": "string",
+      "enum": [
+        "oficina",
+        "web",
+        "app",
+        "videollamada",
+        "telefono",
+        "intermediario"
+      ]
+    },
+    "producto": {
+      "type": "string",
+      "enum": [
+        "cuenta_pago_basica",
+        "cuenta_ordinaria",
+        "cuenta_limitada",
+        "otro"
+      ]
+    },
+    "perfil_entrada": {
+      "type": "string",
+      "enum": [
+        "estandar",
+        "proteccion_internacional",
+        "nie_provisional",
+        "pasaporte_sin_chip",
+        "sin_domicilio",
+        "asistencia_digital",
+        "sin_historial",
+        "otro"
+      ],
+      "description": "Perfil de entrada del intento: la credencial o la situación que el proceso detecta primero, no la persona. 'estandar' es la referencia. Véase evaluabilidad/perfiles.py para la definición y ejemplos de cada perfil. No registrar nacionalidad ni edad."
+    },
+    "resultado": {
+      "type": "string",
+      "enum": [
+        "alta_completada",
+        "alternativa_aceptada",
+        "no_acceso"
+      ]
+    },
+    "causa_no_acceso": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "documentacion_insuficiente",
+        "documento_no_reconocido",
+        "informacion_aml_adicional",
+        "alerta_escalada",
+        "duplicidad",
+        "desistimiento",
+        "fallo_tecnico",
+        "derivacion_alternativa",
+        "rechazo_definitivo"
+      ],
+      "description": "Obligatoria en modo completo si resultado = no_acceso. Taxonomía mínima de la sección 8.2 del ensayo; 'fallo_tecnico' incluye los fallos de verificación digital (selfie, vídeo, SMS, lectura NFC)."
+    },
+    "alternativa_ofrecida": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Se valoró y ofreció una alternativa proporcional antes del rechazo."
+    },
+    "revision_humana": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "revertida_tras_revision": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "La decisión inicial cambió tras la revisión humana."
+    },
+    "negativa_escrita": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "La denegación se comunicó por escrito y motivada. Vacío (null) si hubo cuenta."
+    },
+    "dias_resolucion": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "resultado": {
+            "const": "no_acceso"
+          }
+        },
+        "required": [
+          "resultado"
+        ]
+      },
+      "then": {
+        "required": [
+          "causa_no_acceso"
+        ],
+        "properties": {
+          "causa_no_acceso": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "resultado": {
+            "enum": [
+              "alta_completada",
+              "alternativa_aceptada"
+            ]
+          }
+        },
+        "required": [
+          "resultado"
+        ]
+      },
+      "then": {
+        "properties": {
+          "causa_no_acceso": {
+            "type": "null"
+          },
+          "negativa_escrita": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

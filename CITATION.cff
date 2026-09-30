@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Si utiliza este software o sus datos, cítelo así."
+title: "AI and Data Governance · Banking — Evaluability: kit abierto de gobernanza del no acceso"
+version: 0.3.0
+date-released: 2026-10-01
+license: Apache-2.0
+repository-code: "https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking"
+url: "https://fernandasvilla.github.io/AI-and-Data-Governance-Banking/"
+authors:
+  - family-names: "Sánchez Villa"
+    given-names: "María Fernanda"
+    orcid: "https://orcid.org/0009-0003-3410-3366"
+keywords:
+  - financial inclusion
+  - AI governance
+  - data governance
+  - evaluability
+  - AI Act
+  - GDPR

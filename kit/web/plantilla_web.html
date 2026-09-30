@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluability · AI &amp; Data Governance · Banking – Open Source</title>
+<meta name="description" content="Herramienta abierta para medir qué perfiles de entrada no llegan a ser evaluados por un modelo de crédito, y en qué etapa aparece la primera diferencia. Todo se calcula en el navegador.">
+<script>/*__PAPAPARSE__*/</script>
+<style>
+/*__FUENTES__*/
+:root{color-scheme:light;--navy:#0a2240;--navy-2:#123a66;--bg:#f3f5f8;--panel:#fff;--line:#d9dee7;--line-soft:#eceff4;--ink:#101828;--ink-2:#475467;--muted:#667085;
+--s1:#2a78d6;--s2:#eb6834;--bad:#c2410c;--bad-soft:#fff4ed;--ok:#0f766e;--ok-soft:#effaf8;
+--sans:"Source Sans 3",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--serif:"Source Serif 4",Georgia,serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;font-variant-numeric:tabular-nums}
+a{color:var(--navy-2)}
+.bar{background:var(--navy);color:#fff}
+.bar .in{max-width:1160px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.01em;font-size:17px}
+.brand .mark{width:30px;height:30px;border:2px solid #fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.brand small{font-weight:400;opacity:.75;font-size:13px;border-left:1px solid rgba(255,255,255,.3);padding-left:12px}
+.nav{display:flex;gap:22px;font-size:14px}.nav a{color:#fff;text-decoration:none;opacity:.85}.nav a:hover{opacity:1;text-decoration:underline}
+@media (max-width:760px){.nav{display:none}.brand small{display:none}}
+.hero{background:var(--panel);border-bottom:1px solid var(--line)}
+.hero .in{max-width:1160px;margin:0 auto;padding:36px 20px 30px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:end}
+@media (max-width:860px){.hero .in{grid-template-columns:1fr}}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-2)}
+h1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin:8px 0 10px;color:var(--navy)}
+.lead{color:var(--ink-2);font-size:16.5px;margin:0;max-width:640px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--navy);background:#fff;color:var(--navy);padding:10px 18px;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#eef2f8}
+.btn.primary{background:var(--navy);color:#fff}.btn.primary:hover{background:var(--navy-2)}
+.btn.link{border-color:transparent;background:none;padding:10px 4px;text-decoration:underline}
+.wrap{max-width:1160px;margin:0 auto;padding:24px 20px 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px 24px;margin-bottom:18px}
+.card h2{font-size:18px;font-weight:700;color:var(--navy);margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+.card h2 .n{font-size:13px;color:var(--muted);font-weight:600}
+.card .note{font-size:13px;color:var(--muted);margin:0 0 14px}
+.privacy{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);padding:12px 16px;font-size:14px;color:var(--ink-2);margin-bottom:18px}
+.privacy svg{flex:none;margin-top:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+@media (max-width:760px){.kpis{grid-template-columns:1fr}}
+.kpi{padding:18px 20px;border-right:1px solid var(--line);border-top:4px solid var(--ok)}
+.kpi:last-child{border-right:0}.kpi.bad{border-top-color:var(--bad)}
+.kpi .l{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--navy)}
+.kpi .q{font-size:13.5px;color:var(--muted);margin:2px 0 10px;min-height:40px}
+.kpi .v{font-size:38px;font-weight:700;letter-spacing:-.01em;color:var(--ink);line-height:1}
+.kpi .d{font-size:13px;color:var(--ink-2);margin-top:6px}
+.status{display:inline-block;font-size:12px;font-weight:700;margin-top:10px;letter-spacing:.03em}
+.status.bad{color:var(--bad)}.status.good{color:var(--ok)}
+.alert{border:1px solid #f5c9ad;border-left:4px solid var(--bad);background:var(--bad-soft);padding:12px 16px;margin:10px 0;font-size:14.5px}
+.alert.ok{border-color:#b8e3dc;border-left-color:var(--ok);background:var(--ok-soft)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line-soft);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{font-size:12.5px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;font-weight:700;background:#f7f9fb;border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px}
+svg text{font-family:var(--sans)}
+.muted{color:var(--muted)}.small{font-size:13px}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line)}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}@media (max-width:560px){.steps{grid-template-columns:1fr}}
+.steps li{padding:16px 18px;border-right:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.steps li:last-child{border-right:0}
+.steps li b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+.steps .k{font-family:var(--serif);font-size:26px;color:var(--navy-2);display:block;line-height:1;margin-bottom:8px}
+.upload{display:none;gap:14px;grid-template-columns:1fr 1fr auto;align-items:end;margin-top:16px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.upload.show{display:grid}@media (max-width:860px){.upload.show{grid-template-columns:1fr}}
+.upload label{font-size:13px;font-weight:600;color:var(--ink-2);display:block;margin-bottom:6px}
+.upload input{width:100%;font:inherit;font-size:13.5px;border:1px solid var(--line);padding:9px;background:#fafbfc}
+.msg{font-size:13.5px;margin-top:10px}.msg.err{color:#b42318}
+.source{font-size:13px;color:var(--ink-2);margin:0 0 14px}.source b{color:var(--navy)}
+.res{display:flex;flex-wrap:wrap;gap:10px}
+footer{background:var(--navy);color:#c8d3e3;font-size:13px}
+footer .in{max-width:1160px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer a{color:#fff}
+@media print{body{background:#fff}.bar,.hero .actions,.privacy,.trust,.noprint,footer{display:none!important}.card{break-inside:avoid}}
+</style>
+<style>
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.ptable td{white-space:normal;text-align:left;vertical-align:top}.ptable td:first-child{font-weight:700;color:var(--navy);width:24%}
+.ptable td:last-child{color:var(--ink-2)}
+.ctab td{vertical-align:middle}.ctab td.cell{min-width:150px}
+.cell .v{font-weight:700}.cell .ci{font-size:12px;color:var(--muted);margin-left:4px}
+.heat td.h{text-align:center;font-weight:600;border:2px solid #fff}
+.bar-in{display:inline-block;height:8px;background:var(--s1);border-radius:0 4px 4px 0;vertical-align:middle;margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:14px;align-items:end;margin-top:12px}
+.opts label{font-size:13px;font-weight:600;color:var(--ink-2);display:block;margin-bottom:6px}
+.opts input[type=number]{width:90px;font:inherit;border:1px solid var(--line);padding:8px}
+.where{font-weight:700;color:var(--navy)}
+.concl{border-left:4px solid var(--bad);background:var(--bad-soft);padding:12px 16px;margin:10px 0;font-size:14.5px}
+.concl.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.card,.scroll{min-width:0;max-width:100%}.wrap{overflow-x:clip}
+.viewer{margin-top:16px;border:1px solid var(--line);border-top:3px solid var(--navy)}
+.vbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:10px 14px;background:#f7f9fb;border-bottom:1px solid var(--line)}
+.vact{display:flex;gap:8px;flex-wrap:wrap}.vact .btn{padding:6px 12px;font-size:13px}
+.vbody{max-height:460px;overflow:auto;padding:14px 18px;font-size:14px}
+.vbody pre{margin:0;font-size:12.5px;white-space:pre;font-family:ui-monospace,Consolas,monospace}
+.vbody table{margin:8px 0}.vbody td,.vbody th{white-space:normal;text-align:left}
+.vbody h1{font-size:20px;margin:4px 0 8px}.vbody h2,.vbody h3{font-size:16px;color:var(--navy);margin:16px 0 6px}
+.vbody ul{padding-left:20px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2);margin-left:6px}
+</style>
+<style>
+.lang{display:flex;border:1px solid rgba(255,255,255,.45);border-radius:2px;overflow:hidden;flex:none}
+.lang button{font:inherit;font-size:12.5px;font-weight:700;letter-spacing:.04em;background:transparent;color:#fff;border:0;padding:5px 10px;cursor:pointer;opacity:.75}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--navy);opacity:1}
+.hero .htop{grid-column:1/-1;margin-bottom:-16px}
+.trust{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-bottom:18px}
+.trust .privacy{margin-bottom:0}
+@media (max-width:860px){.trust{grid-template-columns:1fr}}
+.oss-card{display:flex;gap:12px;align-items:flex-start;background:#fffbeb;border:1px solid #f1e3b3;border-left:4px solid #b8860b;padding:12px 16px}
+.oss-card svg{flex:none;margin-top:2px}
+.oss-card .ok-t{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7a5d00;margin-bottom:3px}
+.oss-card p{margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+.oss-btn{display:inline-block;font-size:13px;font-weight:700;color:var(--navy);text-decoration:none;border-bottom:1px solid #b8860b;padding-bottom:1px}
+.oss-btn:hover{color:#7a5d00}
+.compat{margin-top:22px;padding:14px 0 0 16px;border-left:3px solid var(--s1);display:flex;flex-direction:column;gap:6px}
+.compat .ck{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-2)}
+.compat ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;row-gap:4px}
+.compat li{font-size:15.5px;font-weight:600;color:var(--navy);display:flex;align-items:center}
+.compat li+li::before{content:"";width:1px;height:14px;background:var(--line);margin:0 14px}
+.compat .ch{font-size:13.5px;color:var(--ink-2)}
+@media (max-width:1060px){.compat ul{display:grid;grid-template-columns:1fr 1fr;column-gap:12px}.compat li+li::before{display:none}.compat li{font-size:14.5px}}
+.bar .right{display:flex;align-items:center;gap:22px}
+.oss{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.55);border-radius:2px;padding:1px 6px;margin-left:2px}
+.bname{display:flex;flex-direction:column;line-height:1.15}
+.bname .series{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+.bname .nm{display:flex;align-items:baseline;gap:0}
+.bname .nm small{margin-left:12px}
+@media (max-width:760px){.bname .series{font-size:9.5px;letter-spacing:.08em}.bname .oss{display:none}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="in">
+  <div class="brand"><span class="mark">EV</span><span data-i18n="marca">Evaluability</span><span class="oss">Open Source</span></div>
+  <div class="right">
+    <nav class="nav"><a href="#perfiles" data-ir="perfiles" data-i18n="nav_perf"></a><a href="#como" data-ir="como" data-i18n="nav_como"></a><a href="#plantillas" data-ir="plantillas" data-i18n="nav_plant"></a><a href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="nav_cod"></a></nav>
+    <div class="lang" role="group" aria-label="Idioma / Language"><button id="lES" data-lang="es" aria-pressed="true">ES</button><button id="lEN" data-lang="en" aria-pressed="false">EN</button></div>
+  </div>
+</div></div>
+
+<section class="hero"><div class="in">
+  <div class="htop">
+    <div class="eyebrow" data-i18n="eyebrow"></div>
+    <h1 data-i18n="h1"></h1>
+  </div>
+  <div>
+    <p class="lead" data-i18n="lead"></p>
+    <div class="compat">
+      <span class="ck" data-i18n="compat_k"></span>
+      <ul><li data-i18n="compat_1"></li><li data-i18n="compat_2"></li><li data-i18n="compat_3"></li><li data-i18n="compat_4"></li></ul>
+      <span class="ch" data-i18n="compat_h"></span>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn primary" id="bDemo" data-i18n="b_demo"></button>
+    <button class="btn" id="bLoad" data-i18n="b_load"></button>
+    <button class="btn link" id="bPrint" data-i18n="b_print"></button>
+  </div>
+</div></section>
+
+<div class="wrap">
+<div class="trust">
+  <div class="privacy"><svg width="16" height="18" viewBox="0 0 16 18" aria-hidden="true"><rect x="1.5" y="8" width="13" height="9" rx="1" fill="none" stroke="#0a2240" stroke-width="1.6"/><path d="M4.5 8V5.5a3.5 3.5 0 0 1 7 0V8" fill="none" stroke="#0a2240" stroke-width="1.6"/></svg><span data-i18n="privacy"></span></div>
+  <div class="oss-card">
+    <svg width="20" height="18" viewBox="0 0 20 18" aria-hidden="true"><path d="M6 4 1.5 9 6 14M14 4l4.5 5L14 14M11.5 2 8.5 16" fill="none" stroke="#8a6a00" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><div class="ok-t" data-i18n="oss_t"></div><p data-i18n="oss_p"></p>
+      <a class="oss-btn" href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="oss_b"></a></div>
+  </div>
+</div>
+
+<div class="card" id="perfiles">
+  <h2 data-i18n="perf_h"></h2>
+  <p class="note" data-i18n="perf_note"></p>
+  <div class="scroll"><table class="ptable"><tr><th data-i18n="perf_c1"></th><th style="text-align:left" data-i18n="perf_c2"></th><th style="text-align:left" data-i18n="perf_c3"></th></tr><tbody id="tPerfiles"></tbody></table></div>
+</div>
+
+<div class="card noprint" id="como">
+  <h2 data-i18n="como_h"></h2>
+  <p class="note" data-i18n="como_note"></p>
+  <ol class="steps">
+    <li><span class="k">01</span><span data-i18n="st1"></span></li>
+    <li><span class="k">02</span><span data-i18n="st2"></span></li>
+    <li><span class="k">03</span><span data-i18n="st3"></span></li>
+    <li><span class="k">04</span><span data-i18n="st4"></span></li>
+  </ol>
+  <div class="upload" id="upload">
+    <div><label for="fAltas" data-i18n="up_altas"></label><input type="file" id="fAltas" accept=".csv"></div>
+    <div><label for="fCred" data-i18n="up_cred"></label><input type="file" id="fCred" accept=".csv"></div>
+    <button class="btn primary" id="bRun" data-i18n="b_run"></button>
+  </div>
+  <div class="opts"><div><label for="umbral" data-i18n="umbral_l"></label><input type="number" id="umbral" min="0.5" max="1" step="0.05" value="0.80"></div>
+    <div><label for="nmin" data-i18n="nmin_l"></label><input type="number" id="nmin" min="10" max="100000" step="10" value="100"></div>
+    <p class="small muted" style="margin:0;max-width:640px" data-i18n="umbral_n"></p></div>
+  <div class="msg" id="msg"></div>
+</div>
+
+<div id="report" style="display:none">
+  <p class="source" id="srcLabel"></p>
+  <div class="card"><h2><span class="n">01</span><span data-i18n="r1"></span></h2><div id="concl"></div></div>
+  <div class="card">
+    <h2><span class="n">02</span><span data-i18n="r2"></span></h2>
+    <p class="note" data-i18n="r2_note"></p>
+    <div class="scroll" id="tCoc"></div>
+    <div class="legend" id="legSig"></div>
+  </div>
+  <div class="card"><h2><span class="n">03</span><span data-i18n="r3"></span></h2><p class="note" data-i18n="r3_note"></p><div class="scroll" id="tCanal"></div></div>
+  <div class="card"><h2><span class="n">04</span><span data-i18n="r4"></span></h2><p class="note" data-i18n="r4_note"></p><div class="scroll" id="tEmb"></div></div>
+  <div class="card"><h2><span class="n">05</span><span data-i18n="r5"></span></h2><div class="scroll" id="tTraz"></div>
+    <p class="small muted" data-i18n="r5_note"></p></div>
+  <div class="card"><h2><span class="n">06</span><span data-i18n="r6"></span></h2><p class="note" data-i18n="r6_note"></p><div class="scroll" id="tCausas"></div></div>
+  <div class="card"><h2><span class="n">07</span><span data-i18n="r7"></span></h2>
+    <div class="scroll" id="tReg"></div>
+    <p class="small muted" data-i18n="limites"></p>
+    <p class="small muted" id="avisos"></p>
+  </div>
+</div>
+
+<div class="card" id="plantillas">
+  <h2 data-i18n="pl_h"></h2>
+  <p class="note" data-i18n="pl_note"></p>
+  <div class="res">
+    <button class="btn" data-rec="tpl" data-i18n="rec_tpl"></button>
+    <button class="btn" data-rec="tplc" data-i18n="rec_tplc"></button>
+    <button class="btn" data-rec="schema" data-i18n="rec_schema"></button>
+    <button class="btn" data-rec="form" data-i18n="rec_form"></button>
+    <button class="btn" data-rec="check" data-i18n="rec_check"></button>
+    <button class="btn" data-rec="demo" data-i18n="rec_demo"></button>
+  </div>
+  <div class="viewer" id="viewer" hidden>
+    <div class="vbar"><b id="vTitle"></b><span class="vact"><button class="btn" id="vDown" data-i18n="v_down"></button><button class="btn" id="vCopy" data-i18n="v_copy"></button><button class="btn link" id="vClose" data-i18n="v_close"></button></span></div>
+    <div class="vbody" id="vBody"></div>
+    <p class="small muted" id="vMsg"></p>
+  </div>
+  <p class="small muted" style="margin:14px 0 0"><span data-i18n="pl_codes"></span> <span id="codPerf"></span>.<br><span data-i18n="pl_causes"></span> <span id="codCaus"></span>.<br><span data-i18n="pl_repo"></span> <a href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="pl_repo_a"></a>.</p>
+</div>
+</div>
+
+<footer><div class="in">
+  <span data-i18n="foot1"></span>
+  <span><span data-i18n="foot2"></span> · <a href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking">GitHub</a></span>
+</div></footer>
+
+<script>
+// ---------- configuración compartida con el paquete Python (inyectada por construir_web.py)
+const PERFILES = {es: __PERFILES__, en: __PERFILES_EN__};   // clave -> [nombre, por qué falla, ejemplo]
+const PARAM = __PARAM__;                // parámetros del generador de datos de ejemplo
+const SCHEMA = __SCHEMA__;
+const DOCS = __DOCS__;                  // formulario y lista de comprobación por idioma
+const REF = "estandar", Z = 1.959964;
+const CAUSAS = ["documentacion_insuficiente","documento_no_reconocido","informacion_aml_adicional","alerta_escalada","duplicidad","desistimiento","fallo_tecnico","derivacion_alternativa","rechazo_definitivo"];
+const CANALES = ["app","web","videollamada","oficina","telefono","intermediario"];
+const RESULTADOS = ["alta_completada","alternativa_aceptada","no_acceso"];
+const SIGCOL = {clara:"#c2410c", confirmar:"#b7791f", sin:"#0f766e", nodata:"#98a2b3"};
+const ACC = ["alta_completada","alternativa_aceptada"];
+
+// ---------- textos
+const T = {
+es:{
+  title:"Evaluability · AI & Data Governance · Banking – Open Source", marca:"Evaluability",
+  sub:"Auditoría abierta del acceso antes del modelo de crédito",
+  nav_perf:"Perfiles", nav_como:"Cómo funciona", nav_plant:"Plantillas", nav_cod:"Código (GitHub)",
+  eyebrow:"AI &amp; Data Governance · Banking", h1:"Antes de auditar el modelo, audite quién llega a él",
+  lead:"Las pruebas de equidad miden cómo trata el modelo a quienes evalúa. Esta herramienta mide a quienes se quedaron antes: por su documento, su domicilio o por cómo se verifica su identidad. Y le indica en qué etapa aparece la primera diferencia: en el alta, al llegar al modelo o en la decisión.",
+  compat_k:"Funciona con cualquier sistema de decisión", compat_1:"Reglas de software", compat_2:"Scorecards", compat_3:"Decisión humana", compat_4:"Inteligencia artificial", compat_h:"Analiza resultados, no el funcionamiento interno. Puede aplicarse a registros históricos siempre que existan registros comparables de cada etapa (intento, cuenta, evaluación y decisión) enlazados por un identificador.",
+  oss_t:"Código abierto · Apache 2.0", oss_p:"Puede consultar el código para replicarlo o adaptarlo a las necesidades de su institución.", oss_b:"Ver el código en GitHub →",
+  b_demo:"Ver ejemplo", b_load:"Analizar mis datos", b_print:"Guardar informe en PDF", b_run:"Calcular",
+  privacy:"<b>Los datos no salen de su navegador.</b> Los cálculos se hacen en su equipo: la página no envía ni guarda los archivos y no carga recursos de terceros (ni fuentes, ni analítica, ni cookies). Puede descargarla y usarla sin conexión. El registro no debe contener nombres, números de documento, nacionalidad ni edad.",
+  perf_h:"Perfiles de entrada",
+  perf_note:"Situaciones en las que un proceso de alta puede no reconocer bien a una persona. Cada intento de alta se registra con un perfil (el primero que el proceso detecta) y cada perfil se compara con el de referencia. Un perfil describe la credencial o la situación, no a la persona.",
+  perf_c1:"Perfil de entrada", perf_c2:"Por qué el alta puede fallar", perf_c3:"Ejemplo",
+  como_h:"Cómo funciona",
+  como_note:"Funciona con los datos que la entidad ya tiene y mejora a medida que registra más. Hoy, cuando alguien intenta abrir una cuenta y no lo logra, casi nunca queda registro: no hay solicitud, ni negativa escrita, ni causa. Registrar, clasificar, explicar y revisar esos casos es lo que el ensayo llama <b>gobernanza del no acceso</b>.",
+  st1:"<b>Registrar cada intento de alta</b>Canal, perfil de entrada y resultado. Si no hubo cuenta, una de 9 causas normalizadas (modo completo).",
+  st2:"<b>Añadir las decisiones de crédito</b>Opcional: identificador del intento y si se aprobó. Sin ellas, se analiza sólo el acceso a la cuenta (modo básico).",
+  st3:"<b>Cargar los archivos</b>El informe compara cada perfil con el de referencia en cada etapa (alta, llegada al modelo y decisión), medida sobre quienes superaron la anterior, y señala la primera etapa con señal.",
+  st4:"<b>Anexar el informe</b>A la DPIA (RGPD art. 35), la FRIA (Reglamento de IA art. 27) o la vigilancia del art. 72.",
+  up_altas:"Intentos de alta (CSV, obligatorio)", up_cred:"Decisiones de crédito (CSV, opcional)",
+  umbral_l:"Umbral de revisión del cociente", nmin_l:"Casos mínimos para «señal clara»",
+  umbral_n:"Por defecto 0,80 (la referencia convencional de «cuatro quintos»). Es una regla práctica de revisión, no un criterio jurídico: ajústela a su política de riesgos.",
+  r1:"Conclusiones", r2:"En qué etapa aparece la diferencia",
+  r2_note:"Cada etapa se mide sobre quienes superaron la anterior, para no arrastrar pérdidas previas. Cociente = tasa del perfil / tasa del perfil de referencia (1 = igualdad). La barra muestra el intervalo de confianza del 95 %; la línea discontinua, el umbral de revisión.",
+  r3:"Acceso por canal", r3_note:"% de intentos que terminan con cuenta. Cuanto más oscuro, mayor acceso.",
+  r4:"Embudo por perfil", r4_note:"Las tres primeras columnas, % de quienes intentaron el alta; las dos últimas, % de quienes superaron la etapa anterior.",
+  r5:"Trazabilidad y proporcionalidad", r5_note:"Negativas escritas: RDL 19/2017, art. 5. Alternativa antes del rechazo: EBA/GL/2023/04. Una reversión alta tras revisión humana indica falsos negativos del proceso.",
+  r6:"Causas de no acceso", r6_note:"% de los casos sin acceso de cada perfil.",
+  r7:"Dónde incorporar cada resultado",
+  reg:[["Resultado","Dónde se incorpora"],
+    ["Perfiles con señal en el alta o al llegar al modelo","FRIA, Reglamento (UE) 2024/1689 art. 27 (categorías de personas afectadas); DPIA, RGPD art. 35"],
+    ["Representatividad de los datos de entrada que controla la entidad","Reglamento de IA art. 26.4 (responsable del despliegue)"],
+    ["Lagunas en los datos de entrenamiento, validación y prueba","Reglamento de IA art. 10.2 f)–h) (proveedor del sistema)"],
+    ["Perfiles con diferencia en la aprobación entre evaluados","Gestión de riesgos, art. 9; pruebas técnicas del propio sistema"],
+    ["Serie temporal de cocientes y causas","Supervisión del funcionamiento, art. 26.5 (responsable del despliegue); vigilancia poscomercialización, art. 72 (proveedor)"],
+    ["Alternativas ofrecidas antes del rechazo","Directrices EBA/GL/2023/04 (párrs. 12 y 20-21); Reglamento (UE) 2024/1624"],
+    ["Negativas por escrito y causas registradas","Real Decreto-ley 19/2017 art. 5; RGPD arts. 15 y 22"],
+    ["Revisión humana y reversión","Reglamento de IA arts. 14 y 86; Directiva (UE) 2023/2225 art. 18"]],
+  limites:"Límites: mide asociaciones agregadas, no causalidad ni discriminación. Indica en qué etapa se observa una diferencia, no por qué se produce, y requiere registros comparables de cada etapa enlazados por un identificador. Un cociente bajo es una señal de revisión que requiere análisis individualizado. Úsela antes de las pruebas de equidad del modelo (por ejemplo, las de comparadores contrafactuales), no en su lugar.",
+  pl_h:"Plantillas y recursos", pl_note:"Todo lo necesario para empezar a registrar el no acceso. Pulse un recurso para verlo aquí mismo; desde el visor puede descargarlo o copiarlo.",
+  rec_tpl:"Plantilla de intentos de alta (CSV)", rec_tplc:"Plantilla de crédito (CSV)", rec_schema:"Esquema del registro (JSON)",
+  rec_form:"Formulario de solicitud de cuenta básica", rec_check:"Lista de comprobación del alta", rec_demo:"Datos de ejemplo (CSV)",
+  v_down:"Descargar", v_copy:"Copiar", v_close:"Cerrar",
+  pl_codes:"Valores de <code>perfil_entrada</code>:", pl_causes:"Causas normalizadas (<code>causa_no_acceso</code>):",
+  pl_repo:"Código fuente, versión en Python y documentación:", pl_repo_a:"repositorio en GitHub",
+  foot1:"Evaluability v0.3 · AI & Data Governance · Banking · Prototipo probado con datos sintéticos, pendiente de validación con datos de una entidad · Código abierto (Apache 2.0)",
+  foot2:"Fernanda S. Villa, 2026 · Parte del ensayo <i>Gobernar antes del algoritmo</i>",
+  causas:{documentacion_insuficiente:"Documentación insuficiente",documento_no_reconocido:"Documento no reconocido",informacion_aml_adicional:"Información AML adicional",alerta_escalada:"Alerta escalada",duplicidad:"Duplicidad",desistimiento:"Desistimiento",fallo_tecnico:"Fallo técnico o de verificación",derivacion_alternativa:"Derivación a alternativa",rechazo_definitivo:"Rechazo definitivo"},
+  canales:{app:"App",web:"Web",videollamada:"Videollamada",oficina:"Oficina",telefono:"Teléfono",intermediario:"Intermediario"},
+  sig:{clara:"Señal clara",confirmar:"A confirmar",sin:"Sin señal",nodata:"Sin datos"},
+  donde:{alta:"En el alta",datos:"Al llegar al modelo",decision:"En la decisión",sin:"Sin señal"},
+  vistas:{acceso_cuenta:"Alta: ¿consigue la cuenta?",llega_modelo:"Con cuenta: ¿llega al modelo?",aprobacion:"Entre evaluados: ¿diferencia en la aprobación?",evaluabilidad:"Evaluabilidad acumulada",acceso_efectivo:"Acceso efectivo"},
+  th_perfil:"Perfil", th_donde:"Etapas con señal", intentos:"intentos",
+  th_cuenta:"Con cuenta", th_llega:"Llega al modelo", th_credito:"Obtiene crédito", th_llega_c:"Llega al modelo (de quienes tienen cuenta)", th_apr_e:"Aprobados (de los evaluados)",
+  th_sin:"Sin acceso", th_escrita:"Negativa escrita", th_alt:"Alternativa", th_rev:"Revertidas",
+  fuente:"Fuente de datos:", modo_c:"Modo completo", modo_b:"Modo básico", con_c:"Con decisiones de crédito", sin_c:"Sin decisiones de crédito", umbral:"Umbral",
+  demo_label:"Datos de ejemplo · 40.000 intentos sintéticos con siete perfiles · no corresponden a ninguna entidad",
+  tus:(a,c)=>`Sus datos · ${a}${c?" + "+c:""} · calculado localmente`,
+  verbo_c:"obtienen crédito", verbo_b:"consiguen la cuenta",
+  concl:(n,verbo,x,lo,hi,d,extra)=>`<b>${n}.</b> Por cada 100 personas del perfil de referencia que ${verbo}, lo consiguen <b>${x}</b> de este perfil (IC 95 %: ${lo}–${hi}). Primera etapa con señal: <span class="where">${d}</span>.${extra}`,
+  extra_alta:" Entre los casos evaluados no se observa una disparidad agregada de aprobación, por lo que una auditoría limitada a la decisión no mostraría esta diferencia.",
+  extra_datos:" Consigue la cuenta en proporción similar, pero una parte menor llega a ser evaluada.",
+  extra_decision:" Se observa una diferencia de aprobación entre evaluados. Es descriptiva: puede reflejar diferencias de riesgo, variables del sistema o la selección previa, y requiere una revisión técnica del propio sistema.",
+  no_ref:"No hay perfil de referencia («estandar»): no se pueden calcular comparaciones.",
+  ok_all:u=>`Ningún perfil queda por debajo del umbral de ${u}.`,
+  leg:n=>`«Señal clara»: por debajo del umbral y diferencia estadísticamente clara. «A confirmar»: por debajo del umbral pero con incertidumbre o menos de ${n} casos. Las vistas acumuladas (evaluabilidad y acceso efectivo) se usan en las conclusiones, no para localizar la etapa.`,
+  tip:(r,lo,hi,s)=>`Cociente ${r} · IC 95 %: ${lo}–${hi} · ${s}`,
+  basico:"Modo básico: el registro no incluye causas de no acceso. Añada la columna <code>causa_no_acceso</code> para ver dónde y por qué se interrumpe el alta.",
+  calidad:"Calidad de los datos:", calidad_ok:"Calidad de los datos: sin incidencias.",
+  e_vacio:"El archivo de altas está vacío.", e_col:(c,f)=>`Falta la columna «${c}» en el archivo de ${f==="a"?"altas":"crédito"}.`,
+  e_sel:"Seleccione al menos el archivo de intentos de alta.",
+  a_noref:"No hay intentos con perfil «estandar»: no se pueden calcular cocientes.",
+  a_desc:l=>`Perfiles no reconocidos (se analizan igualmente): ${l}.`,
+  a_huerf:h=>`${h} decisiones de crédito no enlazan con ningún intento de alta.`,
+  a_peq:(p,n)=>`El perfil «${p}» sólo tiene ${n} intentos: sus resultados son orientativos.`,
+  a_sinc:(n,p)=>`${n} casos sin acceso del perfil «${p}» no tienen causa registrada.`,
+  a_csv:n=>`${n} filas del CSV no se pudieron leer correctamente (columnas de más o de menos).`,
+  a_dup:n=>`${n} identificadores de intento repetidos: cada intento debe aparecer una sola vez.`,
+  a_res:l=>`Valores de «resultado» no reconocidos: ${l}. Sólo cuentan como acceso «alta_completada» y «alternativa_aceptada».`,
+  a_can:l=>`Canales no previstos en el esquema (se analizan igualmente): ${l}.`,
+  a_fecha:n=>`${n} fechas no tienen el formato AAAA-MM-DD.`,
+  a_incoh:n=>`${n} intentos con cuenta tienen una causa de no acceso: revise la coherencia del registro.`,
+  a_causa:l=>`Causas no normalizadas: ${l}.`,
+  a_rep:(n,c)=>`${n} intentos tienen más de una decisión de crédito${c?` (${c} contradictorias)`:""}: debe haber una sola decisión final por intento.`,
+  a_sincta:n=>`${n} decisiones de crédito corresponden a intentos sin cuenta y no se cuentan: revise el enlace entre registros.`,
+  a_bool:n=>`${n} valores de «aprobado» no son verdadero/falso.`,
+  r_tpl:"Plantilla de intentos de alta", r_tplc:"Plantilla de decisiones de crédito", r_schema:"Esquema del registro",
+  r_demo:"Datos de ejemplo (40.000 intentos sintéticos; se muestran las 200 primeras filas)",
+  d_ini:n=>`Descarga iniciada: ${n}. Si no aparece (algunas vistas previas bloquean las descargas), use «Copiar» o abra la página en su navegador.`,
+  d_no:"Este entorno no permite descargas: use «Copiar».", c_ok:"Copiado al portapapeles.", c_no:"No se pudo copiar automáticamente: seleccione el texto del visor.",
+  num:"es-ES"
+},
+en:{
+  title:"Evaluability · AI & Data Governance · Banking – Open Source", marca:"Evaluability",
+  sub:"Open audit of access before the credit model",
+  nav_perf:"Profiles", nav_como:"How it works", nav_plant:"Templates", nav_cod:"Code (GitHub)",
+  eyebrow:"AI &amp; Data Governance · Banking", h1:"Before auditing the model, audit who reaches it",
+  lead:"Fairness tests measure how a model treats the people it scores. This tool measures those who were left out before: because of their document, their address or how their identity is verified. And it shows at which stage the first gap appears: at onboarding, on reaching the model or in the decision.",
+  compat_k:"Works with any decision system", compat_1:"Software rules", compat_2:"Scorecards", compat_3:"Human decisions", compat_4:"Artificial intelligence", compat_h:"It analyses outcomes, not internal workings. It can be applied to historical records provided comparable records exist for each stage (attempt, account, scoring and decision), linked by an identifier.",
+  oss_t:"Open source · Apache 2.0", oss_p:"The code is available to replicate or adapt to your institution’s needs.", oss_b:"View the code on GitHub →",
+  b_demo:"See example", b_load:"Analyse my data", b_print:"Save report as PDF", b_run:"Calculate",
+  privacy:"<b>Your data never leaves your browser.</b> All calculations run on your device: the page neither sends nor stores your files and loads no third-party resources (no fonts, no analytics, no cookies). You can download it and use it offline. The log must not contain names, document numbers, nationality or age.",
+  perf_h:"Entry profiles",
+  perf_note:"Situations in which an onboarding process may fail to recognise a person properly. Each onboarding attempt is logged with one profile (the first the process detects) and each profile is compared with the reference profile. A profile describes the credential or the situation, not the person.",
+  perf_c1:"Entry profile", perf_c2:"Why onboarding may fail", perf_c3:"Example",
+  como_h:"How it works",
+  como_note:"It works with data the institution already holds and improves as more is logged. Today, when someone tries to open an account and fails, there is rarely any record: no application, no written refusal, no reason. Logging, classifying, explaining and reviewing those cases is what the essay calls <b>non-entry governance</b>.",
+  st1:"<b>Log every onboarding attempt</b>Channel, entry profile and outcome. If no account was opened, one of 9 standardised causes (full mode).",
+  st2:"<b>Add credit decisions</b>Optional: attempt ID and whether it was approved. Without them, only account access is analysed (basic mode).",
+  st3:"<b>Load the files</b>The report compares each profile with the reference at each stage (onboarding, reaching the model and decision), measured among those who passed the previous one, and flags the first stage with a signal.",
+  st4:"<b>Annex the report</b>To the DPIA (GDPR Art. 35), the FRIA (AI Act Art. 27) or post-market monitoring (Art. 72).",
+  up_altas:"Onboarding attempts (CSV, required)", up_cred:"Credit decisions (CSV, optional)",
+  umbral_l:"Ratio review threshold", nmin_l:"Minimum cases for “clear signal”",
+  umbral_n:"Default 0.80 (the conventional “four-fifths” benchmark). It is a practical review rule, not a legal standard: adjust it to your risk policy.",
+  r1:"Findings", r2:"At which stage the gap appears",
+  r2_note:"Each stage is measured among those who passed the previous one, so earlier losses are not carried forward. Ratio = profile rate / reference profile rate (1 = parity). The bar shows the 95% confidence interval; the dashed line, the review threshold.",
+  r3:"Access by channel", r3_note:"% of attempts that end with an account. Darker means higher access.",
+  r4:"Funnel by profile", r4_note:"First three columns: % of those who attempted onboarding; last two: % of those who passed the previous stage.",
+  r5:"Traceability and proportionality", r5_note:"Written refusals: Directive 2014/92/EU Art. 16(7); Spain, RDL 19/2017 Art. 5. Alternative before refusal: EBA/GL/2023/04. A high reversal rate after human review signals false negatives in the process.",
+  r6:"Causes of non-entry", r6_note:"% of each profile’s cases without access.",
+  r7:"Where each result belongs",
+  reg:[["Result","Where it belongs"],
+    ["Profiles with a signal at onboarding or on reaching the model","FRIA, Regulation (EU) 2024/1689 Art. 27 (categories of affected persons); DPIA, GDPR Art. 35"],
+    ["Representativeness of input data under the institution’s control","AI Act Art. 26(4) (deployer)"],
+    ["Gaps in training, validation and testing data","AI Act Art. 10(2)(f)–(h) (provider of the system)"],
+    ["Profiles with an approval gap among those scored","Risk management, Art. 9; technical testing of the system itself"],
+    ["Time series of ratios and causes","Monitoring of operation, Art. 26(5) (deployer); post-market monitoring, Art. 72 (provider)"],
+    ["Alternatives offered before refusal","EBA Guidelines EBA/GL/2023/04 (paras. 12 and 20-21); Regulation (EU) 2024/1624"],
+    ["Written refusals and recorded causes","Directive 2014/92/EU Art. 16(7); Spain, RDL 19/2017 Art. 5; GDPR Arts. 15 and 22"],
+    ["Human review and reversal","AI Act Arts. 14 and 86; Directive (EU) 2023/2225 Art. 18"]],
+  limites:"Limitations: it measures aggregate associations, not causation or discrimination. It shows at which stage a gap is observed, not why it occurs, and requires comparable records for each stage linked by an identifier. A low ratio is a review signal that requires case-by-case analysis. Use it before fairness testing of the model (for example, counterfactual comparator tests), not instead of it.",
+  pl_h:"Templates and resources", pl_note:"Everything needed to start logging non-entry. Click a resource to view it here; from the viewer you can download or copy it.",
+  rec_tpl:"Onboarding attempts template (CSV)", rec_tplc:"Credit template (CSV)", rec_schema:"Log schema (JSON)",
+  rec_form:"Basic account application form (Spain, in Spanish)", rec_check:"Onboarding checklist", rec_demo:"Example data (CSV)",
+  v_down:"Download", v_copy:"Copy", v_close:"Close",
+  pl_codes:"Values of <code>perfil_entrada</code> (data codes stay in Spanish):", pl_causes:"Standardised causes (<code>causa_no_acceso</code>):",
+  pl_repo:"Source code, Python version and documentation:", pl_repo_a:"GitHub repository",
+  foot1:"Evaluability v0.3 · AI & Data Governance · Banking · Prototype tested with synthetic data, pending validation with data from an institution · Open source (Apache 2.0)",
+  foot2:"Fernanda S. Villa, 2026 · Part of the essay <i>Gobernar antes del algoritmo</i> (Governing before the algorithm)",
+  causas:{documentacion_insuficiente:"Insufficient documentation",documento_no_reconocido:"Document not recognised",informacion_aml_adicional:"Additional AML information",alerta_escalada:"Escalated alert",duplicidad:"Duplicate",desistimiento:"Abandoned",fallo_tecnico:"Technical or verification failure",derivacion_alternativa:"Referred to alternative",rechazo_definitivo:"Final refusal"},
+  canales:{app:"App",web:"Web",videollamada:"Video call",oficina:"Branch",telefono:"Phone",intermediario:"Intermediary"},
+  sig:{clara:"Clear signal",confirmar:"To be confirmed",sin:"No signal",nodata:"No data"},
+  donde:{alta:"At onboarding",datos:"On reaching the model",decision:"In the decision",sin:"No signal"},
+  vistas:{acceso_cuenta:"Onboarding: gets the account?",llega_modelo:"With account: reaches the model?",aprobacion:"Among those scored: approval gap?",evaluabilidad:"Cumulative evaluability",acceso_efectivo:"Effective access"},
+  th_perfil:"Profile", th_donde:"Stages with a signal", intentos:"attempts",
+  th_cuenta:"With account", th_llega:"Reaches the model", th_credito:"Obtains credit", th_llega_c:"Reaches the model (of those with an account)", th_apr_e:"Approved (of those scored)",
+  th_sin:"No access", th_escrita:"Written refusal", th_alt:"Alternative", th_rev:"Reversed",
+  fuente:"Data source:", modo_c:"Full mode", modo_b:"Basic mode", con_c:"With credit decisions", sin_c:"Without credit decisions", umbral:"Threshold",
+  demo_label:"Example data · 40,000 synthetic attempts with seven profiles · not from any institution",
+  tus:(a,c)=>`Your data · ${a}${c?" + "+c:""} · computed locally`,
+  verbo_c:"obtain credit", verbo_b:"get the account",
+  concl:(n,verbo,x,lo,hi,d,extra)=>`<b>${n}.</b> For every 100 people in the reference profile who ${verbo}, <b>${x}</b> in this profile do (95% CI: ${lo}–${hi}). First stage with a signal: <span class="where">${d}</span>.${extra}`,
+  extra_alta:" No aggregate approval gap is observed among those scored, so an audit limited to the decision would not show this difference.",
+  extra_datos:" They get the account at a similar rate, but fewer of them reach scoring.",
+  extra_decision:" An approval gap is observed among those scored. It is descriptive: it may reflect differences in risk, system variables or prior selection, and calls for a technical review of the system itself.",
+  no_ref:"There is no reference profile (“estandar”): comparisons cannot be calculated.",
+  ok_all:u=>`No profile falls below the ${u} threshold.`,
+  leg:n=>`“Clear signal”: below the threshold and a statistically clear difference. “To be confirmed”: below the threshold but uncertain or fewer than ${n} cases. Cumulative views (evaluability and effective access) feed the findings, not the stage location.`,
+  tip:(r,lo,hi,s)=>`Ratio ${r} · 95% CI: ${lo}–${hi} · ${s}`,
+  basico:"Basic mode: the log does not include causes of non-entry. Add the <code>causa_no_acceso</code> column to see where and why onboarding stops.",
+  calidad:"Data quality:", calidad_ok:"Data quality: no issues.",
+  e_vacio:"The onboarding file is empty.", e_col:(c,f)=>`Column “${c}” is missing from the ${f==="a"?"onboarding":"credit"} file.`,
+  e_sel:"Select at least the onboarding attempts file.",
+  a_noref:"No attempts with the “estandar” profile: ratios cannot be calculated.",
+  a_desc:l=>`Unrecognised profiles (analysed anyway): ${l}.`,
+  a_huerf:h=>`${h} credit decisions do not match any onboarding attempt.`,
+  a_peq:(p,n)=>`The profile “${p}” only has ${n} attempts: its results are indicative.`,
+  a_sinc:(n,p)=>`${n} no-access cases in the profile “${p}” have no recorded cause.`,
+  a_csv:n=>`${n} CSV rows could not be read correctly (too many or too few columns).`,
+  a_dup:n=>`${n} duplicated attempt IDs: each attempt must appear only once.`,
+  a_res:l=>`Unrecognised “resultado” values: ${l}. Only “alta_completada” and “alternativa_aceptada” count as access.`,
+  a_can:l=>`Channels not in the schema (analysed anyway): ${l}.`,
+  a_fecha:n=>`${n} dates are not in YYYY-MM-DD format.`,
+  a_incoh:n=>`${n} attempts with an account have a non-entry cause: check the consistency of the log.`,
+  a_causa:l=>`Non-standard causes: ${l}.`,
+  a_rep:(n,c)=>`${n} attempts have more than one credit decision${c?` (${c} contradictory)`:""}: there must be a single final decision per attempt.`,
+  a_sincta:n=>`${n} credit decisions belong to attempts without an account and are not counted: check how the records are linked.`,
+  a_bool:n=>`${n} “aprobado” values are not true/false.`,
+  r_tpl:"Onboarding attempts template", r_tplc:"Credit decisions template", r_schema:"Log schema",
+  r_demo:"Example data (40,000 synthetic attempts; first 200 rows shown)",
+  d_ini:n=>`Download started: ${n}. If it does not appear (some previews block downloads), use “Copy” or open the page in your browser.`,
+  d_no:"This environment does not allow downloads: use “Copy”.", c_ok:"Copied to clipboard.", c_no:"Could not copy automatically: select the text in the viewer.",
+  num:"en-GB"
+}};
+let L = "es";
+const t = k => T[L][k];
+const $ = id => document.getElementById(id);
+const nom = p => (PERFILES[L][p]||PERFILES.es[p]||[p])[0];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const dec = s => L==="es" ? s.replace(".", ",") : s;
+const f2 = v => (v==null||isNaN(v)) ? "—" : dec(v.toFixed(2));
+const pct = (v,d=0) => (v==null||isNaN(v)) ? "—" : dec((v*100).toFixed(d)) + (L==="es"?" %":"%");
+const miles = n => n.toLocaleString(t("num"));
+const bool = v => v===true || ["true","1","sí","si","yes","verdadero"].includes(String(v).trim().toLowerCase());
+const isNull = v => v==null || String(v).trim()==="" || ["nan","none","null"].includes(String(v).trim().toLowerCase());
+
+// ---------- datos de ejemplo: mismo algoritmo (mulberry32) y parámetros que demo/generar_datos_demo.py
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+function elegir(u, pares){let s=0; for(const [k,p] of pares){s+=p; if(u<s) return k;} return pares[pares.length-1][0];}
+function generarDemo(n=40000, semilla=2026){
+  const rnd=mulberry32(semilla), pesos=Object.entries(PARAM).map(([k,v])=>[k,v[0]]), altas=[], cred=[];
+  for(let i=0;i<n;i++){
+    const u=Array.from({length:13},()=>rnd()), perfil=elegir(u[0],pesos);
+    const [,pDig,accD,accO,cauD,cauO,pAlt,pRev,pEsc,pEv,pAp]=PARAM[perfil];
+    const digital=u[1]<pDig, canal=digital?(u[2]<.5?"app":"web"):"oficina", ok=u[3]<(digital?accD:accO);
+    let causa=null, alt=false, rev=false, revert=false, escrita=null, resultado, dias;
+    if(ok){resultado="alta_completada"; dias=Math.floor(u[10]*3);}
+    else{causa=elegir(u[4],digital?cauD:cauO); alt=u[5]<pAlt; resultado=(alt&&u[6]<.5)?"alternativa_aceptada":"no_acceso";
+      if(resultado==="alternativa_aceptada") causa=null; rev=u[7]<.30; revert=rev&&u[8]<pRev;
+      escrita=resultado==="no_acceso"?u[9]<pEsc:null; dias=Math.floor(u[10]*20);}
+    const id="I"+String(i).padStart(6,"0");
+    altas.push({id_intento:id,fecha:"2026-03-01",canal,producto:"cuenta_ordinaria",perfil_entrada:perfil,resultado,causa_no_acceso:causa,
+      alternativa_ofrecida:alt,revision_humana:rev,revertida_tras_revision:revert,negativa_escrita:escrita,dias_resolucion:dias});
+    if(resultado!=="no_acceso" && u[11]<pEv) cred.push({id_intento:id,aprobado:u[12]<pAp});
+  }
+  return {altas,cred};
+}
+
+// ---------- estadística (equivalente a evaluabilidad/metricas.py); resultados sin texto, el idioma se aplica al representar
+function cocienteIC(x1,n1,x0,n0){
+  if(!n1||!n0||!x0) return [NaN,NaN,NaN];
+  const r=(x1/n1)/(x0/n0); let a=x1,b=x0,m1=n1,m0=n0;
+  if(x1===0){a=.5;b=x0+.5;m1=n1+1;m0=n0+1;}   // corrección de Haldane-Anscombe, como en metricas.py
+  const se=Math.sqrt(Math.max(0,1/a-1/m1+1/b-1/m0)), rr=(a/m1)/(b/m0);
+  return [r, r===0?0:Math.exp(Math.log(rr)-Z*se), Math.exp(Math.log(rr)+Z*se)];
+}
+const senal=(r,hi,n,u,nMin)=> isNaN(r)?"nodata": r>=u?"sin": (hi<1&&n>=nMin)?"clara":"confirmar";
+// Vistas por etapa (cada una sobre quienes superaron la anterior) y vistas acumuladas; igual que VISTAS en metricas.py
+const VISTAS = {acceso_cuenta:["acceso","intentos","alta"], llega_modelo:["evaluados","acceso","datos"], aprobacion:["aprobados","evaluados","decision"],
+                evaluabilidad:["evaluados","intentos",null], acceso_efectivo:["aprobados","intentos",null]};
+class ErrorDatos extends Error{ constructor(k,...a){ super(k); this.k=k; this.a=a; } }
+
+function calcular(altasIn, cred, umbral, nMin, erroresCsv=0){
+  if(!altasIn.length) throw new ErrorDatos("e_vacio");
+  const altas=altasIn.map(r=>({...r, perfil_entrada: r.perfil_entrada ?? ({estandar:"estandar",no_estandar:"otro"}[r.categoria_documental] ?? r.categoria_documental)}));
+  for(const c of ["id_intento","canal","resultado"]) if(!(c in altas[0])) throw new ErrorDatos("e_col",c,"a");
+  if(isNull(altas[0].perfil_entrada)) throw new ErrorDatos("e_col","perfil_entrada","a");
+  const conCred = !!(cred && cred.length);
+  if(conCred) for(const c of ["id_intento","aprobado"]) if(!(c in cred[0])) throw new ErrorDatos("e_col",c,"c");
+  const completo = "causa_no_acceso" in altas[0];
+  const avisos=[];
+  if(erroresCsv) avisos.push(["a_csv",erroresCsv]);
+  const idsA=altas.map(r=>String(r.id_intento)), idSet=new Set(idsA), dup=idsA.length-idSet.size; if(dup) avisos.push(["a_dup",dup]);
+  const resMal=[...new Set(altas.map(r=>r.resultado))].filter(v=>!RESULTADOS.includes(v)); if(resMal.length) avisos.push(["a_res",resMal.join(", ")]);
+  const canMal=[...new Set(altas.map(r=>r.canal))].filter(v=>!CANALES.includes(v)); if(canMal.length) avisos.push(["a_can",canMal.join(", ")]);
+  if("fecha" in altas[0]){const m=altas.filter(r=>!isNull(r.fecha)&&!/^\d{4}-\d{2}-\d{2}$/.test(String(r.fecha).trim())).length; if(m) avisos.push(["a_fecha",m]);}
+  if(completo){const inc=altas.filter(r=>r.resultado!=="no_acceso"&&!isNull(r.causa_no_acceso)).length; if(inc) avisos.push(["a_incoh",inc]);
+    const cm=[...new Set(altas.map(r=>r.causa_no_acceso).filter(v=>!isNull(v)&&!CAUSAS.includes(v)))]; if(cm.length) avisos.push(["a_causa",cm.join(", ")]);}
+  // una cuenta es condición para ser evaluado: sólo cuentan las decisiones de intentos con acceso
+  const conCuenta=new Set(altas.filter(r=>ACC.includes(r.resultado)).map(r=>String(r.id_intento)));
+  const ev=new Set(), ap=new Set();
+  if(conCred){
+    const vistos={}; for(const r of cred){const i=String(r.id_intento); (vistos[i]=vistos[i]||[]).push(String(r.aprobado).trim().toLowerCase());}
+    const rep=Object.values(vistos).filter(v=>v.length>1), contra=rep.filter(v=>new Set(v).size>1).length; if(rep.length) avisos.push(["a_rep",rep.length,contra]);
+    const sinCta=Object.keys(vistos).filter(i=>idSet.has(i)&&!conCuenta.has(i)).length; if(sinCta) avisos.push(["a_sincta",sinCta]);
+    const nb=cred.filter(r=>!["true","false","1","0","sí","si","no","yes","verdadero","falso"].includes(String(r.aprobado).trim().toLowerCase())).length; if(nb) avisos.push(["a_bool",nb]);
+    for(const r of cred){const i=String(r.id_intento); if(conCuenta.has(i)){ev.add(i); if(bool(r.aprobado)) ap.add(i);}}
+  }
+  const presentes=new Set(altas.map(r=>r.perfil_entrada));
+  const perfiles=[...Object.keys(PERFILES.es).filter(p=>presentes.has(p)), ...[...presentes].filter(p=>!(p in PERFILES.es)).sort()];
+  if(!presentes.has(REF)) avisos.push(["a_noref"]);
+  const desc=[...presentes].filter(p=>!(p in PERFILES.es)); if(desc.length) avisos.push(["a_desc",desc.join(", ")]);
+  if(conCred){const ids=new Set(altas.map(r=>String(r.id_intento))); const h=[...ev].filter(i=>!ids.has(i)).length; if(h) avisos.push(["a_huerf",h]);}
+  const canales=[...CANALES.filter(c=>altas.some(r=>r.canal===c)), ...[...new Set(altas.map(r=>r.canal))].filter(c=>!CANALES.includes(c))];
+  const emb={}, traz={}, causas={}, canal={};
+  for(const p of perfiles){
+    const a=altas.filter(r=>r.perfil_entrada===p), n=a.length;
+    if(n<nMin) avisos.push(["a_peq",p,n]);
+    const acc=a.filter(r=>ACC.includes(r.resultado)).length, e=a.filter(r=>ev.has(String(r.id_intento))).length, apr=a.filter(r=>ap.has(String(r.id_intento))).length;
+    emb[p]={intentos:n,acceso:acc,evaluados:e,aprobados:apr};
+    const na=a.filter(r=>r.resultado==="no_acceso"), rev=a.filter(r=>bool(r.revision_humana));
+    const sinC=completo?na.filter(r=>isNull(r.causa_no_acceso)).length:0; if(sinC) avisos.push(["a_sinc",sinC,p]);
+    const has=c=>c in (a[0]||{});
+    traz[p]={noAcceso:na.length, escrita:has("negativa_escrita")&&na.length?na.filter(r=>bool(r.negativa_escrita)).length/na.length:NaN,
+      alternativa:has("alternativa_ofrecida")&&na.length?na.filter(r=>bool(r.alternativa_ofrecida)).length/na.length:NaN,
+      reversion:rev.length?rev.filter(r=>bool(r.revertida_tras_revision)).length/rev.length:NaN};
+    if(completo){const nc=na.filter(r=>!isNull(r.causa_no_acceso)); causas[p]={}; for(const c of CAUSAS) causas[p][c]=nc.length?nc.filter(r=>r.causa_no_acceso===c).length/nc.length:0;}
+    canal[p]={}; for(const ch of canales){const x=a.filter(r=>r.canal===ch); canal[p][ch]=x.length?x.filter(r=>ACC.includes(r.resultado)).length/x.length:NaN;}
+  }
+  const vistas = conCred?Object.keys(VISTAS):["acceso_cuenta"], coc={}, diag={};
+  if(presentes.has(REF)) for(const p of perfiles){ if(p===REF) continue; coc[p]={};
+    for(const v of vistas){const [num,den]=VISTAS[v], [r,lo,hi]=cocienteIC(emb[p][num],emb[p][den],emb[REF][num],emb[REF][den]); coc[p][v]={r,lo,hi,n:emb[p][den],s:senal(r,hi,emb[p][den],umbral,nMin)};}
+    // etapas con señal, en el orden del proceso
+    diag[p]=vistas.filter(v=>VISTAS[v][2]&&["clara","confirmar"].includes(coc[p][v].s)).map(v=>VISTAS[v][2]);
+  }
+  return {perfiles,emb,coc,diag,vistas,traz,causas,canal,canales,avisos,conCred,completo,umbral,nMin};
+}
+
+// ---------- representación
+const dondeTxt = partes => partes.length ? partes.map(k=>t("donde")[k]).join(" · ") : t("donde").sin;
+function mini(c, u){
+  const W=150,H=22,x=v=>8+(Math.min(1.4,Math.max(.2,v))-.2)/1.2*(W-16), col=SIGCOL[c.s];
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${f2(c.r)}"><title>${t("tip")(f2(c.r),f2(c.lo),f2(c.hi),t("sig")[c.s])}</title>
+  <line x1="8" x2="${W-8}" y1="${H/2}" y2="${H/2}" stroke="#eaecf0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="${x(1)}" x2="${x(1)}" y1="3" y2="${H-3}" stroke="#d0d5dd"/>
+  <line x1="${x(u)}" x2="${x(u)}" y1="2" y2="${H-2}" stroke="#475467" stroke-dasharray="2 2"/>
+  <line x1="${x(c.lo)}" x2="${x(c.hi)}" y1="${H/2}" y2="${H/2}" stroke="${col}" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="${x(c.r)}" cy="${H/2}" r="5" fill="${col}" stroke="#fff" stroke-width="2"/></svg>`;
+}
+const chip = s => `<span class="chip" style="color:${SIGCOL[s]}"><i style="background:${SIGCOL[s]}"></i>${t("sig")[s]}</span>`;
+function heatColor(v){
+  const stops=[[0,[238,244,252]],[.5,[156,194,238]],[.8,[42,120,214]],[1,[10,34,64]]];
+  for(let i=1;i<stops.length;i++){const [p1,c1]=stops[i-1],[p2,c2]=stops[i]; if(v<=p2){const q=(v-p1)/(p2-p1); return c1.map((c,k)=>Math.round(c+(c2[k]-c)*q));}}
+  return stops[stops.length-1][1];
+}
+const heatCell = (v,title="") => { if(isNaN(v)) return `<td class="h">—</td>`; const [r,g,b]=heatColor(v);
+  return `<td class="h" style="background:rgb(${r},${g},${b});color:${v>.75?"#fff":"#101828"}"${title?` title="${esc(title)}"`:""}>${v>0?pct(v):"·"}</td>`; };
+
+let ULTIMO_R=null, ULTIMO_LABEL=null;
+function render(R, label, desplazar=true){
+  ULTIMO_R=R; ULTIMO_LABEL=label;
+  const {perfiles,emb,coc,diag,vistas,traz,causas,canal,canales,avisos,conCred,completo,umbral,nMin}=R;
+  const lab = typeof label==="function" ? label() : label;
+  $("srcLabel").innerHTML = `<b>${t("fuente")}</b> ${esc(lab)} <span class="pill">${completo?t("modo_c"):t("modo_b")}</span><span class="pill">${conCred?t("con_c"):t("sin_c")}</span><span class="pill">${t("umbral")} ${f2(umbral)}</span>`;
+  const vf = conCred?"acceso_efectivo":"acceso_cuenta", verbo = conCred?t("verbo_c"):t("verbo_b");
+  let cc = Object.keys(diag).filter(p=>diag[p].length).map(p=>{
+    const c=coc[p][vf], e=coc[p].aprobacion, k=diag[p][0]; let extra="";
+    if(k==="alta" && e && e.s==="sin") extra=t("extra_alta"); else if(k==="datos") extra=t("extra_datos"); else if(k==="decision") extra=t("extra_decision");
+    const d = t("donde")[k].toLowerCase();
+    return `<div class="concl">${t("concl")(esc(nom(p)),verbo,Math.round(c.r*100),Math.round(c.lo*100),Math.round(c.hi*100),esc(d),extra)}</div>`;});
+  if(!Object.keys(diag).length) cc=[`<div class="concl">${t("no_ref")}</div>`];
+  else if(!cc.length) cc=[`<div class="concl ok">${t("ok_all")(f2(umbral))}</div>`];
+  $("concl").innerHTML = cc.join("");
+  const vs=["acceso_cuenta","llega_modelo","aprobacion"].filter(v=>vistas.includes(v));
+  $("tCoc").innerHTML = `<table class="ctab"><tr><th>${t("th_perfil")}</th>${vs.map(v=>`<th style="text-align:left">${t("vistas")[v]}</th>`).join("")}<th style="text-align:left">${t("th_donde")}</th></tr>`+
+    Object.keys(coc).map(p=>`<tr><td><b>${esc(nom(p))}</b><br><span class="small muted">${miles(emb[p].intentos)} ${t("intentos")}</span></td>${vs.map(v=>{const c=coc[p][v];
+      return `<td class="cell" style="text-align:left">${mini(c,umbral)}<br><span class="v">${f2(c.r)}</span><span class="ci">[${f2(c.lo)}–${f2(c.hi)}]</span> ${chip(c.s)}</td>`;}).join("")}
+      <td style="text-align:left;white-space:normal"><span class="where">${esc(dondeTxt(diag[p]))}</span></td></tr>`).join("")+`</table>`;
+  $("legSig").innerHTML = ["clara","confirmar","sin"].map(chip).join("") + `<span class="small muted">${t("leg")(nMin)}</span>`;
+  $("tCanal").innerHTML = `<table class="heat"><tr><th>${t("th_perfil")}</th>${canales.map(c=>`<th style="text-align:center">${t("canales")[c]||esc(c)}</th>`).join("")}</tr>`+
+    perfiles.map(p=>`<tr><td>${esc(nom(p))}</td>${canales.map(c=>heatCell(canal[p][c], `${nom(p)} · ${t("canales")[c]||c}: ${pct(canal[p][c],1)}`)).join("")}</tr>`).join("")+`</table>`;
+  const bar=v=>isNaN(v)?"—":`<span class="bar-in" style="width:${Math.round(v*60)}px"></span>${pct(v)}`;
+  $("tEmb").innerHTML = `<table><tr><th>${t("th_perfil")}</th><th>${t("th_cuenta")}</th>${conCred?`<th>${t("th_llega")}</th><th>${t("th_credito")}</th><th>${t("th_llega_c")}</th><th>${t("th_apr_e")}</th>`:""}</tr>`+
+    perfiles.map(p=>{const e=emb[p]; return `<tr><td>${esc(nom(p))}</td><td>${bar(e.acceso/e.intentos)}</td>${conCred?`<td>${bar(e.evaluados/e.intentos)}</td><td>${bar(e.aprobados/e.intentos)}</td><td class="small">${pct(e.acceso?e.evaluados/e.acceso:NaN)}</td><td class="small">${pct(e.evaluados?e.aprobados/e.evaluados:NaN)}</td>`:""}</tr>`;}).join("")+`</table>`;
+  $("tTraz").innerHTML = `<table><tr><th>${t("th_perfil")}</th><th>${t("th_sin")}</th><th>${t("th_escrita")}</th><th>${t("th_alt")}</th><th>${t("th_rev")}</th></tr>`+
+    perfiles.map(p=>{const x=traz[p]; return `<tr><td>${esc(nom(p))}</td><td>${miles(x.noAcceso)}</td><td>${pct(x.escrita)}</td><td>${pct(x.alternativa)}</td><td>${pct(x.reversion)}</td></tr>`;}).join("")+`</table>`;
+  if(completo){const cs=CAUSAS.filter(c=>perfiles.some(p=>causas[p]&&causas[p][c]>0));
+    $("tCausas").innerHTML = `<table class="heat"><tr><th>${t("th_perfil")}</th>${cs.map(c=>`<th style="text-align:center;white-space:normal">${t("causas")[c]}</th>`).join("")}</tr>`+
+      perfiles.map(p=>`<tr><td>${esc(nom(p))}</td>${cs.map(c=>heatCell(causas[p][c])).join("")}</tr>`).join("")+`</table>`;}
+  else $("tCausas").innerHTML = `<p class="small muted">${t("basico")}</p>`;
+  $("avisos").textContent = avisos.length ? t("calidad")+" "+avisos.map(([k,...a])=>{ if(k==="a_peq") a[0]=nom(a[0]); if(k==="a_sinc") a[1]=nom(a[1]); const f=t(k); return typeof f==="function"?f(...a):f; }).join(" ") : t("calidad_ok");
+  $("report").style.display="block"; if(desplazar) $("report").scrollIntoView({behavior:"smooth"});
+}
+
+// ---------- idioma
+function aplicarIdioma(lang){
+  L = lang==="en" ? "en" : "es";
+  document.documentElement.lang = L; document.title = t("title");
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=t(el.dataset.i18n); if(typeof v==="string") el.innerHTML=v; });
+  $("lES").setAttribute("aria-pressed", L==="es"); $("lEN").setAttribute("aria-pressed", L==="en");
+  $("tPerfiles").innerHTML = Object.entries(PERFILES[L]).map(([k,[n,por,ej]])=>`<tr><td>${esc(n)}</td><td>${esc(por)}</td><td>${esc(ej)}</td></tr>`).join("");
+  $("tReg").innerHTML = `<table class="ptable"><tr><th>${t("reg")[0][0]}</th><th style="text-align:left">${t("reg")[0][1]}</th></tr>` + t("reg").slice(1).map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join("") + `</table>`;
+  $("codPerf").textContent = Object.keys(PERFILES.es).join(" · ");
+  $("codCaus").textContent = CAUSAS.join(" · ");
+  if(ULTIMO_R) render(ULTIMO_R, ULTIMO_LABEL, false);
+  if(ACTUAL_K && !$("viewer").hidden) abrirRecurso(ACTUAL_K, false);
+  try{ localStorage.setItem("evaluabilidad_idioma", L); }catch(e){}
+}
+
+// ---------- acciones
+const msg=(txt,err)=>{$("msg").textContent=txt; $("msg").className="msg"+(err?" err":"");};
+const msgErr=e=>{ if(e instanceof ErrorDatos){ const f=t(e.k); msg(typeof f==="function"?f(...e.a):f,true);} else msg(e.message,true); };
+const umbral=()=>{const v=parseFloat(String($("umbral").value).replace(",", ".")); return (v>0&&v<=1)?v:0.8;};
+const nMin=()=>{const v=parseInt($("nmin").value,10); return v>0?v:100;};
+let DEMO=null; const demo=()=>DEMO||(DEMO=generarDemo());
+let FUENTE=null; // {a,c,label}
+function recalcular(desplazar=true){ try{ const R = FUENTE ? calcular(FUENTE.a,FUENTE.c,umbral(),nMin(),FUENTE.err) : (()=>{const d=demo(); return calcular(d.altas,d.cred,umbral(),nMin());})();
+  render(R, FUENTE ? FUENTE.label : ()=>t("demo_label"), desplazar); msg(""); } catch(e){ msgErr(e); } }
+$("bDemo").onclick=()=>{ FUENTE=null; recalcular(); };
+$("bLoad").onclick=()=>$("upload").classList.toggle("show");
+$("bPrint").onclick=()=>{ if($("report").style.display==="none") $("bDemo").click(); setTimeout(()=>window.print(),400); };
+const parse=f=>new Promise((res,rej)=>Papa.parse(f,{header:true,skipEmptyLines:true,dynamicTyping:false,complete:r=>{r.data.err=r.errors.length; res(r.data);},error:rej}));
+$("bRun").onclick=async()=>{
+  const fa=$("fAltas").files[0], fc=$("fCred").files[0];
+  if(!fa){msg(t("e_sel"),true);return;}
+  try{ const a=await parse(fa), c=fc?await parse(fc):null; FUENTE={a,c,err:a.err+(c?c.err:0),label:()=>t("tus")(fa.name, fc&&fc.name)}; recalcular(); }
+  catch(e){ msgErr(e); }
+};
+$("umbral").onchange=$("nmin").onchange=()=>{ if($("report").style.display!=="none") recalcular(false); };
+
+const COLS=["id_intento","fecha","canal","producto","perfil_entrada","resultado","causa_no_acceso","alternativa_ofrecida","revision_humana","revertida_tras_revision","negativa_escrita","dias_resolucion"];
+const RECURSOS = {
+  tpl:   ()=>({titulo:t("r_tpl"), archivo:"plantilla_intentos_alta.csv", tipo:"text/csv", texto:COLS.join(",")+"\nI000001,2026-03-01,app,cuenta_ordinaria,estandar,alta_completada,,false,false,false,,0\nI000002,2026-03-01,app,cuenta_pago_basica,proteccion_internacional,no_acceso,documento_no_reconocido,false,true,true,false,12\nI000003,2026-03-02,oficina,cuenta_ordinaria,sin_domicilio,alternativa_aceptada,,true,false,false,,3\nI000004,2026-03-02,app,cuenta_ordinaria,asistencia_digital,no_acceso,fallo_tecnico,false,false,false,false,1\n"}),
+  tplc:  ()=>({titulo:t("r_tplc"), archivo:"plantilla_decisiones_credito.csv", tipo:"text/csv", texto:"id_intento,aprobado\nI000001,true\nI000003,false\n"}),
+  schema:()=>({titulo:t("r_schema"), archivo:"registro_no_acceso.schema.json", tipo:"application/json", texto:JSON.stringify(SCHEMA,null,2)}),
+  form:  ()=>{const d=DOCS[L].form||DOCS.es.form; return {titulo:d.titulo, archivo:d.archivo, tipo:"text/markdown", texto:d.md, html:d.html};},
+  check: ()=>{const d=DOCS[L].check||DOCS.es.check; return {titulo:d.titulo, archivo:d.archivo, tipo:"text/markdown", texto:d.md, html:d.html};},
+  demo:  ()=>{const d=demo(), e=v=>v==null?"":v; return {titulo:t("r_demo"), archivo:"altas_demo.csv", tipo:"text/csv",
+            texto:COLS.join(",")+"\n"+d.altas.map(r=>COLS.map(c=>e(r[c])).join(",")).join("\n"), extra:{archivo:"credito_demo.csv", texto:"id_intento,aprobado\n"+d.cred.map(r=>r.id_intento+","+r.aprobado).join("\n")}};}
+};
+let ACTUAL=null, ACTUAL_K=null;
+function descargar(nombre,texto,tipo){
+  try{const b=new Blob([texto],{type:tipo+";charset=utf-8"}), a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=nombre; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    $("vMsg").textContent=t("d_ini")(nombre);}
+  catch(e){$("vMsg").textContent=t("d_no");}
+}
+function abrirRecurso(k, desplazar=true){
+  const r=RECURSOS[k](); ACTUAL=r; ACTUAL_K=k;
+  $("vTitle").textContent=r.titulo+" · "+r.archivo+(r.extra?" + "+r.extra.archivo:"");
+  $("vBody").innerHTML = r.html ? r.html : `<pre>${esc(r.tipo==="text/csv"? r.texto.split("\n").slice(0,201).join("\n") : r.texto)}</pre>`;
+  $("vMsg").textContent=""; $("viewer").hidden=false; if(desplazar) $("viewer").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.querySelectorAll("[data-rec]").forEach(b=>b.onclick=()=>abrirRecurso(b.dataset.rec));
+$("vDown").onclick=()=>{ if(!ACTUAL) return; descargar(ACTUAL.archivo,ACTUAL.texto,ACTUAL.tipo); if(ACTUAL.extra) setTimeout(()=>descargar(ACTUAL.extra.archivo,ACTUAL.extra.texto,"text/csv"),500); };
+$("vCopy").onclick=async()=>{ if(!ACTUAL) return;
+  try{await navigator.clipboard.writeText(ACTUAL.texto); $("vMsg").textContent=t("c_ok");}
+  catch(e){const x=document.createElement("textarea"); x.value=ACTUAL.texto; document.body.appendChild(x); x.select();
+    try{document.execCommand("copy"); $("vMsg").textContent=t("c_ok");}catch(_){ $("vMsg").textContent=t("c_no");} x.remove();}
+};
+$("vClose").onclick=()=>{$("viewer").hidden=true;};
+document.querySelectorAll("[data-ir]").forEach(a=>a.onclick=ev=>{ev.preventDefault(); const x=$(a.dataset.ir); if(x) x.scrollIntoView({behavior:"smooth"});});
+document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>aplicarIdioma(b.dataset.lang));
+
+// idioma inicial: ?lang=en|es, luego la preferencia guardada, luego el idioma del navegador
+(function(){ let ini=null;
+  try{ ini=new URLSearchParams(location.search).get("lang"); }catch(e){}
+  if(!ini){ try{ ini=localStorage.getItem("evaluabilidad_idioma"); }catch(e){} }
+  if(!ini) ini = (navigator.language||"es").toLowerCase().startsWith("es") ? "es" : "en";
+  aplicarIdioma(ini);
+})();
+</script>
+</body>
+</html>

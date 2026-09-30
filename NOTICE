@@ -1,0 +1,10 @@
+Gobernar antes del modelo — kit «evaluabilidad» y materiales de análisis
+Copyright 2026 María Fernanda Sánchez Villa
+
+Este producto incluye software desarrollado por María Fernanda Sánchez Villa
+como parte del trabajo «AI and Data Governance by Design» (2026).
+Licenciado bajo la Apache License, Version 2.0 (véase LICENSE).
+
+La versión web (docs/index.html) incorpora software y fuentes de terceros:
+- Papa Parse 5.4.1 — Copyright (c) 2015 Matthew Holt — licencia MIT (kit/web/vendor/LICENSE-papaparse.txt).
+- Source Sans 3 y Source Serif 4 — Adobe — SIL Open Font License 1.1 (kit/web/vendor/LICENSE-fuentes-OFL.txt).
