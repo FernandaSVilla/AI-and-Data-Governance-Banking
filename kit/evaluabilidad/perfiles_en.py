@@ -26,10 +26,25 @@ PERFILES_EN = {
         "The process requires proof of address that the person cannot provide.",
         "Person living in a shelter or in informal housing.",
     ),
+    "dispositivo_conectividad": (
+        "Phone or connection not good enough for verification",
+        "The camera cannot capture the document, the phone has no NFC, the video call drops or the SMS does not arrive.",
+        "Creditworthy customer with a national ID card and an old phone or poor coverage.",
+    ),
     "asistencia_digital": (
-        "Needs help with digital verification",
-        "The selfie, video identification or SMS step fails, or the person cannot complete it alone.",
-        "Older person or someone without a recent smartphone.",
+        "Needs help to complete the digital process",
+        "Cannot complete the form or verification steps alone: reading, understanding or digital experience.",
+        "Person with low literacy, an older person or someone new to apps.",
+    ),
+    "accesibilidad": (
+        "Needs an accessibility adjustment",
+        "The channel does not work with a screen reader, biometrics fail or instructions are only visual or audio.",
+        "Person with a visual or motor impairment. The adjustment required is logged, never a diagnosis.",
+    ),
+    "zona_sin_oficina": (
+        "No accessible branch (rural area or reduced mobility)",
+        "Onboarding requires an in-person step (signature, card collection, verification) and there is no nearby branch or the person cannot travel.",
+        "Older person with a national ID in a village without a branch, or a person who cannot leave home.",
     ),
     "sin_historial": (
         "No credit history",

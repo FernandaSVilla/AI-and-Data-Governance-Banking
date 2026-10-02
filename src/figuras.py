@@ -129,7 +129,7 @@ def fig2():
            "⁴ Población comparable: menores de 45 años con renta del hogar inferior a 27.000 € anuales. Asociaciones descriptivas; no prueban discriminación.")
 
 
-# ---------------------------------------------------------------- Figura 3
+# ---------------------------------------------------------------- Figura D.1 del anexo D del ensayo (México); función fig3 por compatibilidad
 def fig3():
     udi_2026 = 8.830224
     cap24, cap26 = 24390, 3000 * udi_2026
@@ -152,16 +152,16 @@ def fig3():
     b.bar([0, 1], [5500, 12000], width=0.55, color=BLUE)
     for x, v, t in [(0, 5500, "5.500"), (1, 12000, "> 12.000")]:
         b.text(x, v + 300, t, ha="center", va="bottom", fontsize=7.6, color=INK)
-    b.set_xticks([0, 1], ["Jul 2024", "Acumulado\n2022-2025"], fontsize=7.6)
+    b.set_xticks([0, 1], ["Activas\njul. 2024", "Abiertas\n2022-2025"], fontsize=7.6)
     b.set_ylim(0, 14500); b.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: es(v, 0)))
     b.yaxis.grid(True, color=GRID, linewidth=0.5); b.set_axisbelow(True)
-    b.set_title("b) Cuentas abiertas", loc="left", fontsize=8.6, fontweight="bold")
-    finish(fig, "fig5_mexico_uso_vs_tope",
+    b.set_title("b) Cuentas activas y abiertas", loc="left", fontsize=8.6, fontweight="bold")
+    finish(fig, "figD1_mexico_uso_vs_tope",
            "Fuente: elaboración propia con Banorte (31 jul. 2024; 10 jul. 2026), El Universal (jul. 2026) y valor de la UDI publicado en el DOF (28/09/2026).\n"
            "El abono medio de 2024 divide 65 millones de pesos mensuales en salarios entre 5.500 cuentas y supone un reparto homogéneo. Datos declarados por la entidad; no es una evaluación independiente.")
 
 
-# ---------------------------------------------------------------- Figura 4
+# ---------------------------------------------------------------- Figura 3 del ensayo (simulación); función fig4 por compatibilidad
 def fig4():
     res = pd.read_csv(DATA / "simulacion_resultados_por_semilla.csv")
     g = res.groupby("r_b")
@@ -186,7 +186,7 @@ def fig4():
     ax.grid(True, color=GRID, linewidth=0.5); ax.set_axisbelow(True)
     ax.legend(frameon=False, fontsize=7.3, loc="lower right")
     finish(fig, "fig3_simulacion_evaluabilidad",
-           "Fuente: simulación propia (200.000 personas por escenario, 20 semillas; bandas = intervalo 2,5-97,5 %). Ambos grupos tienen idéntica distribución de solvencia.\n"
+           "Fuente: simulación propia (200.000 personas por escenario, 20 semillas; bandas = dispersión entre semillas, percentiles 2,5 y 97,5). Ambos grupos tienen idéntica distribución de solvencia.\n"
            "Simulación ilustrativa del mecanismo, no estimación empírica. Código, datos y supuestos en el repositorio del trabajo.")
 
 

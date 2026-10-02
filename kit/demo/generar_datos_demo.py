@@ -1,6 +1,9 @@
 """Genera un registro SINTÉTICO de intentos de alta y decisiones de crédito para probar el kit (v0.3).
 
-Siete perfiles de entrada con comportamientos ilustrativos. Los parámetros son supuestos,
+Diez perfiles de entrada con comportamientos ilustrativos: 40.000 intentos con los siete perfiles
+originales y un bloque adicional de 6.000 intentos (semilla propia) con tres perfiles que afectan
+también a personas con DNI: necesidad de ayuda digital, ajuste de accesibilidad y falta de una
+oficina accesible. El bloque adicional no altera los 40.000 intentos originales. Los parámetros son supuestos,
 no datos de ninguna entidad. El generador usa el mismo algoritmo pseudoaleatorio (mulberry32)
 que la versión web, de modo que «Ver ejemplo» en el navegador y este script producen
 exactamente los mismos datos.
@@ -11,6 +14,7 @@ import pathlib
 import pandas as pd
 
 N, SEMILLA = 40_000, 2026
+N_EXTRA, SEMILLA_EXTRA = 6_000, 2027
 M = 0xFFFFFFFF
 
 # perfil: (peso, p_digital, acceso_digital, acceso_oficina, causas_digital, causas_oficina,
@@ -35,23 +39,38 @@ PARAM = {
         [("documentacion_insuficiente", .70), ("desistimiento", .30)],
         [("documentacion_insuficiente", .60), ("rechazo_definitivo", .20), ("desistimiento", .20)],
         .15, .45, .30, .80, .55),
-    "asistencia_digital": (.05, .45, .40, .95,
+    "dispositivo_conectividad": (.05, .45, .40, .95,
         [("fallo_tecnico", .55), ("desistimiento", .45)],
         [("desistimiento", .60), ("documentacion_insuficiente", .40)],
         .15, .45, .30, .80, .55),
     "sin_historial": (.05, .80, .94, .97, _EST_D, _EST_O, .40, .10, .60, .45, .42),
 }
 
+# Bloque adicional: barreras que afectan también a personas con DNI (supuestos ilustrativos)
+PARAM_EXTRA = {
+    "asistencia_digital": (.35, .55, .45, .92,
+        [("desistimiento", .55), ("fallo_tecnico", .30), ("documentacion_insuficiente", .15)],
+        [("desistimiento", .60), ("documentacion_insuficiente", .40)],
+        .25, .45, .35, .80, .55),
+    "accesibilidad": (.25, .55, .40, .85,
+        [("fallo_tecnico", .60), ("desistimiento", .40)],
+        [("desistimiento", .55), ("fallo_tecnico", .45)],
+        .20, .45, .35, .80, .55),
+    "zona_sin_oficina": (.40, .85, .60, .90,
+        [("desistimiento", .45), ("derivacion_alternativa", .35), ("fallo_tecnico", .20)],
+        [("desistimiento", .70), ("documentacion_insuficiente", .30)],
+        .20, .45, .35, .80, .55),
+}
 
-# Procedencia de los parámetros. Sólo los del documento de protección internacional se anclan en
-# evidencia pública; el resto son supuestos ilustrativos y así se declaran.
+
+# Procedencia de los parámetros. Todos son supuestos de escenario. Los del documento de protección internacional
+# están orientados por la revisión documental (sección 3.3 del ensayo), pero no se estiman a partir de ella.
 PARAM_FUENTES = {
     "proteccion_internacional": {
-        "acceso_digital = 0,05": "Auditoría propia (sección 3.3): ninguna de las 11 entidades que publican los documentos "
-                                  "admitidos en su alta digital incluye el de protección internacional. Se deja un 5 % "
-                                  "residual porque la auditoría mide la información publicada, no la práctica.",
-        "acceso_oficina = 0,60": "Punto medio entre las entidades que publican que admiten el documento (5 de 15, 0,33) "
-                                  "y las que reconocen expresamente el derecho de los solicitantes de asilo (13 de 15, 0,87).",
+        "acceso_digital = 0,05": "Supuesto de escenario, coherente con la revisión documental (sección 3.3): ninguna de las 11 entidades "
+                                  "que publican los documentos admitidos en su alta digital incluye el de protección internacional. "
+                                  "La revisión mide la información publicada, no qué proporción de personas abre la cuenta.",
+        "acceso_oficina = 0,60": "Supuesto de escenario. Ilustra el funcionamiento del informe; no mide la exclusión real.",
         "resto": "Supuestos ilustrativos (peso, canal, alternativas, revisión, negativa escrita, crédito).",
     },
     "otros perfiles": "Supuestos ilustrativos, sin fuente pública que permita calibrarlos.",
@@ -78,14 +97,22 @@ def elegir(u, pares):
     return pares[-1][0]
 
 
-def generar(n=N, semilla=SEMILLA):
+def generar(n=N, semilla=SEMILLA, extra=True):
+    altas, credito = _bloque(PARAM, n, semilla, 0)
+    if extra:
+        a2, c2 = _bloque(PARAM_EXTRA, N_EXTRA, SEMILLA_EXTRA, n)
+        altas, credito = altas + a2, credito + c2
+    return pd.DataFrame(altas), pd.DataFrame(credito)
+
+
+def _bloque(param, n, semilla, inicio):
     rnd = mulberry32(semilla)
-    pesos = [(k, v[0]) for k, v in PARAM.items()]
+    pesos = [(k, v[0]) for k, v in param.items()]
     altas, credito = [], []
-    for i in range(n):
+    for i in range(inicio, inicio + n):
         u = [rnd() for _ in range(13)]  # número fijo de extracciones por fila
         perfil = elegir(u[0], pesos)
-        (_, p_dig, acc_d, acc_o, cau_d, cau_o, p_alt, p_rev, p_esc, p_ev, p_ap) = PARAM[perfil]
+        (_, p_dig, acc_d, acc_o, cau_d, cau_o, p_alt, p_rev, p_esc, p_ev, p_ap) = param[perfil]
         digital = u[1] < p_dig
         canal = ("app" if u[2] < .5 else "web") if digital else "oficina"
         ok = u[3] < (acc_d if digital else acc_o)
@@ -110,7 +137,7 @@ def generar(n=N, semilla=SEMILLA):
                           negativa_escrita=escrita, dias_resolucion=dias))
         if resultado != "no_acceso" and u[11] < p_ev:
             credito.append(dict(id_intento=iid, aprobado=u[12] < p_ap))
-    return pd.DataFrame(altas), pd.DataFrame(credito)
+    return altas, credito
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+ambito,grupo,indicador,proporcion,ic_inf,ic_sup,n
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Todos,ingreso_regular_solo_efectivo,0.1875,0.168,0.2069,3213
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Todos,adultos_ingreso_solo_efectivo,0.1354,0.1203,0.1505,4003
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Todos,suministros_solo_efectivo,0.3276,0.3042,0.3509,3043
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Todos,ahorro_fuera_de_entidad,0.3137,0.2869,0.3406,2385
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Todos,salario_solo_efectivo,0.0929,0.075,0.1109,1943
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin cuenta,ingreso_regular_solo_efectivo,0.9805,0.9614,0.9995,378
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin cuenta,adultos_ingreso_solo_efectivo,0.4421,0.3886,0.4957,644
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin cuenta,suministros_solo_efectivo,0.9454,0.9167,0.9741,419
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin cuenta,ahorro_fuera_de_entidad,0.9201,0.8658,0.9745,195
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin cuenta,salario_solo_efectivo,0.8295,0.7196,0.9394,76
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con cuenta,ingreso_regular_solo_efectivo,0.088,0.0729,0.1031,2835
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con cuenta,adultos_ingreso_solo_efectivo,0.0687,0.0565,0.081,3359
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con cuenta,suministros_solo_efectivo,0.2324,0.2096,0.2552,2624
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con cuenta,ahorro_fuera_de_entidad,0.2579,0.2315,0.2843,2190
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con cuenta,salario_solo_efectivo,0.0587,0.0438,0.0736,1867
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin uso de internet,ingreso_regular_solo_efectivo,0.5148,0.458,0.5716,665
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin uso de internet,adultos_ingreso_solo_efectivo,0.3108,0.266,0.3556,879
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin uso de internet,suministros_solo_efectivo,0.7518,0.703,0.8006,648
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin uso de internet,ahorro_fuera_de_entidad,0.5551,0.4784,0.6318,396
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Sin uso de internet,salario_solo_efectivo,0.3792,0.24,0.5184,86
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con uso de internet,ingreso_regular_solo_efectivo,0.1218,0.1037,0.1399,2548
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con uso de internet,adultos_ingreso_solo_efectivo,0.0916,0.0773,0.1059,3124
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con uso de internet,suministros_solo_efectivo,0.2338,0.2104,0.2572,2395
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con uso de internet,ahorro_fuera_de_entidad,0.2764,0.2485,0.3043,1989
+"UE-4 (Bulgaria, Croacia, Polonia, Rumanía)",Con uso de internet,salario_solo_efectivo,0.0777,0.0607,0.0946,1857

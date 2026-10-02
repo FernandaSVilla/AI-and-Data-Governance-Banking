@@ -8,7 +8,7 @@ Las pruebas de equidad de los sistemas de solvencia se calculan sobre las solici
 
 ## Perfiles de entrada
 
-Cada intento de alta se registra con un perfil: la credencial o la situación que el proceso detecta primero, no la persona. Cada perfil se compara con el de referencia.
+Cada intento de alta se registra con un perfil, es decir, una condición de entrada: la credencial o la situación que el proceso detecta primero, no la persona. La protección internacional es el caso que dio origen al kit, pero el mecanismo es general: una persona con DNI y solvente también puede quedar fuera porque su móvil no permite la verificación, porque necesita ayuda o porque el canal no es accesible. Cada perfil se compara con el de referencia.
 
 | Perfil (`perfil_entrada`) | Por qué el alta puede fallar | Ejemplo |
 |---|---|---|
@@ -17,7 +17,9 @@ Cada intento de alta se registra con un perfil: la credencial o la situación qu
 | NIE en trámite o resguardo (`nie_provisional`) | Documento provisional, sin chip o sin foto estándar; la verificación automática lo rechaza. | Persona recién llegada, o con el permiso en renovación, que presenta el resguardo. |
 | Pasaporte de fuera de la UE sin chip (`pasaporte_sin_chip`) | La verificación automática (lectura NFC o del documento) falla. | Estudiante o trabajador extracomunitario. |
 | Sin domicilio fijo o sin justificante (`sin_domicilio`) | Se exige una prueba de dirección que la persona no puede aportar. | Persona que vive en un albergue o en un alquiler informal. |
-| Necesita asistencia en la verificación digital (`asistencia_digital`) | Falla el selfie, la videoidentificación o el SMS, o la persona no puede completarlos sola. | Persona mayor o sin smartphone reciente. |
+| Móvil o conexión insuficientes para la verificación (`dispositivo_conectividad`) | La cámara no enfoca el documento, el móvil no tiene NFC, la videollamada se corta o el SMS no llega. | Cliente con DNI y solvente, con un móvil antiguo o mala cobertura. |
+| Necesita ayuda para completar el proceso digital (`asistencia_digital`) | No puede completar sola el formulario o los pasos de verificación: lectura, comprensión o experiencia digital. | Persona con baja alfabetización, persona mayor o sin experiencia con apps. |
+| Necesita un ajuste de accesibilidad (`accesibilidad`) | El canal no funciona con lector de pantalla, la biometría falla o las instrucciones son sólo visuales o sonoras. | Persona con discapacidad visual o motora. Se registra el ajuste requerido, nunca un diagnóstico. |
 | Sin historial crediticio (`sin_historial`) | Suele abrir la cuenta sin problema, pero llega al modelo con pocos datos o no llega a ser evaluable. | Joven con su primer empleo o persona recién llegada al país. |
 | Otro perfil no estándar (`otro`) | Cualquier otra credencial o situación válida que el proceso no reconoce bien. | Definirlo en la política interna antes de usarlo. |
 
@@ -55,9 +57,9 @@ Cada cociente (perfil / referencia) lleva un **intervalo de confianza del 95 %**
 |---|---|
 | `esquema/registro_no_acceso.schema.json` | Estándar de registro de cada intento de alta, con minimización de datos: sin nombre, número de documento, nacionalidad ni edad. |
 | `evaluabilidad/` (Python) | Calcula embudo, cocientes con IC, diagnóstico de dónde se produce la diferencia, causas, canal y trazabilidad, y genera el informe. |
-| Informe HTML | Autocontenido, con una tabla que indica dónde incorporar cada resultado: DPIA (RGPD art. 35), FRIA (Reglamento de IA art. 27), art. 10, art. 72, EBA/GL/2023/04, RDL 19/2017. |
+| Informe HTML | Autocontenido, con una tabla que indica dónde incorporar cada resultado: DPIA (RGPD art. 35), FRIA (Reglamento de IA art. 27), art. 10, arts. 26.5 y 72, EBA/GL/2023/04, RDL 19/2017. |
 | `plantillas/` | Formulario de solicitud de cuenta de pago básica y lista de comprobación del alta por perfil. |
-| `demo/` | 40.000 intentos sintéticos con siete perfiles e informe de ejemplo. |
+| `demo/` | 46.000 intentos sintéticos con diez perfiles (40.000 originales y un bloque de 6.000 con barreras que afectan también a personas con DNI) e informe de ejemplo. |
 | `web/` | Plantilla de la versión web; `construir_web.py` genera `docs/index.html`. |
 
 ## Uso
@@ -103,6 +105,12 @@ Los adaptadores de cada fuente están en `src/encuestas/fuentes.py`.
 
 ## Estado y límites
 
-Prototipo funcional (v0.3) probado con datos sintéticos; no se ha validado aún con datos de una entidad. Mide asociaciones agregadas, no causalidad ni discriminación: indica en qué etapa se observa una diferencia, no por qué se produce. Requiere registros comparables de cada etapa (intento, cuenta, evaluación y decisión) enlazados por un identificador. Un perfil describe la credencial o la situación del intento, no a la persona. Cualquier análisis adicional con categorías especiales de datos requiere base jurídica propia (RGPD; Reglamento de IA art. 10.5).
+Prototipo funcional (v0.4) probado con datos sintéticos; no se ha validado aún con datos de una entidad. Mide asociaciones agregadas, no causalidad ni discriminación: indica en qué etapa se observa una diferencia, no por qué se produce. Requiere registros comparables de cada etapa (intento, cuenta, evaluación y decisión) enlazados por un identificador. Un perfil describe la credencial o la situación del intento, no a la persona. Cualquier análisis adicional con categorías especiales de datos requiere base jurídica propia (RGPD; Reglamento de IA, art. 4 bis, antes art. 10.5, que sólo cubre la detección de sesgos en los sistemas de IA).
 
-Parte del ensayo *Gobernar antes del algoritmo: IA, Data Governance y prevención de la exclusión financiera ante el nuevo marco regulatorio europeo de la IA* (Sánchez Villa, 2026). Licencia Apache 2.0 (véanse `LICENSE` y `NOTICE` en la raíz del repositorio).
+Parte del ensayo *Gobernar antes del algoritmo: IA, Data Governance y prevención de la exclusión financiera ante el nuevo marco regulatorio de la Unión Europea* (Sánchez Villa, 2026). Licencia Apache 2.0 (véanse `LICENSE` y `NOTICE` en la raíz del repositorio).
+
+
+## Novedades de la v0.4
+
+- **¿Quién ni siquiera lo intenta?** `python -m evaluabilidad ... --representacion representacion.csv` compara la composición de los intentos con la de la población del área de servicio (CSV agregado: `grupo, intentos_grupo, intentos_total, poblacion_pct`). Representación = (intentos del grupo / intentos totales) / peso del grupo en la población; por debajo de 0,80 se señala con la misma regla que el resto del informe. Es una señal, no una prueba.
+- Ejemplo: `python -m evaluabilidad --altas demo/altas_demo.csv --credito demo/credito_demo.csv --representacion demo/representacion_demo.csv --salida demo/informe_demo.html`

@@ -9,7 +9,9 @@
 | Pending residence number or official receipt | [ ] The process accepts provisional documents and defines which additional verification applies. |
 | Non-EU passport without a chip | [ ] If NFC reading fails, an alternative verification exists (optical reading, video call, branch). |
 | No fixed address or no proof of address | [ ] Alternatives to proof of address are accepted (self-declaration, certificate from a social service or shelter). |
-| Needs help with digital verification | [ ] If the selfie, video or SMS step fails, help or a branch appointment is offered, not a generic error. |
+| Phone or connection not good enough for verification | [ ] If the selfie, NFC, video or SMS step fails, another route is offered (video call, code by other means, branch appointment), not a generic error. |
+| Needs help to complete the digital process | [ ] Human help is available (phone, chat or branch) and the form uses plain language. |
+| Needs an accessibility adjustment | [ ] The channel works with a screen reader and does not rely only on visual or audio instructions; the adjustment required and whether it was available are logged, never a diagnosis (Directive (EU) 2019/882). |
 | No credit history | [ ] The entity knows how many account holders never become scorable and assesses the use of lawful alternative data. |
 
 - [ ] The list of accepted documents is published and consistent across web, app and branch.

@@ -29,7 +29,8 @@
         "app",
         "videollamada",
         "telefono",
-        "intermediario"
+        "intermediario",
+        "no_consta"
       ]
     },
     "producto": {
@@ -49,7 +50,10 @@
         "nie_provisional",
         "pasaporte_sin_chip",
         "sin_domicilio",
+        "dispositivo_conectividad",
         "asistencia_digital",
+        "accesibilidad",
+        "zona_sin_oficina",
         "sin_historial",
         "otro"
       ],
@@ -80,7 +84,7 @@
         "derivacion_alternativa",
         "rechazo_definitivo"
       ],
-      "description": "Obligatoria en modo completo si resultado = no_acceso. Taxonomía mínima de la sección 8.2 del ensayo; 'fallo_tecnico' incluye los fallos de verificación digital (selfie, vídeo, SMS, lectura NFC)."
+      "description": "Obligatoria en modo completo si resultado = no_acceso. Taxonomía mínima de la sección 7.2 del ensayo; 'fallo_tecnico' incluye los fallos de verificación digital (selfie, vídeo, SMS, lectura NFC)."
     },
     "alternativa_ofrecida": {
       "type": [

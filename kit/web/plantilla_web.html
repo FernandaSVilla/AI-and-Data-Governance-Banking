@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evaluability · AI &amp; Data Governance · Banking – Open Source</title>
+<title>Evaluabilidad · medir el no acceso antes del modelo de crédito</title>
 <meta name="description" content="Herramienta abierta para medir qué perfiles de entrada no llegan a ser evaluados por un modelo de crédito, y en qué etapa aparece la primera diferencia. Todo se calcula en el navegador.">
 <script>/*__PAPAPARSE__*/</script>
 <style>
@@ -15,24 +15,24 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;font-variant-numeric:tabular-nums}
 a{color:var(--navy-2)}
 .bar{background:var(--navy);color:#fff}
-.bar .in{max-width:1160px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.bar .in{max-width:1440px;margin:0 auto;padding:0 clamp(20px,4vw,56px);height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.01em;font-size:17px}
 .brand .mark{width:30px;height:30px;border:2px solid #fff;display:grid;place-items:center;font-size:13px;font-weight:700}
 .brand small{font-weight:400;opacity:.75;font-size:13px;border-left:1px solid rgba(255,255,255,.3);padding-left:12px}
 .nav{display:flex;gap:22px;font-size:14px}.nav a{color:#fff;text-decoration:none;opacity:.85}.nav a:hover{opacity:1;text-decoration:underline}
 @media (max-width:760px){.nav{display:none}.brand small{display:none}}
 .hero{background:var(--panel);border-bottom:1px solid var(--line)}
-.hero .in{max-width:1160px;margin:0 auto;padding:36px 20px 30px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:end}
+.hero .in{max-width:1440px;margin:0 auto;padding:40px clamp(20px,4vw,56px) 32px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:end}
 @media (max-width:860px){.hero .in{grid-template-columns:1fr}}
 .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-2)}
 h1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin:8px 0 10px;color:var(--navy)}
-.lead{color:var(--ink-2);font-size:16.5px;margin:0;max-width:640px}
+.lead{color:var(--ink-2);font-size:16.5px;margin:0;max-width:760px}
 .actions{display:flex;flex-wrap:wrap;gap:10px}
 .btn{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--navy);background:#fff;color:var(--navy);padding:10px 18px;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block}
 .btn:hover{background:#eef2f8}
 .btn.primary{background:var(--navy);color:#fff}.btn.primary:hover{background:var(--navy-2)}
 .btn.link{border-color:transparent;background:none;padding:10px 4px;text-decoration:underline}
-.wrap{max-width:1160px;margin:0 auto;padding:24px 20px 40px}
+.wrap{max-width:1440px;margin:0 auto;padding:28px clamp(20px,4vw,56px) 44px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px 24px;margin-bottom:18px}
 .card h2{font-size:18px;font-weight:700;color:var(--navy);margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
 .card h2 .n{font-size:13px;color:var(--muted);font-weight:600}
@@ -76,9 +76,16 @@ svg text{font-family:var(--sans)}
 .source{font-size:13px;color:var(--ink-2);margin:0 0 14px}.source b{color:var(--navy)}
 .res{display:flex;flex-wrap:wrap;gap:10px}
 footer{background:var(--navy);color:#c8d3e3;font-size:13px}
-footer .in{max-width:1160px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer .in{max-width:1440px;margin:0 auto;padding:22px clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
 footer a{color:#fff}
 @media print{body{background:#fff}.bar,.hero .actions,.privacy,.trust,.noprint,footer{display:none!important}.card{break-inside:avoid}}
+.esp-sec .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}.esp-sec .tabs .btn[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}.kpi{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#fff}
+.kpi .v{font-family:var(--serif);font-size:28px;color:var(--navy);line-height:1.1}.kpi .kl{font-size:13px;color:var(--ink-2);text-transform:none;letter-spacing:0;font-weight:400}.kpi.alto .v{color:var(--bad)}
+.esp-plot{width:100%;overflow-x:auto}.esp-plot svg{display:block;max-width:100%;height:auto}
+.esp-tab{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}.esp-tab th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 8px}
+.esp-tab td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line-soft);vertical-align:top}.esp-tab tr:last-child td{border-bottom:2px solid var(--ink)}.esp-tab td.n{text-align:right;white-space:nowrap}
+.esp-tab tr.grp td{font-weight:700;color:var(--navy);background:var(--bg)}.esp-lee{background:var(--bg);border-left:3px solid var(--navy);padding:8px 12px;margin:12px 0;font-size:14px}
 </style>
 <style>
 .chip{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;white-space:nowrap}
@@ -135,95 +142,326 @@ footer a{color:#fff}
 .bname .nm small{margin-left:12px}
 @media (max-width:760px){.bname .series{font-size:9.5px;letter-spacing:.08em}.bname .oss{display:none}}
 </style>
+<style>
+/* estilo por bandas: fondos de lado a lado con contenido contenido */
+.hero .in{grid-template-columns:1.35fr .85fr;align-items:center;gap:48px;padding-top:48px;padding-bottom:44px}
+.hero-art{display:flex;justify-content:center}.hero-art svg{width:100%;max-width:420px;height:auto}
+@media (max-width:860px){.hero-art{display:none}}
+h1{font-family:var(--sans);font-weight:300;text-transform:uppercase;font-size:clamp(28px,3.2vw,44px);line-height:1.08;letter-spacing:.005em;margin:10px 0 16px}
+h1 b{font-weight:700}
+.hero .actions{margin-top:22px}
+.band{background:var(--navy);color:#fff}
+.band .in,.band-light .in{max-width:1440px;margin:0 auto;padding:56px clamp(20px,4vw,56px)}
+.sec-t{font-size:clamp(24px,2.4vw,32px);font-weight:300;text-transform:uppercase;line-height:1.12;margin:0 0 8px;color:inherit}
+.sec-t b{font-weight:700}
+.band .band-l{color:#c8d3e3;margin:0 0 34px;font-size:16px;max-width:760px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+@media (max-width:860px){.stats{grid-template-columns:1fr;gap:28px}}
+.stat{border-left:3px solid #4aa3df;padding-left:22px}
+.stat .v{font-size:clamp(38px,3.6vw,52px);font-weight:700;line-height:1;letter-spacing:-.01em}
+.stat .t{font-size:15.5px;color:#e6ecf4;margin:12px 0 8px;max-width:360px}
+.stat .s{font-size:12.5px;color:#9fb2cc;letter-spacing:.02em}
+.band-light{background:#e8eff7;border-top:1px solid #d5e0ec;border-bottom:1px solid #d5e0ec}
+.band-light .sec-t{color:var(--navy)}
+.band-light .note{font-size:15px;color:var(--ink-2);margin:0 0 24px;max-width:980px}
+.band-light .steps{background:#fff}
+.wrap+.band-light{margin-top:0}
+@media (max-width:860px){.hero .in{grid-template-columns:1fr;gap:0;padding-top:32px;padding-bottom:32px}}
+</style>
+<style>
+/* fachada académica: documento de método y calculadora */
+body{background:#f4f5f7}
+header.doc{background:#fff;border-bottom:1px solid var(--line)}
+header.doc .in{max-width:none;margin:0;padding:24px clamp(20px,6.5vw,96px) 22px}
+.doc .meta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.doc .tag{font-size:12px;letter-spacing:.06em;color:var(--ink-2);border:1px solid var(--line);padding:3px 9px;border-radius:2px}
+.doc .metaR{display:flex;align-items:center;gap:16px;font-size:13.5px}.doc .metaR a{color:var(--navy-2)}
+.doc .lang{border-color:var(--line)}.doc .lang button{color:var(--ink-2);opacity:1}
+.doc .lang button[aria-pressed="true"]{background:var(--navy);color:#fff}
+header.doc h1{font-family:var(--serif);font-weight:600;text-transform:none;font-size:clamp(25px,2.6vw,33px);line-height:1.2;letter-spacing:0;color:var(--navy);margin:0 0 10px;max-width:none}
+.doc .sub{font-size:16.5px;color:var(--ink-2);margin:0 0 8px;max-width:860px}
+.doc .auth{font-size:13.5px;color:var(--muted);margin:0 0 18px}
+.doc .actions{margin-top:0}
+.toc{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:13.5px}
+.toc a{color:var(--ink-2);text-decoration:none}.toc a:hover{color:var(--navy);text-decoration:underline}
+.wrap{max-width:1180px;padding-left:clamp(20px,4vw,48px);padding-right:clamp(20px,4vw,48px)}
+.wrap+.wrap{padding-top:0}
+.card.sec h2{font-family:var(--serif);font-weight:600;font-size:21px}
+.eqgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+@media (max-width:860px){.eqgrid{grid-template-columns:1fr}}
+.eq{border:1px solid var(--line);border-top:3px solid var(--navy);padding:14px 16px 12px;background:#fbfcfd}
+.eq .el{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy-2)}
+.eq .f{font-family:var(--serif);font-size:21px;color:var(--ink);margin:12px 0 10px;display:flex;align-items:center;gap:8px}
+.lhs{white-space:nowrap}
+.eq .eqq{font-size:13.5px;color:var(--ink-2);font-style:italic}
+.frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;font-size:17px}
+.frac>span{padding:0 4px;white-space:nowrap}.frac>span:first-child{border-bottom:1.3px solid var(--ink)}
+.eq sub,.fm sub,.vars sub{font-size:.7em}
+.vars{font-size:13.5px;color:var(--ink-2);margin:4px 0 14px}
+.defs{display:grid;grid-template-columns:210px 1fr;gap:10px 22px;margin:0;border-top:1px solid var(--line-soft);padding-top:14px;font-size:14px}
+@media (max-width:760px){.defs{grid-template-columns:1fr;gap:2px}.defs dd{margin-bottom:10px}}
+.defs dt{font-weight:700;color:var(--navy)}.defs dd{margin:0;color:var(--ink-2)}
+.fm{font-family:var(--serif);font-size:16px;color:var(--ink)}
+.cite{font-family:var(--serif);font-size:15px;background:#fbfcfd;border-left:3px solid var(--navy);padding:10px 14px}
+.steps .k{font-family:var(--serif);font-size:20px}
+details.sec>summary,details.more>summary{cursor:pointer;list-style:none}
+details.sec>summary::-webkit-details-marker,details.more>summary::-webkit-details-marker{display:none}
+details.sec>summary h2{display:inline}
+details.sec>summary::after,details.more>summary::after{content:"＋";float:right;color:var(--navy);font-size:18px}
+details[open].sec>summary::after,details[open].more>summary::after{content:"－"}
+details.sec:not([open]){padding-bottom:18px}
+details.more{margin:0 0 18px}details.more>summary{font-weight:700;color:var(--navy);padding:12px 0}
+.intro{font-size:16.5px;line-height:1.55}.intro p{margin:0 0 12px}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 0;padding:0;list-style:none}
+.steps3 li{border-top:3px solid var(--navy);padding:10px 2px 0;color:var(--ink-2)}
+.steps3 b{display:block;font-family:var(--serif);font-size:22px;color:var(--navy)}
+@media(max-width:700px){.steps3{grid-template-columns:1fr}}
+.bloque{font-family:var(--serif);font-size:19px;color:var(--navy);margin:26px 0 10px;border-bottom:2px solid var(--navy);padding-bottom:6px}
+.natab{font-size:13.5px}.natab td,.natab th{text-align:left;vertical-align:top}.natab td:first-child{min-width:150px}.natab th{white-space:normal}.natab tr.ref td{background:#f7f9fb}
+.vfl{margin:6px 0 0;padding-left:0;list-style:none}.vfl code{font-size:13px;background:var(--line-soft);padding:1px 5px;border-radius:3px}.vfl li{margin:0 0 14px;line-height:1.5}.vfl li>b{display:block;color:var(--navy)}.vfl .btn{margin:6px 0 4px;display:inline-block}.vfl .esp{display:block;font-size:13.5px;background:var(--ok-soft);border-left:3px solid var(--ok);padding:6px 10px;margin-top:4px}
+.vgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
+.vcard{border:1px solid var(--line);border-top:4px solid var(--navy);border-radius:10px;padding:14px 16px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.vcard.vpy{grid-column:1/-1;border-top-color:var(--muted);background:var(--bg)}.vcard.ves{border-top-color:var(--s2)}
+.vh{display:flex;align-items:center;gap:10px}.vn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:14px}
+.vtag{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy-2);background:var(--line-soft);border-radius:999px;padding:2px 10px}
+.vcard h3{margin:4px 0 0;font-size:16px;color:var(--navy)}.vcard p{margin:0;color:var(--ink-2);font-size:14px}.vcard .btn{align-self:flex-start;margin:4px 0}
+.vcard code{font-size:13px;background:var(--line-soft);padding:1px 5px;border-radius:3px}
+.vexp{margin-top:auto;background:var(--ok-soft);border-left:3px solid var(--ok);padding:8px 10px;font-size:13.5px;border-radius:0 6px 6px 0}.vel{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);margin-bottom:2px}
+@media(max-width:760px){.vgrid{grid-template-columns:1fr}}
+.wbcite h2{font-size:15px;margin:0 0 8px}.wbcite .cite{margin:0 0 8px}
+.vbody .cite{margin:0 0 12px}
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:12px 0 14px}
+.ccard{border:1px solid var(--line);border-top:4px solid var(--navy);border-radius:10px;background:#fff;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.ccard.csw{border-top-color:var(--s1)}.ccard.ces{border-top-color:var(--s2)}
+.ctop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.ctype{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--navy);border-radius:999px;padding:2px 10px}
+.ccard.csw .ctype{background:var(--s1)}.ccard.ces .ctype{background:var(--s2)}.csrc{font-weight:700;color:var(--navy);font-size:15px}
+.ctext{font-family:var(--serif);font-size:15px;line-height:1.6;margin:0;color:var(--ink);padding-left:22px;text-indent:-22px}
+.cfoot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:8px;font-size:13.5px}
+.cav{min-width:0;overflow-wrap:anywhere}.cav b{color:var(--navy)}.ccopy{font-size:13px;padding:4px 10px}
+@media(max-width:760px){.cgrid{grid-template-columns:1fr}}
+.hero{border-top:4px solid var(--navy)}.hk{font-family:var(--serif);font-size:22px;line-height:1.35;color:var(--navy);margin:0 0 16px;max-width:900px}
+.hstats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.hs{border-radius:6px;padding:12px 14px;background:#f7f9fb;border-left:5px solid var(--navy)}
+.hs.per{border-color:var(--s2);background:var(--bad-soft)}.hs.gap{border-color:var(--bad);background:#fff}
+.hs .big{font-family:var(--serif);font-size:40px;line-height:1;color:var(--navy)}.hs.per .big{color:var(--s2)}.hs.gap .big{color:var(--bad)}
+.hs .de{font-size:15px;color:var(--ink-2);margin-left:4px}.hs .hd{display:block;margin-top:6px;font-size:14px;color:var(--ink-2);line-height:1.4}
+.hx{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.gna{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}.gna h2{font-size:18px;margin:0 0 8px}.gna p{margin:0 0 10px;line-height:1.55}
+.gnal{margin:0 0 12px;padding-left:20px}.gnal li{margin:0 0 6px;line-height:1.5}
+.blqn{margin:-4px 0 14px;max-width:960px}
+.wmr{display:grid;grid-template-columns:minmax(170px,26%) 1fr 150px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line-soft)}
+.wml b{display:block;font-size:14px}.wmbar{display:flex;align-items:center;gap:6px;margin:2px 0}.wmbar .b{display:block;height:11px;border-radius:2px}.wmbar em{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.wmv{display:flex;flex-direction:column;line-height:1.3}.wmfoot{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:16px 0 8px;align-items:center}
+.wmstat{background:#f7f9fb;border-left:5px solid var(--navy);padding:10px 14px;font-size:14px;color:var(--ink-2)}.wmstat .big{font-family:var(--serif);font-size:34px;color:var(--navy);display:block;line-height:1.1}
+.wbsec .cite{margin:10px 0 0;font-size:13px}
+@media(max-width:700px){.wmr{grid-template-columns:1fr}.wmfoot{grid-template-columns:1fr}}
+.citas h3{font-size:14px;margin:14px 0 4px;color:var(--navy)}.citas pre{font-size:12px;background:#f7f9fb;padding:10px;overflow:auto;border:1px solid var(--line)}
+.esgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}.esc{background:#fbfcfd;border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.esk{font-weight:700;color:var(--navy);margin-bottom:8px}.esv{margin:6px 0}.esbig{margin:6px 0;font-size:14px;color:var(--ink-2)}.esbig .big{font-family:var(--serif);font-size:28px;color:var(--navy);margin-right:8px}
+.esc .cite{font-size:12px;margin:10px 0 0}
+@media(max-width:700px){.esgrid{grid-template-columns:1fr}}
+.ciego{margin:12px 0 0;font-weight:600;color:var(--navy)}.clave{margin:14px 0 6px;padding:10px 14px;border-left:4px solid var(--bad);background:var(--bad-soft);font-size:15px}.origen{font-size:13.5px;background:#f7f9fb;border-left:3px solid var(--navy);padding:8px 12px;margin:10px 0 0}
+.de100{font-weight:700;font-size:14px;color:var(--ink)}
+@media(max-width:700px){.hstats{grid-template-columns:1fr}.hk{font-size:19px}}
+.vis .lead{font-size:17px;line-height:1.55;margin:0 0 16px}
+.fleg{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--ink-2);margin:0 0 12px}.fleg .muted{margin-left:auto}
+.sw{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}.sw.ref,.b.ref{background:var(--navy)}.sw.per,.b.per{background:var(--s2)}
+.fgrid{display:grid;grid-template-columns:1fr 1.15fr 1fr 1.15fr 1fr 1.15fr 1fr;gap:8px;align-items:stretch}
+.fst{border:1px solid var(--line);border-radius:6px;padding:10px;background:#fbfcfd}
+.fh{font-weight:700;color:var(--navy);font-size:13.5px;line-height:1.25;min-height:34px}.fh i{font-family:var(--serif);font-weight:600;color:var(--ink-2)}
+.fb{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:13px}.fb .b{display:block;height:12px;border-radius:2px;min-width:2px;max-width:calc(100% - 30px)}
+.fcon{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;font-size:13px;padding:4px 2px;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.fcon .frac{font-size:13px}.fr{font-family:var(--serif);font-size:15px}.fnum{margin-top:4px;color:var(--ink-2)}.fnum b{color:var(--ink);font-size:15px}
+.fq{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.3}.fsig{margin-top:4px;font-size:12px;font-weight:700;color:var(--ok)}
+.fcon.sig{border-color:var(--s2);background:var(--bad-soft)}.fcon.sig .fsig{color:var(--bad)}
+.fbr{display:grid;grid-template-columns:1fr 1.15fr 1fr 1.15fr 1fr 1.15fr 1fr;gap:8px;margin-top:10px;row-gap:6px}
+.br{border-top:2px solid;padding-top:4px;font-size:12.5px;font-weight:700;text-align:center}.br.all{grid-column:1/8;border-color:var(--s2);color:var(--bad)}.br.aud{grid-column:5/8;border-color:var(--muted);color:var(--ink-2)}
+.regla{margin:14px 0 0;font-size:14.5px;color:var(--ink-2)}
+.grupos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.grp{border-top:3px solid var(--navy);padding-top:8px}.gh{font-weight:700;color:var(--navy);margin-bottom:6px;font-size:14.5px}
+.dni{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--ok);background:var(--ok-soft);border-radius:10px;padding:1px 8px;vertical-align:middle}
+.pc{padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px;line-height:1.4}.pc b{display:block;color:var(--ink)}.pc span{display:block;color:var(--ink-2)}.pc i{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.hbar{margin:4px 0 6px}.hrow{display:grid;grid-template-columns:minmax(150px,30%) 1fr 54px;gap:10px;align-items:center;padding:3px 0;font-size:13.5px}.hrow.ref .hl{font-weight:700}
+.ht{position:relative;height:14px;background:var(--line-soft);border-radius:2px}.hb{position:absolute;left:0;top:0;bottom:0;background:var(--s2);border-radius:2px}.hrow.ref .hb{background:var(--navy)}
+.hr{position:absolute;top:-3px;bottom:-3px;border-left:2px dashed var(--navy)}.hv{text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:860px){.fgrid,.fbr{grid-template-columns:1fr}.br.all,.br.aud{grid-column:auto}.fcon{border:0;border-left:2px solid var(--line);align-items:flex-start;text-align:left;padding-left:12px}.fleg .muted{margin-left:0}.hrow{grid-template-columns:110px 1fr 46px}}
+@media print{header.doc .actions,.toc,.doc .lang{display:none!important}}
+</style>
 </head>
 <body>
-<div class="bar"><div class="in">
-  <div class="brand"><span class="mark">EV</span><span data-i18n="marca">Evaluability</span><span class="oss">Open Source</span></div>
-  <div class="right">
-    <nav class="nav"><a href="#perfiles" data-ir="perfiles" data-i18n="nav_perf"></a><a href="#como" data-ir="como" data-i18n="nav_como"></a><a href="#plantillas" data-ir="plantillas" data-i18n="nav_plant"></a><a href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="nav_cod"></a></nav>
-    <div class="lang" role="group" aria-label="Idioma / Language"><button id="lES" data-lang="es" aria-pressed="true">ES</button><button id="lEN" data-lang="en" aria-pressed="false">EN</button></div>
-  </div>
-</div></div>
-
-<section class="hero"><div class="in">
-  <div class="htop">
-    <div class="eyebrow" data-i18n="eyebrow"></div>
-    <h1 data-i18n="h1"></h1>
-  </div>
-  <div>
-    <p class="lead" data-i18n="lead"></p>
-    <div class="compat">
-      <span class="ck" data-i18n="compat_k"></span>
-      <ul><li data-i18n="compat_1"></li><li data-i18n="compat_2"></li><li data-i18n="compat_3"></li><li data-i18n="compat_4"></li></ul>
-      <span class="ch" data-i18n="compat_h"></span>
-    </div>
-  </div>
+<header class="doc"><div class="in">
+  <div class="meta"><span class="tag" data-i18n="pc_tag"></span>
+    <span class="metaR"><a href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="nav_cod"></a>
+    <span class="lang" role="group" aria-label="Idioma / Language"><button id="lES" data-lang="es" aria-pressed="true">ES</button><button id="lEN" data-lang="en" aria-pressed="false">EN</button></span></span></div>
+  <h1 data-i18n="sci_t"></h1>
+  <p class="sub" data-i18n="sci_s"></p>
+  <p class="auth" data-i18n="sci_a"></p>
   <div class="actions">
     <button class="btn primary" id="bDemo" data-i18n="b_demo"></button>
-    <button class="btn" id="bLoad" data-i18n="b_load"></button>
+    <button class="btn link" id="bLoad" data-i18n="b_load"></button>
     <button class="btn link" id="bPrint" data-i18n="b_print"></button>
   </div>
-</div></section>
+  <nav class="toc noprint"><a href="#verificar" data-ir="verificar" data-i18n="vf_nav"></a><a href="#metodo" data-ir="metodo" data-i18n="met_h"></a><a href="#como" data-ir="como" data-i18n="como_h"></a><a href="#quien" data-ir="quien" data-i18n="perf_h"></a><a href="#plantillas" data-ir="plantillas" data-i18n="pl_h"></a><a href="#citar" data-ir="citar" data-i18n="cite_h"></a></nav>
+</div></header>
 
 <div class="wrap">
-<div class="trust">
-  <div class="privacy"><svg width="16" height="18" viewBox="0 0 16 18" aria-hidden="true"><rect x="1.5" y="8" width="13" height="9" rx="1" fill="none" stroke="#0a2240" stroke-width="1.6"/><path d="M4.5 8V5.5a3.5 3.5 0 0 1 7 0V8" fill="none" stroke="#0a2240" stroke-width="1.6"/></svg><span data-i18n="privacy"></span></div>
-  <div class="oss-card">
-    <svg width="20" height="18" viewBox="0 0 20 18" aria-hidden="true"><path d="M6 4 1.5 9 6 14M14 4l4.5 5L14 14M11.5 2 8.5 16" fill="none" stroke="#8a6a00" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <div><div class="ok-t" data-i18n="oss_t"></div><p data-i18n="oss_p"></p>
-      <a class="oss-btn" href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="oss_b"></a></div>
+<section class="card hero" id="idea">
+  <p class="hk" data-i18n="h_k"></p>
+  <div class="hstats">
+    <div class="hs ref"><span class="big">96</span><span class="de" data-i18n="h_de"></span><span class="hd" data-i18n="h_ref"></span></div>
+    <div class="hs per"><span class="big">43</span><span class="de" data-i18n="h_de"></span><span class="hd" data-i18n="h_per"></span></div>
+    <div class="hs gap"><span class="big">57</span><span class="hd" data-i18n="h_gap"></span></div>
   </div>
-</div>
-
-<div class="card" id="perfiles">
-  <h2 data-i18n="perf_h"></h2>
-  <p class="note" data-i18n="perf_note"></p>
-  <div class="scroll"><table class="ptable"><tr><th data-i18n="perf_c1"></th><th style="text-align:left" data-i18n="perf_c2"></th><th style="text-align:left" data-i18n="perf_c3"></th></tr><tbody id="tPerfiles"></tbody></table></div>
-</div>
-
-<div class="card noprint" id="como">
-  <h2 data-i18n="como_h"></h2>
-  <p class="note" data-i18n="como_note"></p>
-  <ol class="steps">
-    <li><span class="k">01</span><span data-i18n="st1"></span></li>
-    <li><span class="k">02</span><span data-i18n="st2"></span></li>
-    <li><span class="k">03</span><span data-i18n="st3"></span></li>
-    <li><span class="k">04</span><span data-i18n="st4"></span></li>
-  </ol>
-  <div class="upload" id="upload">
-    <div><label for="fAltas" data-i18n="up_altas"></label><input type="file" id="fAltas" accept=".csv"></div>
-    <div><label for="fCred" data-i18n="up_cred"></label><input type="file" id="fCred" accept=".csv"></div>
-    <button class="btn primary" id="bRun" data-i18n="b_run"></button>
+  <p class="hx" data-i18n="h_ilus"></p>
+  <div class="gna">
+    <h2 data-i18n="gna_h"></h2>
+    <p data-i18n="gna_1"></p>
+    <ul class="gnal"><li data-i18n="gna_e1"></li><li data-i18n="gna_e2"></li><li data-i18n="gna_e3"></li></ul>
+    <details class="more"><summary data-i18n="leer_mas"></summary>
+    <p data-i18n="gna_2"></p>
+    <p class="small muted" data-i18n="gna_3"></p>
+    <p class="origen" data-i18n="gna_4"></p>
+    </details>
   </div>
-  <div class="opts"><div><label for="umbral" data-i18n="umbral_l"></label><input type="number" id="umbral" min="0.5" max="1" step="0.05" value="0.80"></div>
-    <div><label for="nmin" data-i18n="nmin_l"></label><input type="number" id="nmin" min="10" max="100000" step="10" value="100"></div>
-    <p class="small muted" style="margin:0;max-width:640px" data-i18n="umbral_n"></p></div>
-  <div class="msg" id="msg"></div>
-</div>
-
+</section>
+<section class="card vis" id="vistaMetodo">
+  <p class="lead" data-i18n="simple"></p>
+  <div id="funnel"></div>
+  <p class="regla" data-i18n="regla_vis"></p>
+</section>
+<section class="card sec esp-sec" id="espana">
+  <h2 data-i18n="es2_h"></h2>
+  <p class="note" data-i18n="es2_note"></p>
+  <div class="tabs"><button class="btn" id="bECF" data-i18n="b_ecf" aria-pressed="true"></button><button class="btn" id="bEST" data-i18n="b_est" aria-pressed="false"></button></div>
+  <div id="espOut"></div>
+</section>
+<details class="card sec" id="quien">
+  <summary><h2 data-i18n="quien_h"></h2></summary>
+  <p class="note" data-i18n="quien_note"></p>
+  <div class="grupos" id="grupos"></div>
+</details>
+<details class="card sec verif" id="verificar" open>
+  <summary><h2 data-i18n="vf_h"></h2></summary>
+  <p class="note" data-i18n="vf_note"></p>
+  <div class="vgrid">
+    <div class="vcard"><div class="vh"><span class="vn">1</span><span class="vtag" data-i18n="vt1"></span></div>
+      <h3 data-i18n="vf1_t"></h3><p data-i18n="vf1"></p><button class="btn primary" id="bVer" data-i18n="vf1_b"></button>
+      <div class="vexp"><span class="vel" data-i18n="vexp"></span><span data-i18n="vf1_e"></span></div></div>
+    <div class="vcard"><div class="vh"><span class="vn">2</span><span class="vtag" data-i18n="vt2"></span></div>
+      <h3 data-i18n="vf2_t"></h3><p data-i18n="vf2"></p><button class="btn primary" id="bDemo2" data-i18n="b_demo"></button>
+      <div class="vexp"><span class="vel" data-i18n="vexp"></span><span data-i18n="vf2_e"></span></div></div>
+    <div class="vcard"><div class="vh"><span class="vn">3</span><span class="vtag" data-i18n="vt3"></span></div>
+      <h3 data-i18n="vf3_t"></h3><p data-i18n="vf3"></p><button class="btn primary" id="bWB" data-i18n="b_wb"></button>
+      <div class="vexp"><span class="vel" data-i18n="vexp"></span><span data-i18n="vf3_e"></span></div></div>
+    <div class="vcard ves"><div class="vh"><span class="vn">4</span><span class="vtag" data-i18n="vt4"></span></div>
+      <h3 data-i18n="vf5_t"></h3><p data-i18n="vf5"></p><button class="btn primary" data-ir="espana" data-i18n="vf5_b"></button>
+      <div class="vexp"><span class="vel" data-i18n="vexp"></span><span data-i18n="vf5_e"></span></div></div>
+    <div class="vcard vpy"><div class="vh"><span class="vn">5</span><span class="vtag" data-i18n="vt5"></span></div>
+      <h3 data-i18n="vf4_t"></h3><p data-i18n="vf4"></p>
+      <div class="vexp"><span class="vel" data-i18n="vexp"></span><span data-i18n="vf4_e"></span></div></div>
+  </div>
+</details>
 <div id="report" style="display:none">
   <p class="source" id="srcLabel"></p>
-  <div class="card"><h2><span class="n">01</span><span data-i18n="r1"></span></h2><div id="concl"></div></div>
+  <div class="card"><h2><span class="n"></span><span data-i18n="r1"></span></h2><div id="concl"></div></div>
+  <details class="more" id="infCompleto"><summary data-i18n="inf_comp"></summary>
+  <div id="bloqueNoAcc">
+  <p class="bloque" data-i18n="blq_a"></p>
   <div class="card">
-    <h2><span class="n">02</span><span data-i18n="r2"></span></h2>
+    <h2><span class="n"></span><span data-i18n="rna"></span></h2>
+    <p class="note" data-i18n="rna_note"></p>
+    <div id="gNoAcc"></div>
+    <div class="scroll" id="tNoAcc"></div>
+    <div class="clave" id="claveEsc"></div>
+    <p class="note" data-i18n="rna_norma"></p>
+  </div>
+  <details class="more"><summary data-i18n="more_cc"></summary>
+  <div class="card"><h2><span class="n"></span><span data-i18n="r6"></span></h2><p class="note" data-i18n="r6_note"></p><div class="scroll" id="tCausas"></div></div>
+  <div class="card"><h2><span class="n"></span><span data-i18n="r3"></span></h2><p class="note" data-i18n="r3_note"></p><div class="scroll" id="tCanal"></div></div>
+  </details>
+  <p class="bloque" data-i18n="blq_b"></p>
+  <p class="note blqn" data-i18n="blq_b_note"></p>
+  </div>
+  <div class="card">
+    <h2><span class="n"></span><span data-i18n="r2"></span></h2>
     <p class="note" data-i18n="r2_note"></p>
     <div class="scroll" id="tCoc"></div>
     <div class="legend" id="legSig"></div>
   </div>
-  <div class="card"><h2><span class="n">03</span><span data-i18n="r3"></span></h2><p class="note" data-i18n="r3_note"></p><div class="scroll" id="tCanal"></div></div>
-  <div class="card"><h2><span class="n">04</span><span data-i18n="r4"></span></h2><p class="note" data-i18n="r4_note"></p><div class="scroll" id="tEmb"></div></div>
-  <div class="card"><h2><span class="n">05</span><span data-i18n="r5"></span></h2><div class="scroll" id="tTraz"></div>
+  <div id="bloqueRep">
+  <p class="bloque" data-i18n="blq_c"></p>
+  <p class="note blqn" data-i18n="blq_c_note"></p>
+  <div class="card">
+    <h2><span class="n"></span><span data-i18n="rep_h"></span></h2>
+    <p class="note" data-i18n="rep_note"></p>
+    <div id="gRep"></div>
+    <div class="scroll" id="tRep"></div>
+    <p class="small muted" data-i18n="rep_lim"></p>
+  </div>
+  </div>
+  </details>
+  <div class="card wbcite" id="wbCite" hidden><h2 data-i18n="wb_cite_h"></h2><p class="cite" id="wbCiteTxt"></p><p class="small muted" data-i18n="wb_cite_n"></p></div>
+  <details class="more" id="masInforme"><summary data-i18n="more_rep"></summary>
+  <div class="card"><h2><span class="n"></span><span data-i18n="r4"></span></h2><p class="note" data-i18n="r4_note"></p><div class="scroll" id="tEmb"></div></div>
+  <div class="card"><h2><span class="n"></span><span data-i18n="r5"></span></h2><div class="scroll" id="tTraz"></div>
     <p class="small muted" data-i18n="r5_note"></p></div>
-  <div class="card"><h2><span class="n">06</span><span data-i18n="r6"></span></h2><p class="note" data-i18n="r6_note"></p><div class="scroll" id="tCausas"></div></div>
-  <div class="card"><h2><span class="n">07</span><span data-i18n="r7"></span></h2>
+  <div class="card"><h2><span class="n"></span><span data-i18n="r7"></span></h2>
     <div class="scroll" id="tReg"></div>
     <p class="small muted" data-i18n="limites"></p>
     <p class="small muted" id="avisos"></p>
   </div>
+  </details>
 </div>
 
-<div class="card" id="plantillas">
-  <h2 data-i18n="pl_h"></h2>
+</div>
+
+<div class="wrap">
+<details class="card sec" id="metodo">
+  <summary><h2 data-i18n="met_h"></h2></summary>
+  <p class="note" data-i18n="met_note"></p>
+  <div class="eqgrid">
+    <div class="eq"><div class="el" data-i18n="st_1"></div><div class="f"><span class="lhs"><i>R</i><sub>1</sub> =</span> <span class="frac"><span><i>a</i><sub>p</sub> / <i>n</i><sub>p</sub></span><span><i>a</i><sub>r</sub> / <i>n</i><sub>r</sub></span></span></div><div class="eqq" data-i18n="q_1"></div></div>
+    <div class="eq"><div class="el" data-i18n="st_2"></div><div class="f"><span class="lhs"><i>R</i><sub>2</sub> =</span> <span class="frac"><span><i>e</i><sub>p</sub> / <i>a</i><sub>p</sub></span><span><i>e</i><sub>r</sub> / <i>a</i><sub>r</sub></span></span></div><div class="eqq" data-i18n="q_2"></div></div>
+    <div class="eq"><div class="el" data-i18n="st_3"></div><div class="f"><span class="lhs"><i>R</i><sub>3</sub> =</span> <span class="frac"><span><i>c</i><sub>p</sub> / <i>e</i><sub>p</sub></span><span><i>c</i><sub>r</sub> / <i>e</i><sub>r</sub></span></span></div><div class="eqq" data-i18n="q_3"></div></div>
+  </div>
+  <p class="vars" data-i18n="vars"></p>
+  <dl class="defs">
+    <dt data-i18n="rule_h"></dt><dd data-i18n="rule"></dd>
+    <dt data-i18n="ci_h"></dt><dd><span class="fm">IC<sub>95</sub> = exp( ln <i>R</i> ± 1,96 · √( 1/<i>x</i><sub>p</sub> − 1/<i>m</i><sub>p</sub> + 1/<i>x</i><sub>r</sub> − 1/<i>m</i><sub>r</sub> ) )</span><br><span data-i18n="ci_d"></span></dd>
+    <dt data-i18n="acc_h"></dt><dd data-i18n="acc"></dd>
+    <dt data-i18n="val_h"></dt><dd data-i18n="val"></dd>
+    <dt data-i18n="compat_k"></dt><dd data-i18n="compat_h"></dd>
+    <dt data-i18n="priv_h"></dt><dd data-i18n="privacy"></dd>
+  </dl>
+</details>
+
+<section class="card sec" id="como">
+  <h2 data-i18n="como_h"></h2>
+  <p class="note" data-i18n="como_note"></p>
+  <ol class="steps">
+    <li><span class="k">1</span><span data-i18n="st1"></span></li>
+    <li><span class="k">2</span><span data-i18n="st2"></span></li>
+    <li><span class="k">3</span><span data-i18n="st3"></span></li>
+    <li><span class="k">4</span><span data-i18n="st4"></span></li>
+  </ol>
+  <div class="upload" id="upload">
+    <div><label for="fAltas" data-i18n="up_altas"></label><input type="file" id="fAltas" accept=".csv"></div>
+    <div><label for="fCred" data-i18n="up_cred"></label><input type="file" id="fCred" accept=".csv"></div>
+    <div><label for="fRep" data-i18n="up_rep"></label><input type="file" id="fRep" accept=".csv"></div>
+    <button class="btn primary" id="bRun" data-i18n="b_run"></button>
+  </div>
+  <details class="more"><summary data-i18n="adv"></summary>
+  <div class="opts"><div><label for="umbral" data-i18n="umbral_l"></label><input type="number" id="umbral" min="0.5" max="1" step="0.05" value="0.80"></div>
+    <div><label for="nmin" data-i18n="nmin_l"></label><input type="number" id="nmin" min="10" max="100000" step="10" value="100"></div>
+    <p class="small muted" style="margin:0;max-width:640px" data-i18n="umbral_n"></p></div>
+  </details>
+  <div class="msg" id="msg"></div>
+</section>
+
+</div>
+
+<div class="wrap">
+<details class="card sec" id="plantillas">
+  <summary><h2 data-i18n="pl_h"></h2></summary>
   <p class="note" data-i18n="pl_note"></p>
   <div class="res">
     <button class="btn" data-rec="tpl" data-i18n="rec_tpl"></button>
@@ -232,6 +470,8 @@ footer a{color:#fff}
     <button class="btn" data-rec="form" data-i18n="rec_form"></button>
     <button class="btn" data-rec="check" data-i18n="rec_check"></button>
     <button class="btn" data-rec="demo" data-i18n="rec_demo"></button>
+    <button class="btn" data-rec="wb" data-i18n="rec_wb"></button>
+    <button class="btn" data-rec="ver" data-i18n="rec_ver"></button>
   </div>
   <div class="viewer" id="viewer" hidden>
     <div class="vbar"><b id="vTitle"></b><span class="vact"><button class="btn" id="vDown" data-i18n="v_down"></button><button class="btn" id="vCopy" data-i18n="v_copy"></button><button class="btn link" id="vClose" data-i18n="v_close"></button></span></div>
@@ -239,7 +479,26 @@ footer a{color:#fff}
     <p class="small muted" id="vMsg"></p>
   </div>
   <p class="small muted" style="margin:14px 0 0"><span data-i18n="pl_codes"></span> <span id="codPerf"></span>.<br><span data-i18n="pl_causes"></span> <span id="codCaus"></span>.<br><span data-i18n="pl_repo"></span> <a href="https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking" target="_blank" rel="noopener" data-i18n="pl_repo_a"></a>.</p>
-</div>
+</details>
+<section class="card citas" id="citar">
+  <h2 data-i18n="cite_h"></h2>
+  <p class="note" data-i18n="cite_intro"></p>
+  <div class="cgrid">
+    <article class="ccard csw"><div class="ctop"><span class="ctype" data-i18n="ct_sw"></span><span class="csrc" data-i18n="cs_sw"></span></div>
+      <p class="ctext" id="citeSW"></p>
+      <div class="cfoot"><span class="cav"><b data-i18n="disp"></b> <a id="dispSW" target="_blank" rel="noopener"></a></span><button class="btn link ccopy" data-copy="citeSW" data-i18n="b_copy"></button></div></article>
+    <article class="ccard"><div class="ctop"><span class="ctype" data-i18n="ct_ds"></span><span class="csrc" data-i18n="cs_wb"></span></div>
+      <p class="ctext" id="citeWB"></p>
+      <div class="cfoot"><span class="cav"><b data-i18n="disp"></b> <a id="dispWB" target="_blank" rel="noopener"></a></span><button class="btn link ccopy" data-copy="citeWB" data-i18n="b_copy"></button></div></article>
+    <article class="ccard ces"><div class="ctop"><span class="ctype" data-i18n="ct_ds"></span><span class="csrc" data-i18n="cs_bde"></span></div>
+      <p class="ctext" id="citeBDE"></p>
+      <div class="cfoot"><span class="cav"><b data-i18n="disp"></b> <a id="dispBDE" target="_blank" rel="noopener"></a></span><button class="btn link ccopy" data-copy="citeBDE" data-i18n="b_copy"></button></div></article>
+    <article class="ccard ces"><div class="ctop"><span class="ctype" data-i18n="ct_ds"></span><span class="csrc" data-i18n="cs_est"></span></div>
+      <p class="ctext" id="citeEST"></p>
+      <div class="cfoot"><span class="cav"><b data-i18n="disp"></b> <a id="dispEST" target="_blank" rel="noopener"></a></span><button class="btn link ccopy" data-copy="citeEST" data-i18n="b_copy"></button></div></article>
+  </div>
+  <p class="small muted" data-i18n="cite_n"></p>
+</section>
 </div>
 
 <footer><div class="in">
@@ -249,13 +508,26 @@ footer a{color:#fff}
 
 <script>
 // ---------- configuración compartida con el paquete Python (inyectada por construir_web.py)
-const PERFILES = {es: __PERFILES__, en: __PERFILES_EN__};   // clave -> [nombre, por qué falla, ejemplo]
-const PARAM = __PARAM__;                // parámetros del generador de datos de ejemplo
+const PERFILES = {es: __PERFILES__, en: __PERFILES_EN__};
+const FINDEX = __FINDEX__, FINDEX_COND = __FINDEX_COND__;
+const VERIF = {altas: __VERIF_A__, cred: __VERIF_C__};
+const REP_DEMO = __REP_DEMO__;
+const ES_ECF = __ES_ECF__, ES_EST = __ES_EST__;   // data/bde_cuadro31_ecf2021.csv y data/eurostat_banca_internet_discapacidad_2024.csv   // kit/demo/representacion_demo.csv (cifras ilustrativas)   // kit/verificacion/*.csv, 200 intentos contables a mano
+const csvObjs = txt => { const [h,...rs]=txt.trim().split("\n"); const c=h.split(","); return rs.map(r=>{const v=r.split(","), o={}; c.forEach((k,i)=>o[k]=v[i]===""?null:v[i]); return o;}); };
+const WB_URL = "https://microdata.worldbank.org/catalog/7860/study-description", WB_DOI = "https://doi.org/10.48529/BK9N-8R43";
+const CITA_EUROSTAT = `Eurostat. (2026). <i>Persons using the internet for internet banking by level of disability (activity limitation)</i> [dsb_ictiu07; datos de 2024; actualización 17/04/2026]. <a href="https://ec.europa.eu/eurostat/databrowser/view/dsb_ictiu07/default/table?lang=en" target="_blank" rel="noopener">https://ec.europa.eu/eurostat/databrowser/view/dsb_ictiu07/default/table</a>`;
+const CITA_WB_SOLO = `Development Research Group, Finance and Private Sector Development Unit. (2025). <i>The Global Findex Database 2025: Connectivity and Financial Inclusion in the Digital Economy</i> [Set de datos; WLD_2024_FINDEX_v02_M]. World Bank, Development Data Group. https://doi.org/10.48529/BK9N-8R43`;
+const CITA_BDE_SOLO = `Banco de España. (2026). <i>Informe de Inclusión Financiera 2025</i>, cuadro 3.1 [datos de la Encuesta de Competencias Financieras 2021]. Banco de España.`;
+const CITA_EST_SOLO = `Eurostat. (2026). <i>Persons using the internet for internet banking by level of disability (activity limitation)</i> [Set de datos dsb_ictiu07; datos de 2024; actualización 17/04/2026]. Comisión Europea.`;
+const CITA_BDE_ECF = `Banco de España. (2026). <i>Informe de Inclusión Financiera 2025</i> (cuadro 3.1, con datos de la Encuesta de Competencias Financieras 2021). DOI: <a href="https://doi.org/10.53479/43247" target="_blank" rel="noopener">10.53479/43247</a>`;
+const CITA_BDE = `Banco de España. (2026). <i>Informe de Inclusión Financiera 2025</i>. DOI: <a href="https://doi.org/10.53479/43247" target="_blank" rel="noopener">10.53479/43247</a>`;
+const CITA_WB = `Development Research Group, Finance and Private Sector Development Unit. (2025). <i>The Global Findex Database 2025: Connectivity and Financial Inclusion in the Digital Economy</i> [Dataset]. World Bank, Development Data Group. <a href="${WB_DOI}" target="_blank" rel="noopener">${WB_DOI}</a><br><a href="${WB_URL}" target="_blank" rel="noopener">${WB_URL}</a>`;   // Global Findex 2025: agregados de data/encuestas/findex2025_condiciones.csv   // clave -> [nombre, por qué falla, ejemplo]
+const PARAM = __PARAM__, PARAM_EXTRA = __PARAM_EXTRA__;                // parámetros del generador de datos de ejemplo
 const SCHEMA = __SCHEMA__;
 const DOCS = __DOCS__;                  // formulario y lista de comprobación por idioma
 const REF = "estandar", Z = 1.959964;
 const CAUSAS = ["documentacion_insuficiente","documento_no_reconocido","informacion_aml_adicional","alerta_escalada","duplicidad","desistimiento","fallo_tecnico","derivacion_alternativa","rechazo_definitivo"];
-const CANALES = ["app","web","videollamada","oficina","telefono","intermediario"];
+const CANALES = ["app","web","videollamada","oficina","telefono","intermediario","no_consta"];
 const RESULTADOS = ["alta_completada","alternativa_aceptada","no_acceso"];
 const SIGCOL = {clara:"#c2410c", confirmar:"#b7791f", sin:"#0f766e", nodata:"#98a2b3"};
 const ACC = ["alta_completada","alternativa_aceptada"];
@@ -263,32 +535,125 @@ const ACC = ["alta_completada","alternativa_aceptada"];
 // ---------- textos
 const T = {
 es:{
-  title:"Evaluability · AI & Data Governance · Banking – Open Source", marca:"Evaluability",
+  title:"Evaluabilidad · calculadora de cocientes de acceso por etapa (prueba de concepto)", marca:"Evaluability",
+  pc_tag:"Evaluabilidad v0.4 · Prueba de concepto · Material de replicación · Código abierto (Apache 2.0)",
+  sci_t:"¿En qué paso se pierde a cada persona? Medir el no acceso antes del modelo de crédito, decida un software, una persona o una IA",
+  sci_s:"Método para medir, antes del modelo de crédito, si cada perfil de entrada llega en igualdad de condiciones a la cuenta, a la evaluación y a la decisión, y en qué etapa aparece la primera diferencia. Analiza resultados, no el funcionamiento interno del sistema: sirve igual si quien decide es una regla de software, una persona en la oficina o un modelo de IA.",
+  sci_a:"M. F. Sánchez Villa (2026). Material de replicación del ensayo <i>Gobernar antes del algoritmo</i>. Los cálculos se ejecutan en su navegador.",
+  blq_b_note:"<b>Evaluabilidad</b> es la posibilidad de llegar a ser evaluado. Los sistemas de evaluación de solvencia son de alto riesgo (Reglamento de IA, anexo III, punto 5.b) y quien los utiliza debe asegurarse de que los datos de entrada sean pertinentes y suficientemente representativos (arts. 10 y 26.4). Esta parte muestra si la población que llega al modelo ya viene filtrada.",
+  mas_concl:n=>`Ver los otros ${n} perfiles con señal`,
+  ciego:n=>`En ${n} de estos perfiles la aprobación entre los evaluados es similar a la de referencia: una auditoría del modelo de crédito no vería la diferencia.`,
+  clave_esc:(a,b)=>`<b>Negativas por escrito:</b> sólo el ${a} en los perfiles no estándar, frente al ${b} en el perfil de referencia. Para la cuenta de pago básica, la denegación debe comunicarse por escrito, gratuitamente y con sus motivos, salvo que lo impidan la seguridad nacional, el orden público o la prevención del blanqueo (Directiva 2014/92/UE, art. 16.7). Ese deber nace con la solicitud completa (Real Decreto-ley 19/2017, art. 5): quien es disuadido o abandona antes no recibe nada por escrito, y sólo un registro de cada intento lo hace visible.`,
+  gna_4:"<b>¿De dónde salen los datos?</b> Del registro de alta de la entidad: canal, perfil de entrada —la condición que el proceso detecta, como un documento no reconocido, un fallo de verificación o una petición de ayuda—, resultado y causa. No se registra nacionalidad, edad ni diagnóstico, y los resultados se comparten sólo en agregado (base jurídica y minimización: RGPD, arts. 6, 9 y 25; ensayo, §7.5). El informe es un instrumento interno de mejora: con el supervisor se comparte sólo en agregado y con al menos 100 intentos por perfil.",
+  cite_h_ens:"El ensayo", cite_ens:"Sánchez Villa, M. F. (2026). <i>Gobernar antes del algoritmo: IA, Data Governance y prevención de la exclusión financiera ante el nuevo marco regulatorio de la Unión Europea. De la trazabilidad del no acceso a la evaluabilidad algorítmica</i>. Ensayo presentado al V Premio Federico Prades-IEBF.", cite_h_sw:"La herramienta (software)", cite_intro:"Referencias en formato APA. Use «Copiar cita» para pegarlas en su documento.", ct_sw:"Software", ct_ds:"Set de datos", cs_sw:"Evaluabilidad · esta herramienta", cs_wb:"Banco Mundial · Global Findex 2025", cs_bde:"Banco de España · Competencias Financieras 2021", cs_est:"Eurostat · Banca por internet 2024", b_copy:"Copiar cita", cite_h_dat:"Set de datos · Banco Mundial", cite_h_bde:"Set de datos · Banco de España", cite_h_est:"Set de datos · Eurostat", disp:"Disponible en:",
+  wm_nav:"Datos reales", wm_h:"Prueba con datos reales: Global Findex 2025 (Banco Mundial)",
+  wm_note:"La misma lógica, aplicada a la encuesta mundial del Banco Mundial sobre inclusión financiera. Una encuesta no registra intentos, sino si la persona tiene cuenta; por eso mide el tamaño del problema, no el no acceso de un banco concreto. Porcentaje de adultos con cuenta en una entidad financiera, con y sin cada condición.",
+  wm_cond:{sin_documento:"Sin documento de identidad",sin_telefono:"Sin teléfono móvil",sin_internet:"No usa internet",telefono_basico:"Sólo teléfono básico (sin smartphone)"},
+  wm_eco:n=>`${n} economías`, wm_aj:x=>`${x} de cada 100 ajustado¹`,
+  wm_leg_c:"Con la condición", wm_leg_r:"Referencia (con documento, smartphone o internet)",
+  wm_ayuda:" de los adultos sin cuenta declara que no podría usarla sin ayuda (58 economías). La barrera no es sólo documental: también es tecnológica y de competencias.",
+  wm_b:"Calcular con estos datos", wm_lim:"¹ Ajustado por edad, sexo, educación, ingreso, empleo, ruralidad y país. Asociaciones, no efectos causales. En España la encuesta tiene 1.000 entrevistas y sólo 31 personas sin documento: no permite conclusiones para España; para eso hacen falta los registros de las entidades.",
+  es_nav:"España", es_h:"Contexto en España: barreras que también afectan a personas con DNI", es_note:"Dos datos oficiales de contexto, no una evaluación con la herramienta: son cifras agregadas, sin los tamaños de muestra que permitirían calcular intervalos, y no miden intentos de alta sino el uso de la banca por internet y el acceso presencial. Muestran a quién puede dejar fuera un alta que sólo funciona por app o sólo en oficina.",
+  es_dis_t:"Banca por internet según discapacidad (2024)", es_dis_r:"77,8 % sin limitación de actividad", es_dis_p:"51,8 % con limitación grave", es_dis_v:"67 de cada 100 · entre 55 y 74 años: 44,3 % frente a 67,3 %",
+  es_geo_t:"Municipios sin acceso presencial a servicios bancarios (finales de 2024)", es_geo_1:"municipios, el 32,4 % del total", es_geo_2:"personas viven en ellos",
+  h_k:"Cuando alguien no consigue abrir una cuenta, casi nunca queda registro. Y lo que no se registra, no se puede corregir.",
+  h_de:"de 100", h_ref:"personas con DNI y sin incidencias consiguen la cuenta.", h_per:"con un documento válido que la app no reconoce (en el ejemplo, el de solicitante de protección internacional) consiguen la cuenta.",
+  h_gap:"se quedan fuera. No reciben una negativa formal, no generan historial y el modelo de crédito nunca las verá. Esta herramienta las cuenta.",
+  h_ilus:"Cifras ilustrativas del ejemplo; con los registros de una entidad, la herramienta calcula las suyas.",
+  gna_h:"Qué es la gobernanza del no acceso",
+  gna_1:"Es mapear la exclusión que ni siquiera llega a registrarse. Por ejemplo:",
+  gna_e1:"El abuelo con DNI y un móvil antiguo: la cámara no enfoca el documento, lo intenta dos veces y no vuelve a probar.",
+  gna_e2:"La persona con movilidad reducida, o que vive en un pueblo sin sucursal: el alta exige un paso presencial y no va.",
+  gna_e3:"La solicitante de asilo: la app no ofrece su documento entre las opciones y en la oficina le dicen «no» de palabra.",
+  gna_2:"Ninguna recibe una negativa por escrito y ninguna aparece en las estadísticas. Gobernar el no acceso es registrar cada intento —también los fallidos y los abandonos—, su causa y lo que hizo la entidad, para que esa ausencia se convierta en evidencia que se puede revisar, explicar y corregir.",
+  gna_3:"Y quien ni siquiera llega a intentarlo no aparece en ningún registro de una entidad: para verlo hacen falta encuestas, como Global Findex del Banco Mundial, o la experiencia de las organizaciones que acompañan a estas personas.",
+  de100:x=>`${x} de cada 100`,
+  simple:"<b>Cómo se mide.</b> Se sigue a cada perfil por las cuatro etapas y se compara, en cada una, con el perfil de referencia. Así se ve en qué etapa se pierde a las personas.",
+  s3_1:"Registre cada intento de alta, también los que fallan, o use los datos de ejemplo.", s3_2:"La herramienta cuenta quién se quedó fuera, dónde y por qué, y compara cada perfil con el de referencia.", s3_3:"Obtiene un informe del no acceso y de la evaluabilidad, listo para el supervisor o la evaluación de impacto.",
+  more_rep:"Ver más detalle: embudo completo, trazabilidad y dónde incorporar cada resultado", more_cc:"Ver causas del no acceso y acceso por canal", leer_mas:"Leer más: de dónde salen los datos y qué mide", inf_comp:"Ver el informe completo: quién se quedó fuera, en qué etapa y quién ni siquiera lo intenta", adv:"Opciones avanzadas: umbral de revisión y mínimo de casos",
+  vf_nav:"Verificar", vf_h:"Verificar en 3 minutos", vf_note:"Cinco comprobaciones para que cualquier lector confirme, sin programar, que las cifras del ensayo salen de esta herramienta. Debajo de cada una, el resultado esperado.",
+  vf1_t:"Un archivo que se puede contar a mano", vf1:" 200 intentos de alta (100 con documento estándar y 100 con documento de protección internacional). Descárguelo en «Plantillas y recursos» para abrirlo en Excel, o calcúlelo aquí:", vf1_b:"Calcular con el archivo de verificación",
+  vf1_e:"En Excel, filtre perfil_entrada y resultado = alta_completada: 96 de 100 y 43 de 100. R₁ = (43/100) / (96/100) = 0,45. La herramienta da 0,45 (IC 95 %: 0,36–0,56), señal clara.",
+  vf2_t:"El ejemplo del ensayo", vf2:" Pulse «Calcular con datos de ejemplo» (46.000 intentos sintéticos).", vf2_e:"Documento de protección internacional, 0,44 en el alta, y 0,60 al llegar al modelo para el perfil sin historial: las cifras de la figura 7 del ensayo.",
+  vf3_t:"Datos reales del Banco Mundial", vf3:" Global Findex 2025, la encuesta mundial del Banco Mundial: compara el acceso a una cuenta de los adultos con y sin documento de identidad en 123 economías.", vf3_e:"0,45 (45 de cada 100), señal clara en el alta, como en la sección 3.4 del ensayo. Comprueba que el método detecta una diferencia conocida en datos reales; no mide el no acceso de ningún banco.",
+  es2_h:"La herramienta con datos españoles reales y abiertos",
+  es2_note:"El método se validó con escenarios sintéticos de verdad conocida. Aquí se aplica a dos fuentes oficiales españolas, públicas y verificables: compara cada grupo con su referencia y marca si queda por debajo del umbral de revisión de 0,80. Son tablas publicadas, sin el tamaño de cada grupo, por lo que no hay intervalo de confianza: el resultado es descriptivo.",
+  b_ecf:"Banco de España · nacidos fuera de España (2021)", b_est:"Eurostat · banca por internet en España (2024)",
+  vf5_t:"Datos españoles reales (sin programar)", vf5:" Dos tablas oficiales españolas, del Banco de España y de Eurostat, calculadas con el mismo método.", vf5_b:"Ver los datos españoles",
+  ecf_h:"¿Dónde se pierde a quien nació fuera de España? Cuenta, crédito y quien ni siquiera lo pide",
+  ecf_lee:n=>`<b>Cómo leerlo.</b> Abrir una cuenta casi no marca diferencias (${n.cta} de cada 100 frente a la referencia). La brecha aparece después: en la tarjeta de crédito y en la hipoteca. Y antes de cualquier evaluación, quien nació fuera de España <b>deja de pedir crédito por miedo al rechazo ${n.miedo} veces más</b>: una exclusión que ningún modelo registra.`,
+  ecf_k:[["en la cuenta corriente","de cada 100 frente a nacidos en España"],["en la hipoteca","de cada 100 frente a nacidos en España"],["veces más: no pide crédito por miedo al rechazo","antes de cualquier evaluación"],["veces más: crédito rechazado","en los últimos dos años"]],
+  ecf_g1:"Acceso (cociente: nacidos fuera / nacidos en España; 1 = igualdad)", ecf_g2:"Exclusión antes y en la evaluación (veces más frecuente)",
+  ecf_th:["Indicador","Nacidos fuera","Nacidos en España","Cociente","Población comparable¹","Lectura"],
+  ecf_nota:"¹ Población comparable: grupos con características sociodemográficas similares, según el propio Banco de España. Fuente: Banco de España (2026), <i>Informe de Inclusión Financiera 2025</i>, cuadro 3.1, con datos de la Encuesta de Competencias Financieras 2021. https://doi.org/10.53479/43247",
+  est_h:"¿Quién no usa el canal digital? Banca por internet en España, 2024",
+  est_lee:n=>`<b>Cómo leerlo.</b> Si el alta es sólo digital, el canal deja fuera a quien no lo usa. En España, por cada 100 personas sin limitación de actividad que usan la banca por internet, la usan <b>${n.grave}</b> de quienes tienen una limitación grave; entre las personas de 55 a 74 años con limitación grave, <b>${n.comb}</b> de cada 100 frente a las de 25 a 54 sin limitación. Muchas tienen DNI: la barrera es el canal, no el documento.`,
+  est_k:[["con limitación grave","de cada 100 frente a sin limitación"],["55-74 años, sin limitación","de cada 100 frente a 25-54 años"],["55-74 años con limitación grave","de cada 100 frente a 25-54 sin limitación"]],
+  est_g1:"Uso de la banca por internet (cociente frente a la referencia; 1 = igualdad)",
+  est_th:["Grupo","España","Referencia","Cociente España","Cociente UE-27","Lectura"],
+  est_nota:"Porcentaje de personas de 16 a 74 años que usaron la banca por internet en los últimos 3 meses. Fuente: Eurostat, dsb_ictiu07, datos de 2024 (encuesta comunitaria sobre uso de TIC en los hogares; en España, la realiza el INE).",
+  lee_bajo:"Por debajo del umbral", lee_ok:"Por encima del umbral", lee_alto:"Más frecuente (por encima de 1,25)",
+  vf4_t:"Reproducción completa (opcional, con Python)", vexp:"Resultado esperado", vt1:"Datos contables · a mano", vt2:"Ejemplo sintético del ensayo", vt3:"Datos reales · Banco Mundial", vt4:"Datos reales · España", vt5:"Para quien programa", vf5_e:"Banco de España: cuenta corriente 0,95; hipoteca 0,61; 2,6 veces más personas nacidas fuera de España no piden crédito por miedo al rechazo. Eurostat: banca por internet 0,67 con limitación grave; 0,52 entre las personas de 55 a 74 años con limitación grave.", vf4:" En el repositorio: <code>pip install -r requirements.txt</code> y <code>pytest kit/tests</code>.", vf4_e:"21 pruebas superadas, incluida la que comprueba el archivo de 200 intentos.",
+  rec_ver:"Archivo de verificación: 200 intentos (CSV)", r_ver:"Archivo de verificación · 200 intentos contables a mano",
+  ver_label:"Archivo de verificación · 200 intentos (100 por perfil) · contable a mano en una hoja de cálculo",
+  regla_vis:"<b>Cuándo hay una señal:</b> cuando, de cada 100 personas del perfil de referencia que pasan una etapa, la pasan menos de 80 del perfil analizado y la diferencia es estadísticamente clara (con al menos 100 intentos). En el ejemplo, la pérdida está en el alta (45 de cada 100), mientras que entre los evaluados la aprobación es igual (≈ 100 de cada 100): el modelo trata igual a quien llega, pero muchos no llegan. Detalle estadístico en «Método».",
+  etapas:["Intentan abrir una cuenta","Consiguen la cuenta","Llegan al modelo de crédito","Obtienen crédito"],
+  fq:["¿Consiguen la cuenta?","Con cuenta, ¿llegan al modelo?","Evaluados, ¿se les aprueba?"],
+  leg_ref:"Perfil de referencia (DNI, sin incidencias)", leg_per:"Perfil analizado (en el ejemplo, documento de protección internacional)", ex_note:"Cifras ilustrativas por cada 100 intentos",
+  ve_metodo:"Lo que mide este método: todas las etapas", ve_audit:"Lo que ve una auditoría del modelo",
+  quien_h:"Quién puede quedarse fuera", quien_note:"La exclusión antes del modelo no es sólo un problema de documentos. Muchas de estas personas son españolas, tienen DNI y son solventes: lo que falla es lo que el canal presupone. Cada intento se registra con su condición de entrada, nunca con la nacionalidad, la edad o un diagnóstico.",
+  g_doc:"Documentación", g_tec:"Tecnología y competencias digitales", g_acc:"Accesibilidad", g_ter:"Territorio y domicilio", g_dat:"Datos e historial", con_dni:"también con DNI",
+  g_nota:"% de intentos que terminan sin cuenta. Barra azul y línea discontinua: perfil de referencia.",
+  blq_a:"A · El no acceso: quién se quedó fuera y qué se hizo", blq_b:"B · La evaluabilidad: ¿llegan al modelo de crédito en igualdad de condiciones?",
+  rna:"Resumen del no acceso", rna_note:"Por perfil de entrada: cuántos intentos terminaron sin cuenta, en qué canal se pierde más, por qué y cómo respondió la entidad. La primera fila es el perfil de referencia, para comparar.",
+  rna_norma:"Negativa por escrito: exigida para la cuenta de pago básica (Directiva 2014/92/UE, art. 16.7; RDL 19/2017). Alternativa antes del rechazo: EBA/GL/2023/04. Recuperados: de los intentos que fallaron en el alta ordinaria, % que obtuvo cuenta por otra vía.",
+  na_int:"Intentos", na_sin:"Sin cuenta", na_canal:"Canal con menos acceso", na_causa:"Causa principal", na_acc:"acceso", na_ref:"referencia",
+  met_h:"Método", met_note:"Cada etapa se mide sobre quienes superaron la anterior, para localizar dónde aparece la primera diferencia sin arrastrar las pérdidas previas. Un cociente igual a 1 indica igualdad con el perfil de referencia.",
+  st_1:"Etapa 1 · Alta", st_2:"Etapa 2 · Llegada al modelo", st_3:"Etapa 3 · Decisión",
+  q_1:"¿Consigue la cuenta?", q_2:"Con cuenta, ¿llega a ser evaluado?", q_3:"Entre evaluados, ¿misma aprobación?",
+  vars:"<i>n</i>: intentos de alta · <i>a</i>: con cuenta · <i>e</i>: evaluados por el modelo · <i>c</i>: obtienen crédito · subíndice <i>p</i>: perfil de entrada · <i>r</i>: perfil de referencia (documento estándar).",
+  rule_h:"Regla de señal", rule:"«Señal clara» si <i>R</i> &lt; <i>u</i> (umbral de revisión, 0,80 por defecto), el límite superior del IC 95 % es inferior a 1 y la base de la etapa es de al menos <i>n</i><sub>mín</sub> casos (100 por defecto). «A confirmar» si <i>R</i> &lt; <i>u</i> sin cumplir las otras dos condiciones.",
+  ci_h:"Intervalo de confianza", ci_d:"Método logarítmico de Katz para el cociente de proporciones (idéntico a <code>scipy.stats.contingency.relative_risk</code>); <i>x</i>: éxitos y <i>m</i>: base de la etapa. Con <i>x</i><sub>p</sub> = 0 se aplica la corrección de Haldane-Anscombe.",
+  acc_h:"Vistas acumuladas", acc:"Evaluabilidad = <i>e</i>/<i>n</i> y acceso efectivo = <i>c</i>/<i>n</i>. Resumen el efecto total y alimentan las conclusiones; no se usan para localizar la etapa.",
+  val_h:"Validación", val:"Por simulación, el IC 95 % cubre el valor real en el 94-95 % de los casos y las falsas alarmas son del 0,35 % con 300 intentos (1,5 % con 100). En escenarios con verdad conocida, detecta el 99-100 % de las pérdidas previas al modelo y localiza la etapa correcta en al menos el 94 %; una auditoría de equidad del modelo, que por construcción sólo ve a los evaluados, no las detecta. Ambos controles son complementarios (ensayo, tabla 12 y tabla C.3 del anexo C).",
+  priv_h:"Privacidad",
+  cite_h:"Cómo citar", cite_txt:"Sánchez Villa, M. F. (2026). <i>Evaluabilidad: medir el no acceso antes del modelo de crédito</i> (versión 0.4, prueba de concepto) [software]. Licencia Apache 2.0.",
+  cite_n:"Prueba de concepto validada con datos sintéticos de verdad conocida y aplicada a microdatos públicos de encuesta y a tablas oficiales españolas; pendiente de validación con registros de una entidad. Mide asociaciones agregadas, no causas ni discriminación. Código abierto (Apache 2.0).",
   sub:"Auditoría abierta del acceso antes del modelo de crédito",
   nav_perf:"Perfiles", nav_como:"Cómo funciona", nav_plant:"Plantillas", nav_cod:"Código (GitHub)",
-  eyebrow:"AI &amp; Data Governance · Banking", h1:"Antes de auditar el modelo, audite quién llega a él",
+  eyebrow:"AI &amp; Data Governance · Banking", h1:"Antes de auditar el modelo,<br><b>audite quién llega a él</b>",
   lead:"Las pruebas de equidad miden cómo trata el modelo a quienes evalúa. Esta herramienta mide a quienes se quedaron antes: por su documento, su domicilio o por cómo se verifica su identidad. Y le indica en qué etapa aparece la primera diferencia: en el alta, al llegar al modelo o en la decisión.",
-  compat_k:"Funciona con cualquier sistema de decisión", compat_1:"Reglas de software", compat_2:"Scorecards", compat_3:"Decisión humana", compat_4:"Inteligencia artificial", compat_h:"Analiza resultados, no el funcionamiento interno. Puede aplicarse a registros históricos siempre que existan registros comparables de cada etapa (intento, cuenta, evaluación y decisión) enlazados por un identificador.",
+  compat_k:"Ámbito de aplicación", compat_1:"Reglas de software", compat_2:"Scorecards", compat_3:"Decisión humana", compat_4:"Inteligencia artificial", compat_h:"Cualquier sistema de decisión (reglas de software, scorecards, decisión humana o inteligencia artificial): analiza resultados, no el funcionamiento interno. Puede aplicarse a registros históricos siempre que existan registros comparables de cada etapa (intento, cuenta, evaluación y decisión) enlazados por un identificador.",
   oss_t:"Código abierto · Apache 2.0", oss_p:"Puede consultar el código para replicarlo o adaptarlo a las necesidades de su institución.", oss_b:"Ver el código en GitHub →",
-  b_demo:"Ver ejemplo", b_load:"Analizar mis datos", b_print:"Guardar informe en PDF", b_run:"Calcular",
-  privacy:"<b>Los datos no salen de su navegador.</b> Los cálculos se hacen en su equipo: la página no envía ni guarda los archivos y no carga recursos de terceros (ni fuentes, ni analítica, ni cookies). Puede descargarla y usarla sin conexión. El registro no debe contener nombres, números de documento, nacionalidad ni edad.",
+  b_demo:"Calcular con datos de ejemplo", b_load:"Calcular con mis datos", b_print:"Exportar informe (PDF)", b_run:"Calcular",
+  privacy:"Los datos no salen de su navegador. Los cálculos se hacen en su equipo: la página no envía ni guarda los archivos y no carga recursos de terceros (ni fuentes, ni analítica, ni cookies). Puede descargarla y usarla sin conexión. El registro no debe contener nombres, números de documento, nacionalidad ni edad.",
   perf_h:"Perfiles de entrada",
   perf_note:"Situaciones en las que un proceso de alta puede no reconocer bien a una persona. Cada intento de alta se registra con un perfil (el primero que el proceso detecta) y cada perfil se compara con el de referencia. Un perfil describe la credencial o la situación, no a la persona.",
   perf_c1:"Perfil de entrada", perf_c2:"Por qué el alta puede fallar", perf_c3:"Ejemplo",
-  como_h:"Cómo funciona",
+  como_h:"Datos y parámetros",
+  band_t:"Lo que el modelo <b>no ve</b>", band_l:"Tres datos del ensayo que dan origen a esta herramienta.",
+  s1v:"0,45", s1t:"Acceso a una cuenta de quienes no tienen documento de identidad frente a quienes lo tienen, en 123 economías.", s1s:"Global Findex 2025 (Banco Mundial) · cálculo propio",
+  s2v:"&lt; 1 %", s2t:"Pérdidas previas al modelo visibles para una auditoría de equidad del modelo, que por construcción sólo ve a los evaluados. Esta herramienta las detecta en el 99-100 % de los escenarios.", s2s:"Simulación con verdad conocida",
+  s3v:"0 de 11", s3t:"Entidades en España que mencionan el documento de solicitante de protección internacional entre los admitidos para abrir una cuenta por internet, de las 11 que publican esos requisitos. En oficina, 5 de 15 publican que lo admiten.", s3s:"Revisión documental propia de 15 entidades · información pública, septiembre de 2026",
+  ilu:"Ilustración: mano sosteniendo una tarjeta genérica de ejemplo", ilu_card:"TARJETA DE EJEMPLO",
   como_note:"Funciona con los datos que la entidad ya tiene y mejora a medida que registra más. Hoy, cuando alguien intenta abrir una cuenta y no lo logra, casi nunca queda registro: no hay solicitud, ni negativa escrita, ni causa. Registrar, clasificar, explicar y revisar esos casos es lo que el ensayo llama <b>gobernanza del no acceso</b>.",
   st1:"<b>Registrar cada intento de alta</b>Canal, perfil de entrada y resultado. Si no hubo cuenta, una de 9 causas normalizadas (modo completo).",
   st2:"<b>Añadir las decisiones de crédito</b>Opcional: identificador del intento y si se aprobó. Sin ellas, se analiza sólo el acceso a la cuenta (modo básico).",
   st3:"<b>Cargar los archivos</b>El informe compara cada perfil con el de referencia en cada etapa (alta, llegada al modelo y decisión), medida sobre quienes superaron la anterior, y señala la primera etapa con señal.",
-  st4:"<b>Anexar el informe</b>A la DPIA (RGPD art. 35), la FRIA (Reglamento de IA art. 27) o la vigilancia del art. 72.",
-  up_altas:"Intentos de alta (CSV, obligatorio)", up_cred:"Decisiones de crédito (CSV, opcional)",
+  st4:"<b>Anexar el informe</b>A la DPIA (RGPD art. 35), la FRIA (Reglamento de IA art. 27) o la supervisión del art. 26.5 (y, a través del proveedor, la vigilancia del art. 72).",
+  up_altas:"Intentos de alta (CSV, obligatorio)", up_cred:"Decisiones de crédito (CSV, opcional)", up_rep:"Representación frente a la población (CSV agregado, opcional: grupo, intentos_grupo, intentos_total, poblacion_pct)",
+  blq_c:"C · Quién ni siquiera lo intenta: representación frente a la población", blq_c_note:"El registro sólo ve a quien empieza el alta. Para acercarse a quien no lo intenta —la persona mayor que no se anima con la app, quien vive lejos de una oficina— se compara quién intenta abrir una cuenta con quién vive en el área que atiende la entidad.",
+  rep_h:"Representación de cada grupo entre quienes intentan abrir una cuenta", rep_note:"Representación = proporción del grupo en los intentos / proporción del grupo en la población adulta del área de servicio (padrón del INE u otra fuente oficial). 1 indica que el grupo lo intenta en la misma proporción en que está en la población; por debajo de 0,80, la herramienta lo señala con la misma regla que el resto del informe.",
+  rep_none:"No hay datos de representación para esta fuente. Para calcularla, suba un CSV agregado con grupo, intentos_grupo, intentos_total y poblacion_pct.",
+  rep_lim:"Es una señal, no una prueba: que un grupo lo intente menos puede deberse a menor demanda del producto y no a que el canal lo disuada. Si sólo se conoce la composición de las altas, el cociente mezcla el no intento y el no acceso. Los datos por grupo se usan sólo en agregado y con base jurídica propia. En el ejemplo, las cifras son ilustrativas.",
+  rep_th:["Grupo","En la población","En los intentos","Representación [IC 95 %]","Señal"], rep_de:n=>`${n} de cada 100 esperados`,
   umbral_l:"Umbral de revisión del cociente", nmin_l:"Casos mínimos para «señal clara»",
   umbral_n:"Por defecto 0,80 (la referencia convencional de «cuatro quintos»). Es una regla práctica de revisión, no un criterio jurídico: ajústela a su política de riesgos.",
   r1:"Conclusiones", r2:"En qué etapa aparece la diferencia",
   r2_note:"Cada etapa se mide sobre quienes superaron la anterior, para no arrastrar pérdidas previas. Cociente = tasa del perfil / tasa del perfil de referencia (1 = igualdad). La barra muestra el intervalo de confianza del 95 %; la línea discontinua, el umbral de revisión.",
   r3:"Acceso por canal", r3_note:"% de intentos que terminan con cuenta. Cuanto más oscuro, mayor acceso.",
   r4:"Embudo por perfil", r4_note:"Las tres primeras columnas, % de quienes intentaron el alta; las dos últimas, % de quienes superaron la etapa anterior.",
-  r5:"Trazabilidad y proporcionalidad", r5_note:"Negativas escritas: RDL 19/2017, art. 5. Alternativa antes del rechazo: EBA/GL/2023/04. Una reversión alta tras revisión humana indica falsos negativos del proceso.",
+  r5:"Trazabilidad y proporcionalidad", r5_note:"Recuperación tras fallo: de los intentos que no terminaron en un alta ordinaria, % que obtuvo cuenta por una vía alternativa; que la tecnología falle es inevitable, la señal es que no haya una vía para recuperar a la persona. Negativas escritas: RDL 19/2017, art. 5. Alternativa antes del rechazo: EBA/GL/2023/04. Una reversión alta tras revisión humana indica falsos negativos del proceso.",
   r6:"Causas de no acceso", r6_note:"% de los casos sin acceso de cada perfil.",
   r7:"Dónde incorporar cada resultado",
   reg:[["Resultado","Dónde se incorpora"],
@@ -307,27 +672,32 @@ es:{
   v_down:"Descargar", v_copy:"Copiar", v_close:"Cerrar",
   pl_codes:"Valores de <code>perfil_entrada</code>:", pl_causes:"Causas normalizadas (<code>causa_no_acceso</code>):",
   pl_repo:"Código fuente, versión en Python y documentación:", pl_repo_a:"repositorio en GitHub",
-  foot1:"Evaluability v0.3 · AI & Data Governance · Banking · Prototipo probado con datos sintéticos, pendiente de validación con datos de una entidad · Código abierto (Apache 2.0)",
+  foot1:"Evaluabilidad v0.4 · Prueba de concepto · Código abierto (Apache 2.0)",
   foot2:"Fernanda S. Villa, 2026 · Parte del ensayo <i>Gobernar antes del algoritmo</i>",
-  causas:{documentacion_insuficiente:"Documentación insuficiente",documento_no_reconocido:"Documento no reconocido",informacion_aml_adicional:"Información AML adicional",alerta_escalada:"Alerta escalada",duplicidad:"Duplicidad",desistimiento:"Desistimiento",fallo_tecnico:"Fallo técnico o de verificación",derivacion_alternativa:"Derivación a alternativa",rechazo_definitivo:"Rechazo definitivo"},
-  canales:{app:"App",web:"Web",videollamada:"Videollamada",oficina:"Oficina",telefono:"Teléfono",intermediario:"Intermediario"},
+  causas:{documentacion_insuficiente:"Documentación insuficiente",documento_no_reconocido:"Documento no reconocido",informacion_aml_adicional:"Información adicional de PBC/FT",alerta_escalada:"Alerta escalada",duplicidad:"Duplicidad",desistimiento:"Desistimiento",fallo_tecnico:"Fallo técnico o de verificación",derivacion_alternativa:"Derivación a alternativa",rechazo_definitivo:"Rechazo definitivo"},
+  canales:{app:"App",web:"Web",videollamada:"Videollamada",oficina:"Oficina",telefono:"Teléfono",intermediario:"Intermediario",no_consta:"No consta"},
   sig:{clara:"Señal clara",confirmar:"A confirmar",sin:"Sin señal",nodata:"Sin datos"},
   donde:{alta:"En el alta",datos:"Al llegar al modelo",decision:"En la decisión",sin:"Sin señal"},
   vistas:{acceso_cuenta:"Alta: ¿consigue la cuenta?",llega_modelo:"Con cuenta: ¿llega al modelo?",aprobacion:"Entre evaluados: ¿diferencia en la aprobación?",evaluabilidad:"Evaluabilidad acumulada",acceso_efectivo:"Acceso efectivo"},
-  th_perfil:"Perfil", th_donde:"Etapas con señal", intentos:"intentos",
+  th_perfil:"Perfil", th_donde:"Etapas con señal", intentos:"intentos", personas:"personas encuestadas",
   th_cuenta:"Con cuenta", th_llega:"Llega al modelo", th_credito:"Obtiene crédito", th_llega_c:"Llega al modelo (de quienes tienen cuenta)", th_apr_e:"Aprobados (de los evaluados)",
-  th_sin:"Sin acceso", th_escrita:"Negativa escrita", th_alt:"Alternativa", th_rev:"Revertidas",
-  fuente:"Fuente de datos:", modo_c:"Modo completo", modo_b:"Modo básico", con_c:"Con decisiones de crédito", sin_c:"Sin decisiones de crédito", umbral:"Umbral",
-  demo_label:"Datos de ejemplo · 40.000 intentos sintéticos con siete perfiles · no corresponden a ninguna entidad",
+  th_sin:"Sin acceso", th_recup:"Recuperación tras fallo", th_escrita:"Negativa escrita", th_alt:"Alternativa", th_rev:"Revertidas",
+  fuente:"Fuente de datos:", modo_c:"Incluye causas de no acceso", modo_b:"Sólo resultado del alta", con_c:"Incluye decisiones de crédito", sin_c:"Sin decisiones de crédito", umbral:"Umbral de revisión",
+  wb_cite_h:"Fuente de los datos", wb_cite_n:"Para qué sirve: muestra el tamaño del problema en el mundo y comprueba que la herramienta detecta una diferencia conocida con datos reales. No mide el no acceso de ningún banco: una encuesta pregunta si la persona tiene cuenta, no si lo intentó ni qué le pasó. Datos de uso público del Banco Mundial. El archivo que usa esta página no contiene microdatos: se reconstruye con el número de personas encuestadas y la proporción ponderada con cuenta publicada en el repositorio (data/encuestas/findex2025_condiciones.csv). Con datos de encuesta sólo puede medirse la primera etapa, la tenencia de cuenta; las etapas de evaluación y decisión requieren registros de una entidad.", wb_fuente:"Cite los datos originales así:",
+  b_wb:"Calcular con datos del Banco Mundial", rec_wb:"Datos del Banco Mundial: Global Findex 2025 (CSV)",
+  r_wb:`Global Findex 2025 · ${FINDEX.economias} economías · ${FINDEX.n.toLocaleString("es-ES")} adultos · se muestran las 200 primeras filas`,
+  wb_label:`Banco Mundial, Global Findex 2025 · ${FINDEX.n.toLocaleString("es-ES")} adultos de ${FINDEX.economias} economías · referencia: con documento de identidad · con pesos muestrales, el ensayo obtiene ${FINDEX.r} (IC 95 %: ${FINDEX.lo}-${FINDEX.hi})`,
+  demo_label:"Datos de ejemplo · 46.000 intentos sintéticos con diez perfiles · no corresponden a ninguna entidad",
   tus:(a,c)=>`Sus datos · ${a}${c?" + "+c:""} · calculado localmente`,
   verbo_c:"obtienen crédito", verbo_b:"consiguen la cuenta",
-  concl:(n,verbo,x,lo,hi,d,extra)=>`<b>${n}.</b> Por cada 100 personas del perfil de referencia que ${verbo}, lo consiguen <b>${x}</b> de este perfil (IC 95 %: ${lo}–${hi}). Primera etapa con señal: <span class="where">${d}</span>.${extra}`,
-  extra_alta:" Entre los casos evaluados no se observa una disparidad agregada de aprobación, por lo que una auditoría limitada a la decisión no mostraría esta diferencia.",
+  concl:(n,verbo,x,lo,hi,d,extra)=>`Por cada 100 personas del perfil de referencia que ${verbo}, lo consiguen <b>${x}</b> de este perfil (IC 95 %: ${lo}–${hi}). Primera etapa con señal: <span class="where">${d}</span>.${extra}`,
+  extra_alta:"",
+  na_concl:(sp,sr,canal,causa,esc)=>`El ${sp} de sus intentos terminó sin cuenta (referencia: ${sr})${canal?`, con el menor acceso por ${canal.toLowerCase()}`:""}${causa?`, por «${causa}»`:""}; el ${esc} de las negativas consta por escrito. `,
   extra_datos:" Consigue la cuenta en proporción similar, pero una parte menor llega a ser evaluada.",
   extra_decision:" Se observa una diferencia de aprobación entre evaluados. Es descriptiva: puede reflejar diferencias de riesgo, variables del sistema o la selección previa, y requiere una revisión técnica del propio sistema.",
   no_ref:"No hay perfil de referencia («estandar»): no se pueden calcular comparaciones.",
   ok_all:u=>`Ningún perfil queda por debajo del umbral de ${u}.`,
-  leg:n=>`«Señal clara»: por debajo del umbral y diferencia estadísticamente clara. «A confirmar»: por debajo del umbral pero con incertidumbre o menos de ${n} casos. Las vistas acumuladas (evaluabilidad y acceso efectivo) se usan en las conclusiones, no para localizar la etapa.`,
+  leg:n=>`Una señal es un indicio que merece revisión, no una prueba de incumplimiento ni de discriminación. «Señal clara»: por debajo del umbral y diferencia estadísticamente clara. «A confirmar»: por debajo del umbral pero con incertidumbre o menos de ${n} casos. Las vistas acumuladas (evaluabilidad y acceso efectivo) se usan en las conclusiones, no para localizar la etapa.`,
   tip:(r,lo,hi,s)=>`Cociente ${r} · IC 95 %: ${lo}–${hi} · ${s}`,
   basico:"Modo básico: el registro no incluye causas de no acceso. Añada la columna <code>causa_no_acceso</code> para ver dónde y por qué se interrumpe el alta.",
   calidad:"Calidad de los datos:", calidad_ok:"Calidad de los datos: sin incidencias.",
@@ -349,38 +719,131 @@ es:{
   a_sincta:n=>`${n} decisiones de crédito corresponden a intentos sin cuenta y no se cuentan: revise el enlace entre registros.`,
   a_bool:n=>`${n} valores de «aprobado» no son verdadero/falso.`,
   r_tpl:"Plantilla de intentos de alta", r_tplc:"Plantilla de decisiones de crédito", r_schema:"Esquema del registro",
-  r_demo:"Datos de ejemplo (40.000 intentos sintéticos; se muestran las 200 primeras filas)",
+  r_demo:"Datos de ejemplo (46.000 intentos sintéticos; se muestran las 200 primeras filas)",
   d_ini:n=>`Descarga iniciada: ${n}. Si no aparece (algunas vistas previas bloquean las descargas), use «Copiar» o abra la página en su navegador.`,
   d_no:"Este entorno no permite descargas: use «Copiar».", c_ok:"Copiado al portapapeles.", c_no:"No se pudo copiar automáticamente: seleccione el texto del visor.",
   num:"es-ES"
 },
 en:{
-  title:"Evaluability · AI & Data Governance · Banking – Open Source", marca:"Evaluability",
+  title:"Evaluability · stage-wise access ratio calculator (proof of concept)", marca:"Evaluability",
+  pc_tag:"Evaluability v0.4 · Proof of concept · Replication material · Open source (Apache 2.0)",
+  sci_t:"At which step is each person lost? Measuring non-entry before the credit model, whether software, a person or an AI decides",
+  sci_s:"A method to measure, before the credit model, whether each entry profile reaches the account, the scoring and the decision on equal terms, and at which stage the first gap appears. It analyses outcomes, not the system’s internals: it works whether the decision is made by a software rule, a person at the branch or an AI model.",
+  sci_a:"M. F. Sánchez Villa (2026). Replication material for the essay <i>Gobernar antes del algoritmo</i> (Governing before the algorithm). Calculations run in your browser.",
+  blq_b_note:"<b>Evaluability</b> is the possibility of being scored at all. Creditworthiness assessment systems are high-risk (AI Act, Annex III, point 5(b)) and deployers must ensure input data are relevant and sufficiently representative (Arts. 10 and 26(4)). This part shows whether the population reaching the model has already been filtered.",
+  mas_concl:n=>`Show the other ${n} profiles with a signal`,
+  ciego:n=>`In ${n} of these profiles approval among those scored is similar to the reference: a credit-model audit would not see the difference.`,
+  clave_esc:(a,b)=>`<b>Written refusals:</b> only ${a} for non-standard profiles, against ${b} for the reference profile. For basic payment accounts, refusals must be given in writing, free of charge and with reasons, unless national security, public policy or anti-money-laundering rules prevent it (Directive 2014/92/EU, Art. 16(7)). In Spain that duty arises with a complete application (Royal Decree-law 19/2017, Art. 5): whoever is discouraged or gives up earlier receives nothing in writing, and only a log of every attempt makes them visible.`,
+  gna_4:"<b>Where does the data come from?</b> From the institution’s onboarding log: channel, entry profile — the condition the process detects, such as an unrecognised document, a failed verification or a request for help — outcome and reason. Nationality, age and diagnoses are not recorded, and results are shared only in aggregate (legal basis and minimisation: GDPR Arts. 6, 9 and 25; essay §7.5). The report is an internal improvement tool: it is shared with the supervisor only in aggregate and with at least 100 attempts per profile.",
+  cite_h_ens:"The essay", cite_ens:"Sánchez Villa, M. F. (2026). <i>Gobernar antes del algoritmo: IA, Data Governance y prevención de la exclusión financiera ante el nuevo marco regulatorio de la Unión Europea. De la trazabilidad del no acceso a la evaluabilidad algorítmica</i> [Governing before the algorithm]. Essay submitted to the 5th Federico Prades-IEBF Prize.", cite_h_sw:"The tool (software)", cite_intro:"References in APA style. Use “Copy citation” to paste them into your document.", ct_sw:"Software", ct_ds:"Dataset", cs_sw:"Evaluability · this tool", cs_wb:"World Bank · Global Findex 2025", cs_bde:"Banco de España · Financial Competences 2021", cs_est:"Eurostat · Internet banking 2024", b_copy:"Copy citation", cite_h_dat:"Dataset · World Bank", cite_h_bde:"Dataset · Banco de España", cite_h_est:"Dataset · Eurostat", disp:"Available at:",
+  wm_nav:"Real data", wm_h:"Test with real data: Global Findex 2025 (World Bank)",
+  wm_note:"The same logic, applied to the World Bank’s global financial inclusion survey. A survey does not log attempts, only whether a person has an account; so it measures the size of the problem, not any bank’s non-entry. Share of adults with an account at a financial institution, with and without each condition.",
+  wm_cond:{sin_documento:"No identity document",sin_telefono:"No mobile phone",sin_internet:"Does not use the internet",telefono_basico:"Basic phone only (no smartphone)"},
+  wm_eco:n=>`${n} economies`, wm_aj:x=>`${x} per 100 adjusted¹`,
+  wm_leg_c:"With the condition", wm_leg_r:"Reference (has a document, smartphone or internet)",
+  wm_ayuda:" of adults without an account say they could not use one without help (58 economies). The barrier is not only documentary: it is also technological and about skills.",
+  wm_b:"Calculate with this data", wm_lim:"¹ Adjusted for age, sex, education, income, employment, rurality and country. Associations, not causal effects. In Spain the survey has 1,000 interviews and only 31 people without a document: it does not support conclusions for Spain; that requires institutions’ records.",
+  es_nav:"Spain", es_h:"Context in Spain: barriers that also affect people with a national ID", es_note:"Two official context figures, not an evaluation with the tool: they are aggregates, without the sample sizes needed for confidence intervals, and they measure internet banking use and in-person access rather than onboarding attempts. They show who may be left out by onboarding that only works through an app or only at a branch.",
+  es_dis_t:"Internet banking by disability (2024)", es_dis_r:"77.8% with no activity limitation", es_dis_p:"51.8% with a severe limitation", es_dis_v:"67 per 100 · aged 55 to 74: 44.3% vs 67.3%",
+  es_geo_t:"Municipalities without in-person access to banking services (end of 2024)", es_geo_1:"municipalities, 32.4% of the total", es_geo_2:"people live in them",
+  h_k:"When someone fails to open an account, there is rarely any record. And what is not recorded cannot be fixed.",
+  h_de:"of 100", h_ref:"people with a national ID and no issues get the account.", h_per:"with a valid document the app does not recognise (in the example, an asylum-seeker document) get the account.",
+  h_gap:"are left out. They get no formal refusal, build no history, and the credit model will never see them. This tool counts them.",
+  h_ilus:"Illustrative figures from the example; with an institution’s records, the tool calculates its own.",
+  gna_h:"What non-entry governance means",
+  gna_1:"It means mapping the exclusion that never even gets recorded. For example:",
+  gna_e1:"The grandfather with a national ID and an old phone: the camera cannot focus on the document, he tries twice and gives up.",
+  gna_e2:"The person with reduced mobility, or living in a village without a branch: onboarding requires an in-person step and they do not go.",
+  gna_e3:"The asylum seeker: the app does not list her document, and at the branch she is told “no” verbally.",
+  gna_2:"None of them receives a written refusal and none appears in the statistics. Governing non-entry means logging every attempt — including failed and abandoned ones — its cause and what the institution did, so that this absence becomes evidence that can be reviewed, explained and corrected.",
+  gna_3:"And those who never even try appear in no institution’s records: seeing them requires surveys, such as the World Bank’s Global Findex, or the experience of the organisations that support these people.",
+  de100:x=>`${x} per 100`,
+  simple:"<b>How it is measured.</b> Each profile is followed through the four stages and compared, at each one, with the reference profile. This shows at which stage people are lost.",
+  s3_1:"Log every onboarding attempt, including failed ones, or use the example data.", s3_2:"The tool counts who was left out, where and why, and compares each profile with the reference profile.", s3_3:"You get a report on non-entry and evaluability, ready for the supervisor or the impact assessment.",
+  more_rep:"More detail: full funnel, traceability and where each result belongs", more_cc:"See reasons for non-entry and access by channel", leer_mas:"Read more: where the data come from and what it measures", inf_comp:"See the full report: who was left out, at which stage and who does not even try", adv:"Advanced options: review threshold and minimum number of cases",
+  vf_nav:"Verify", vf_h:"Verify in 3 minutes", vf_note:"Five checks so any reader can confirm, without coding, that the essay’s figures come from this tool. Under each one, the expected result.",
+  vf1_t:"A file you can count by hand", vf1:" 200 onboarding attempts (100 with a standard document and 100 with an international protection document). Download it from “Templates and resources” to open in Excel, or compute it here:", vf1_b:"Calculate with the verification file",
+  vf1_e:"In Excel, filter perfil_entrada and resultado = alta_completada: 96 of 100 and 43 of 100. R₁ = (43/100) / (96/100) = 0.45. The tool gives 0.45 (95% CI 0.36–0.56), clear signal.",
+  vf2_t:"The essay’s example", vf2:" Click “Calculate with example data” (46,000 synthetic attempts).", vf2_e:"International protection document, 0.44 at onboarding, and 0.60 on reaching the model for the no-history profile: the figures in the essay’s Figure 7.",
+  vf3_t:"Real World Bank data", vf3:" Global Findex 2025, the World Bank’s global survey: it compares account ownership of adults with and without an identity document across 123 economies.", vf3_e:"0.45 (45 per 100), clear signal at onboarding, as in section 3.4 of the essay. It checks that the method detects a known gap in real data; it does not measure any bank’s non-entry.",
+  es2_h:"The tool on real, open Spanish data",
+  es2_note:"The method was validated with known-truth synthetic scenarios. Here it is applied to two official, public and verifiable Spanish sources: each group is compared with its reference and flagged if it falls below the 0.80 review threshold. These are published tables without group sizes, so there is no confidence interval: the result is descriptive.",
+  b_ecf:"Banco de España · people born abroad (2021)", b_est:"Eurostat · internet banking in Spain (2024)",
+  vf5_t:"Real Spanish data (no coding)", vf5:" Two official Spanish tables, from Banco de España and Eurostat, computed with the same method.", vf5_b:"See the Spanish data",
+  ecf_h:"Where are people born abroad lost? Account, credit and those who do not even apply",
+  ecf_lee:n=>`<b>How to read it.</b> Opening an account barely differs (${n.cta} per 100 relative to the reference). The gap appears later: credit cards and mortgages. And before any assessment, people born abroad <b>refrain from applying for credit for fear of rejection ${n.miedo} times as often</b>: an exclusion no model records.`,
+  ecf_k:[["current account","per 100 relative to people born in Spain"],["mortgage","per 100 relative to people born in Spain"],["times as often: does not apply for fear of rejection","before any assessment"],["times as often: credit rejected","in the last two years"]],
+  ecf_g1:"Access (ratio: born abroad / born in Spain; 1 = parity)", ecf_g2:"Exclusion before and at assessment (times as frequent)",
+  ecf_th:["Indicator","Born abroad","Born in Spain","Ratio","Comparable population¹","Reading"],
+  ecf_nota:"¹ Comparable population: groups with similar socio-demographic characteristics, as defined by Banco de España. Source: Banco de España (2026), <i>Informe de Inclusión Financiera 2025</i>, table 3.1, based on the 2021 Survey of Financial Competences. https://doi.org/10.53479/43247",
+  est_h:"Who does not use the digital channel? Internet banking in Spain, 2024",
+  est_lee:n=>`<b>How to read it.</b> If onboarding is digital-only, the channel leaves out those who do not use it. In Spain, for every 100 people with no activity limitation who use internet banking, <b>${n.grave}</b> of those severely limited do; among people aged 55-74 who are severely limited, <b>${n.comb}</b> per 100 relative to those aged 25-54 with no limitation. Many hold a national ID: the barrier is the channel, not the document.`,
+  est_k:[["severely limited","per 100 relative to not limited"],["aged 55-74, not limited","per 100 relative to aged 25-54"],["aged 55-74, severely limited","per 100 relative to 25-54 not limited"]],
+  est_g1:"Use of internet banking (ratio to the reference; 1 = parity)",
+  est_th:["Group","Spain","Reference","Ratio Spain","Ratio EU-27","Reading"],
+  est_nota:"Share of people aged 16-74 who used internet banking in the last 3 months. Source: Eurostat, dsb_ictiu07, 2024 data (EU survey on ICT usage in households; in Spain, carried out by INE).",
+  lee_bajo:"Below the threshold", lee_ok:"Above the threshold", lee_alto:"More frequent (above 1.25)",
+  vf4_t:"Full reproduction (optional, with Python)", vexp:"Expected result", vt1:"Countable data · by hand", vt2:"The essay’s synthetic example", vt3:"Real data · World Bank", vt4:"Real data · Spain", vt5:"For coders", vf5_e:"Banco de España: current account 0.95; mortgage 0.61; people born abroad refrain from applying for credit for fear of rejection 2.6 times as often. Eurostat: internet banking 0.67 for the severely limited; 0.52 for people aged 55-74 who are severely limited.", vf4:" In the repository: <code>pip install -r requirements.txt</code> and <code>pytest kit/tests</code>.", vf4_e:"21 tests passed, including the one that checks the 200-attempt file.",
+  rec_ver:"Verification file: 200 attempts (CSV)", r_ver:"Verification file · 200 attempts you can count by hand",
+  ver_label:"Verification file · 200 attempts (100 per profile) · countable by hand in a spreadsheet",
+  regla_vis:"<b>When there is a signal:</b> when, for every 100 people in the reference profile who pass a stage, fewer than 80 in the profile analysed do, and the difference is statistically clear (with at least 100 attempts). In the example, the loss is at onboarding (45 per 100), while among those scored approval is equal (≈ 100 per 100): the model treats those who arrive equally, but many never arrive. Statistical detail under “Method”.",
+  etapas:["Try to open an account","Get the account","Reach the credit model","Obtain credit"],
+  fq:["Do they get the account?","With an account, do they reach the model?","Once scored, are they approved?"],
+  leg_ref:"Reference profile (national ID, no issues)", leg_per:"Profile analysed (in the example, international protection document)", ex_note:"Illustrative figures per 100 attempts",
+  ve_metodo:"What this method measures: every stage", ve_audit:"What a model audit sees",
+  quien_h:"Who can be left out", quien_note:"Exclusion before the model is not only about documents. Many of these people are nationals, hold a national ID and are creditworthy: what fails is what the channel assumes. Each attempt is logged with its entry condition, never with nationality, age or a diagnosis.",
+  g_doc:"Documents", g_tec:"Technology and digital skills", g_acc:"Accessibility", g_ter:"Territory and address", g_dat:"Data and history", con_dni:"also with a national ID",
+  g_nota:"% of attempts that end without an account. Blue bar and dashed line: reference profile.",
+  blq_a:"A · Non-entry: who was left out and what was done", blq_b:"B · Evaluability: do they reach the credit model on equal terms?",
+  rna:"Non-entry summary", rna_note:"By entry profile: how many attempts ended without an account, which channel loses most, why, and how the institution responded. The first row is the reference profile, for comparison.",
+  rna_norma:"Written refusal: required for basic payment accounts (Directive 2014/92/EU, Art. 16(7)). Alternative before refusal: EBA/GL/2023/04. Recovered: of the attempts that failed standard onboarding, % that obtained an account another way.",
+  na_int:"Attempts", na_sin:"No account", na_canal:"Channel with least access", na_causa:"Main reason", na_acc:"access", na_ref:"reference",
+  met_h:"Method", met_note:"Each stage is measured among those who passed the previous one, so the first gap can be located without carrying earlier losses forward. A ratio of 1 means parity with the reference profile.",
+  st_1:"Stage 1 · Onboarding", st_2:"Stage 2 · Reaching the model", st_3:"Stage 3 · Decision",
+  q_1:"Does the person get the account?", q_2:"With an account, is the person scored?", q_3:"Among those scored, same approval?",
+  vars:"<i>n</i>: onboarding attempts · <i>a</i>: with account · <i>e</i>: scored by the model · <i>c</i>: obtain credit · subscript <i>p</i>: entry profile · <i>r</i>: reference profile (standard document).",
+  rule_h:"Signal rule", rule:"“Clear signal” if <i>R</i> &lt; <i>u</i> (review threshold, 0.80 by default), the upper bound of the 95% CI is below 1 and the stage base has at least <i>n</i><sub>min</sub> cases (100 by default). “To be confirmed” if <i>R</i> &lt; <i>u</i> without meeting the other two conditions.",
+  ci_h:"Confidence interval", ci_d:"Katz log method for the ratio of proportions (identical to <code>scipy.stats.contingency.relative_risk</code>); <i>x</i>: successes and <i>m</i>: stage base. With <i>x</i><sub>p</sub> = 0 the Haldane-Anscombe correction is applied.",
+  acc_h:"Cumulative views", acc:"Evaluability = <i>e</i>/<i>n</i> and effective access = <i>c</i>/<i>n</i>. They summarise the total effect and feed the findings; they are not used to locate the stage.",
+  val_h:"Validation", val:"By simulation, the 95% CI covers the true value in 94-95% of cases and false alarms are 0.35% with 300 attempts (1.5% with 100). In scenarios with known ground truth, it detects 99-100% of pre-model losses and locates the right stage in at least 94%; a model fairness audit, which by construction only sees those evaluated, does not detect them. The two controls are complementary (essay, Table 12 and Table C.3 in Annex C).",
+  priv_h:"Privacy",
+  cite_h:"How to cite", cite_txt:"Sánchez Villa, M. F. (2026). <i>Evaluability: measuring non-entry before the credit model</i> (version 0.4, proof of concept) [software]. Apache 2.0 licence.",
+  cite_n:"Proof of concept validated with known-truth synthetic data and applied to public survey microdata and official Spanish tables; pending validation with records from an institution. It measures aggregate associations, not causes or discrimination. Open source (Apache 2.0).",
   sub:"Open audit of access before the credit model",
   nav_perf:"Profiles", nav_como:"How it works", nav_plant:"Templates", nav_cod:"Code (GitHub)",
-  eyebrow:"AI &amp; Data Governance · Banking", h1:"Before auditing the model, audit who reaches it",
+  eyebrow:"AI &amp; Data Governance · Banking", h1:"Before auditing the model,<br><b>audit who reaches it</b>",
   lead:"Fairness tests measure how a model treats the people it scores. This tool measures those who were left out before: because of their document, their address or how their identity is verified. And it shows at which stage the first gap appears: at onboarding, on reaching the model or in the decision.",
-  compat_k:"Works with any decision system", compat_1:"Software rules", compat_2:"Scorecards", compat_3:"Human decisions", compat_4:"Artificial intelligence", compat_h:"It analyses outcomes, not internal workings. It can be applied to historical records provided comparable records exist for each stage (attempt, account, scoring and decision), linked by an identifier.",
+  compat_k:"Scope", compat_1:"Software rules", compat_2:"Scorecards", compat_3:"Human decisions", compat_4:"Artificial intelligence", compat_h:"Any decision system (software rules, scorecards, human decisions or artificial intelligence): it analyses outcomes, not internal workings. It can be applied to historical records provided comparable records exist for each stage (attempt, account, scoring and decision), linked by an identifier.",
   oss_t:"Open source · Apache 2.0", oss_p:"The code is available to replicate or adapt to your institution’s needs.", oss_b:"View the code on GitHub →",
-  b_demo:"See example", b_load:"Analyse my data", b_print:"Save report as PDF", b_run:"Calculate",
-  privacy:"<b>Your data never leaves your browser.</b> All calculations run on your device: the page neither sends nor stores your files and loads no third-party resources (no fonts, no analytics, no cookies). You can download it and use it offline. The log must not contain names, document numbers, nationality or age.",
+  b_demo:"Calculate with example data", b_load:"Calculate with my data", b_print:"Export report (PDF)", b_run:"Calculate",
+  privacy:"Your data never leaves your browser. All calculations run on your device: the page neither sends nor stores your files and loads no third-party resources (no fonts, no analytics, no cookies). You can download it and use it offline. The log must not contain names, document numbers, nationality or age.",
   perf_h:"Entry profiles",
   perf_note:"Situations in which an onboarding process may fail to recognise a person properly. Each onboarding attempt is logged with one profile (the first the process detects) and each profile is compared with the reference profile. A profile describes the credential or the situation, not the person.",
   perf_c1:"Entry profile", perf_c2:"Why onboarding may fail", perf_c3:"Example",
-  como_h:"How it works",
+  como_h:"Data and parameters",
+  band_t:"What the model <b>does not see</b>", band_l:"Three findings from the essay behind this tool.",
+  s1v:"0.45", s1t:"Account ownership of adults without an identity document relative to those with one, across 123 economies.", s1s:"Global Findex 2025 (World Bank) · own calculation",
+  s2v:"&lt; 1%", s2t:"Pre-model losses visible to a model fairness audit, which by construction only sees those evaluated. This tool detects them in 99-100% of scenarios.", s2s:"Simulation with known ground truth",
+  s3v:"0 of 11", s3t:"Institutions in Spain that list the international protection applicant document among those accepted to open an account online, out of the 11 that publish those requirements. In branches, 5 of 15 state that they accept it.", s3s:"Own documentary review of 15 institutions · public information, September 2026",
+  ilu:"Illustration: hand holding a generic example card", ilu_card:"EXAMPLE CARD",
   como_note:"It works with data the institution already holds and improves as more is logged. Today, when someone tries to open an account and fails, there is rarely any record: no application, no written refusal, no reason. Logging, classifying, explaining and reviewing those cases is what the essay calls <b>non-entry governance</b>.",
   st1:"<b>Log every onboarding attempt</b>Channel, entry profile and outcome. If no account was opened, one of 9 standardised causes (full mode).",
   st2:"<b>Add credit decisions</b>Optional: attempt ID and whether it was approved. Without them, only account access is analysed (basic mode).",
   st3:"<b>Load the files</b>The report compares each profile with the reference at each stage (onboarding, reaching the model and decision), measured among those who passed the previous one, and flags the first stage with a signal.",
-  st4:"<b>Annex the report</b>To the DPIA (GDPR Art. 35), the FRIA (AI Act Art. 27) or post-market monitoring (Art. 72).",
-  up_altas:"Onboarding attempts (CSV, required)", up_cred:"Credit decisions (CSV, optional)",
+  st4:"<b>Annex the report</b>To the DPIA (GDPR Art. 35), the FRIA (AI Act Art. 27) or monitoring under Art. 26(5) (and, through the provider, post-market monitoring under Art. 72).",
+  up_altas:"Onboarding attempts (CSV, required)", up_cred:"Credit decisions (CSV, optional)", up_rep:"Representation against the population (aggregate CSV, optional: grupo, intentos_grupo, intentos_total, poblacion_pct)",
+  blq_c:"C · Who does not even try: representation against the population", blq_c_note:"The log only sees those who start onboarding. To approach those who never try — the older person who gives up on the app, someone far from a branch — the tool compares who tries to open an account with who lives in the institution's service area.",
+  rep_h:"Representation of each group among those who try to open an account", rep_note:"Representation = group share among attempts / group share in the adult population of the service area (official census). 1 means the group tries in the same proportion as it is in the population; below 0.80 the tool flags it with the same rule as the rest of the report.",
+  rep_none:"No representation data for this source. Upload an aggregate CSV with grupo, intentos_grupo, intentos_total and poblacion_pct.",
+  rep_lim:"A signal, not proof: a group may try less because of lower demand, not because the channel deters it. If only the composition of opened accounts is known, the ratio mixes not trying and not getting in. Group data are used only in aggregate and with their own legal basis. In the example the figures are illustrative.",
+  rep_th:["Group","In the population","Among attempts","Representation [95% CI]","Signal"], rep_de:n=>`${n} per 100 expected`,
   umbral_l:"Ratio review threshold", nmin_l:"Minimum cases for “clear signal”",
   umbral_n:"Default 0.80 (the conventional “four-fifths” benchmark). It is a practical review rule, not a legal standard: adjust it to your risk policy.",
   r1:"Findings", r2:"At which stage the gap appears",
   r2_note:"Each stage is measured among those who passed the previous one, so earlier losses are not carried forward. Ratio = profile rate / reference profile rate (1 = parity). The bar shows the 95% confidence interval; the dashed line, the review threshold.",
   r3:"Access by channel", r3_note:"% of attempts that end with an account. Darker means higher access.",
   r4:"Funnel by profile", r4_note:"First three columns: % of those who attempted onboarding; last two: % of those who passed the previous stage.",
-  r5:"Traceability and proportionality", r5_note:"Written refusals: Directive 2014/92/EU Art. 16(7); Spain, RDL 19/2017 Art. 5. Alternative before refusal: EBA/GL/2023/04. A high reversal rate after human review signals false negatives in the process.",
+  r5:"Traceability and proportionality", r5_note:"Recovery after failure: of the attempts that did not end in a standard onboarding, % that obtained an account through an alternative route; technology failing is inevitable, the signal is when there is no route to recover the person. Written refusals: Directive 2014/92/EU Art. 16(7); Spain, RDL 19/2017 Art. 5. Alternative before refusal: EBA/GL/2023/04. A high reversal rate after human review signals false negatives in the process.",
   r6:"Causes of non-entry", r6_note:"% of each profile’s cases without access.",
   r7:"Where each result belongs",
   reg:[["Result","Where it belongs"],
@@ -399,27 +862,32 @@ en:{
   v_down:"Download", v_copy:"Copy", v_close:"Close",
   pl_codes:"Values of <code>perfil_entrada</code> (data codes stay in Spanish):", pl_causes:"Standardised causes (<code>causa_no_acceso</code>):",
   pl_repo:"Source code, Python version and documentation:", pl_repo_a:"GitHub repository",
-  foot1:"Evaluability v0.3 · AI & Data Governance · Banking · Prototype tested with synthetic data, pending validation with data from an institution · Open source (Apache 2.0)",
+  foot1:"Evaluability v0.4 · Proof of concept · Open source (Apache 2.0)",
   foot2:"Fernanda S. Villa, 2026 · Part of the essay <i>Gobernar antes del algoritmo</i> (Governing before the algorithm)",
   causas:{documentacion_insuficiente:"Insufficient documentation",documento_no_reconocido:"Document not recognised",informacion_aml_adicional:"Additional AML information",alerta_escalada:"Escalated alert",duplicidad:"Duplicate",desistimiento:"Abandoned",fallo_tecnico:"Technical or verification failure",derivacion_alternativa:"Referred to alternative",rechazo_definitivo:"Final refusal"},
-  canales:{app:"App",web:"Web",videollamada:"Video call",oficina:"Branch",telefono:"Phone",intermediario:"Intermediary"},
+  canales:{app:"App",web:"Web",videollamada:"Video call",oficina:"Branch",telefono:"Phone",intermediario:"Intermediary",no_consta:"Not recorded"},
   sig:{clara:"Clear signal",confirmar:"To be confirmed",sin:"No signal",nodata:"No data"},
   donde:{alta:"At onboarding",datos:"On reaching the model",decision:"In the decision",sin:"No signal"},
   vistas:{acceso_cuenta:"Onboarding: gets the account?",llega_modelo:"With account: reaches the model?",aprobacion:"Among those scored: approval gap?",evaluabilidad:"Cumulative evaluability",acceso_efectivo:"Effective access"},
-  th_perfil:"Profile", th_donde:"Stages with a signal", intentos:"attempts",
+  th_perfil:"Profile", th_donde:"Stages with a signal", intentos:"attempts", personas:"survey respondents",
   th_cuenta:"With account", th_llega:"Reaches the model", th_credito:"Obtains credit", th_llega_c:"Reaches the model (of those with an account)", th_apr_e:"Approved (of those scored)",
-  th_sin:"No access", th_escrita:"Written refusal", th_alt:"Alternative", th_rev:"Reversed",
-  fuente:"Data source:", modo_c:"Full mode", modo_b:"Basic mode", con_c:"With credit decisions", sin_c:"Without credit decisions", umbral:"Threshold",
-  demo_label:"Example data · 40,000 synthetic attempts with seven profiles · not from any institution",
+  th_sin:"No access", th_recup:"Recovery after failure", th_escrita:"Written refusal", th_alt:"Alternative", th_rev:"Reversed",
+  fuente:"Data source:", modo_c:"Includes reasons for non-entry", modo_b:"Onboarding outcome only", con_c:"Includes credit decisions", sin_c:"No credit decisions", umbral:"Review threshold",
+  wb_cite_h:"Data source", wb_cite_n:"What it is for: it shows the size of the problem worldwide and checks that the tool detects a known gap in real data. It does not measure any bank’s non-entry: a survey asks whether a person has an account, not whether they tried or what happened. Public-use data from the World Bank. The file used by this page contains no microdata: it is rebuilt from the number of respondents and the weighted share with an account published in the repository (data/encuestas/findex2025_condiciones.csv). Survey data can only measure the first stage, account ownership; the scoring and decision stages require an institution's records.", wb_fuente:"Cite the original data as:",
+  b_wb:"Calculate with World Bank data", rec_wb:"World Bank data: Global Findex 2025 (CSV)",
+  r_wb:`Global Findex 2025 · ${FINDEX.economias} economies · ${FINDEX.n.toLocaleString("en-GB")} adults · first 200 rows shown`,
+  wb_label:`World Bank, Global Findex 2025 · ${FINDEX.n.toLocaleString("en-GB")} adults in ${FINDEX.economias} economies · reference: has an identity document · with survey weights, the essay reports ${FINDEX.r_en} (95% CI ${FINDEX.lo_en}-${FINDEX.hi_en})`,
+  demo_label:"Example data · 46,000 synthetic attempts with ten profiles · not from any institution",
   tus:(a,c)=>`Your data · ${a}${c?" + "+c:""} · computed locally`,
   verbo_c:"obtain credit", verbo_b:"get the account",
-  concl:(n,verbo,x,lo,hi,d,extra)=>`<b>${n}.</b> For every 100 people in the reference profile who ${verbo}, <b>${x}</b> in this profile do (95% CI: ${lo}–${hi}). First stage with a signal: <span class="where">${d}</span>.${extra}`,
-  extra_alta:" No aggregate approval gap is observed among those scored, so an audit limited to the decision would not show this difference.",
+  concl:(n,verbo,x,lo,hi,d,extra)=>`For every 100 people in the reference profile who ${verbo}, <b>${x}</b> in this profile do (95% CI: ${lo}–${hi}). First stage with a signal: <span class="where">${d}</span>.${extra}`,
+  extra_alta:"",
+  na_concl:(sp,sr,canal,causa,esc)=>`${sp} of its attempts ended without an account (reference: ${sr})${canal?`, with the lowest access via ${canal.toLowerCase()}`:""}${causa?`, because of “${causa}”`:""}; ${esc} of refusals were in writing. `,
   extra_datos:" They get the account at a similar rate, but fewer of them reach scoring.",
   extra_decision:" An approval gap is observed among those scored. It is descriptive: it may reflect differences in risk, system variables or prior selection, and calls for a technical review of the system itself.",
   no_ref:"There is no reference profile (“estandar”): comparisons cannot be calculated.",
   ok_all:u=>`No profile falls below the ${u} threshold.`,
-  leg:n=>`“Clear signal”: below the threshold and a statistically clear difference. “To be confirmed”: below the threshold but uncertain or fewer than ${n} cases. Cumulative views (evaluability and effective access) feed the findings, not the stage location.`,
+  leg:n=>`A signal is an indication that deserves review, not proof of non-compliance or discrimination. “Clear signal”: below the threshold and a statistically clear difference. “To be confirmed”: below the threshold but uncertain or fewer than ${n} cases. Cumulative views (evaluability and effective access) feed the findings, not the stage location.`,
   tip:(r,lo,hi,s)=>`Ratio ${r} · 95% CI: ${lo}–${hi} · ${s}`,
   basico:"Basic mode: the log does not include causes of non-entry. Add the <code>causa_no_acceso</code> column to see where and why onboarding stops.",
   calidad:"Data quality:", calidad_ok:"Data quality: no issues.",
@@ -441,7 +909,7 @@ en:{
   a_sincta:n=>`${n} credit decisions belong to attempts without an account and are not counted: check how the records are linked.`,
   a_bool:n=>`${n} “aprobado” values are not true/false.`,
   r_tpl:"Onboarding attempts template", r_tplc:"Credit decisions template", r_schema:"Log schema",
-  r_demo:"Example data (40,000 synthetic attempts; first 200 rows shown)",
+  r_demo:"Example data (46,000 synthetic attempts; first 200 rows shown)",
   d_ini:n=>`Download started: ${n}. If it does not appear (some previews block downloads), use “Copy” or open the page in your browser.`,
   d_no:"This environment does not allow downloads: use “Copy”.", c_ok:"Copied to clipboard.", c_no:"Could not copy automatically: select the text in the viewer.",
   num:"en-GB"
@@ -449,7 +917,9 @@ en:{
 let L = "es";
 const t = k => T[L][k];
 const $ = id => document.getElementById(id);
-const nom = p => (PERFILES[L][p]||PERFILES.es[p]||[p])[0];
+// perfiles de los datos públicos de encuesta (no forman parte de la taxonomía del registro)
+const EXTRA = {es:{sin_documento_identidad:"Sin documento de identidad (Global Findex 2025)"}, en:{sin_documento_identidad:"No identity document (Global Findex 2025)"}};
+const nom = p => (EXTRA[L]&&EXTRA[L][p]) || (PERFILES[L][p]||PERFILES.es[p]||[p])[0];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const dec = s => L==="es" ? s.replace(".", ",") : s;
 const f2 = v => (v==null||isNaN(v)) ? "—" : dec(v.toFixed(2));
@@ -461,9 +931,13 @@ const isNull = v => v==null || String(v).trim()==="" || ["nan","none","null"].in
 // ---------- datos de ejemplo: mismo algoritmo (mulberry32) y parámetros que demo/generar_datos_demo.py
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
 function elegir(u, pares){let s=0; for(const [k,p] of pares){s+=p; if(u<s) return k;} return pares[pares.length-1][0];}
-function generarDemo(n=40000, semilla=2026){
+function generarDemo(){
+  const a=bloqueDemo(PARAM,40000,2026,0), b=bloqueDemo(PARAM_EXTRA,6000,2027,40000);   // igual que generar() en Python
+  return {altas:a.altas.concat(b.altas), cred:a.cred.concat(b.cred)};
+}
+function bloqueDemo(PARAM, n, semilla, inicio){
   const rnd=mulberry32(semilla), pesos=Object.entries(PARAM).map(([k,v])=>[k,v[0]]), altas=[], cred=[];
-  for(let i=0;i<n;i++){
+  for(let i=inicio;i<inicio+n;i++){
     const u=Array.from({length:13},()=>rnd()), perfil=elegir(u[0],pesos);
     const [,pDig,accD,accO,cauD,cauO,pAlt,pRev,pEsc,pEv,pAp]=PARAM[perfil];
     const digital=u[1]<pDig, canal=digital?(u[2]<.5?"app":"web"):"oficina", ok=u[3]<(digital?accD:accO);
@@ -478,6 +952,18 @@ function generarDemo(n=40000, semilla=2026){
     if(resultado!=="no_acceso" && u[11]<pEv) cred.push({id_intento:id,aprobado:u[12]<pAp});
   }
   return {altas,cred};
+}
+
+// ---------- datos públicos del Banco Mundial (Global Findex 2025), reconstruidos a partir de agregados
+// Una fila por persona encuestada en las economías que preguntan por el documento de identidad. El número de
+// personas es el real; la proporción con cuenta en cada grupo es la ponderada publicada (data/encuestas/
+// findex2025_condiciones.csv). No son microdatos: no contiene ninguna respuesta individual.
+function datosFindex(){
+  const altas=[]; let i=0;
+  const add=(perfil,n,acc)=>{ for(let k=0;k<n;k++) altas.push({id_intento:"F"+String(i++).padStart(6,"0"),fecha:"",canal:"no_consta",
+    producto:"",perfil_entrada:perfil,resultado:k<acc?"alta_completada":"no_acceso"}); };
+  add("estandar",FINDEX.n_ref,FINDEX.acc_ref); add("sin_documento_identidad",FINDEX.n_p,FINDEX.acc_p);
+  return altas;
 }
 
 // ---------- estadística (equivalente a evaluabilidad/metricas.py); resultados sin texto, el idioma se aplica al representar
@@ -523,7 +1009,7 @@ function calcular(altasIn, cred, umbral, nMin, erroresCsv=0){
   const presentes=new Set(altas.map(r=>r.perfil_entrada));
   const perfiles=[...Object.keys(PERFILES.es).filter(p=>presentes.has(p)), ...[...presentes].filter(p=>!(p in PERFILES.es)).sort()];
   if(!presentes.has(REF)) avisos.push(["a_noref"]);
-  const desc=[...presentes].filter(p=>!(p in PERFILES.es)); if(desc.length) avisos.push(["a_desc",desc.join(", ")]);
+  const desc=[...presentes].filter(p=>!(p in PERFILES.es)&&!(p in EXTRA.es)); if(desc.length) avisos.push(["a_desc",desc.join(", ")]);
   if(conCred){const ids=new Set(altas.map(r=>String(r.id_intento))); const h=[...ev].filter(i=>!ids.has(i)).length; if(h) avisos.push(["a_huerf",h]);}
   const canales=[...CANALES.filter(c=>altas.some(r=>r.canal===c)), ...[...new Set(altas.map(r=>r.canal))].filter(c=>!CANALES.includes(c))];
   const emb={}, traz={}, causas={}, canal={};
@@ -535,7 +1021,8 @@ function calcular(altasIn, cred, umbral, nMin, erroresCsv=0){
     const na=a.filter(r=>r.resultado==="no_acceso"), rev=a.filter(r=>bool(r.revision_humana));
     const sinC=completo?na.filter(r=>isNull(r.causa_no_acceso)).length:0; if(sinC) avisos.push(["a_sinc",sinC,p]);
     const has=c=>c in (a[0]||{});
-    traz[p]={noAcceso:na.length, escrita:has("negativa_escrita")&&na.length?na.filter(r=>bool(r.negativa_escrita)).length/na.length:NaN,
+    const fal=a.filter(r=>r.resultado==="no_acceso"||r.resultado==="alternativa_aceptada");
+    traz[p]={noAcceso:na.length, recup:fal.length?fal.filter(r=>r.resultado==="alternativa_aceptada").length/fal.length:NaN, escrita:has("negativa_escrita")&&na.length?na.filter(r=>bool(r.negativa_escrita)).length/na.length:NaN,
       alternativa:has("alternativa_ofrecida")&&na.length?na.filter(r=>bool(r.alternativa_ofrecida)).length/na.length:NaN,
       reversion:rev.length?rev.filter(r=>bool(r.revertida_tras_revision)).length/rev.length:NaN};
     if(completo){const nc=na.filter(r=>!isNull(r.causa_no_acceso)); causas[p]={}; for(const c of CAUSAS) causas[p][c]=nc.length?nc.filter(r=>r.causa_no_acceso===c).length/nc.length:0;}
@@ -568,27 +1055,99 @@ function heatColor(v){
   return stops[stops.length-1][1];
 }
 const heatCell = (v,title="") => { if(isNaN(v)) return `<td class="h">—</td>`; const [r,g,b]=heatColor(v);
-  return `<td class="h" style="background:rgb(${r},${g},${b});color:${v>.75?"#fff":"#101828"}"${title?` title="${esc(title)}"`:""}>${v>0?pct(v):"·"}</td>`; };
+  return `<td class="h" style="background:rgb(${r},${g},${b});color:${v>.75?"#fff":"#101828"}"${title?` title="${esc(title)}"`:""}>${pct(v)}</td>`; };
 
+function wilsonJS(x,n){ if(!n) return [NaN,NaN]; const z=1.959964, p=x/n, d=1+z*z/n, c=(p+z*z/(2*n))/d, h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d; return [Math.max(0,c-h), Math.min(1,c+h)]; }
+function calcRep(rows,u,nMin){ if(!rows||!rows.length) return null;
+  return rows.map(r=>{ const num=v=>parseFloat(String(v).replace(",",".")); const x=num(r.intentos_grupo), n=num(r.intentos_total); let pi=num(r.poblacion_pct); if(pi>1) pi=pi/100;
+    if(!(n>0)||!(pi>0)) return {g:r.grupo,p:NaN,pi,r:NaN,lo:NaN,hi:NaN,n,s:"nodata"};
+    const [lo,hi]=wilsonJS(x,n), rr=(x/n)/pi; return {g:r.grupo,p:x/n,pi,r:rr,lo:lo/pi,hi:hi/pi,n,s:senal(rr,hi/pi,n,u,nMin)}; }); }
+function repActual(){ if(FUENTE&&FUENTE.encuesta) return null; if(!FUENTE) return REP_DEMO; return FUENTE.rep||null; }
+function dibujarRep(R){
+  const rp=calcRep(repActual(),R.umbral,R.nMin);
+  if(!rp){ $("gRep").innerHTML=""; $("tRep").innerHTML=`<p class="small muted">${t("rep_none")}</p>`; return rp; }
+  const mx=Math.max(1.2,...rp.map(x=>isNaN(x.hi)?0:x.hi));
+  $("gRep").innerHTML=`<div class="hbar">`+rp.map(x=>`<div class="hrow"><span class="hl">${esc(x.g)}</span><span class="ht"><span class="hb" style="width:${(Math.min(x.r,mx)/mx*100).toFixed(1)}%;background:${SIGCOL[x.s]}"></span><span class="hr" style="left:${(1/mx*100).toFixed(1)}%"></span><span class="hr" style="left:${(R.umbral/mx*100).toFixed(1)}%;opacity:.45"></span></span><span class="hv">${f2(x.r)}</span></div>`).join("")+`</div>`;
+  const th=t("rep_th");
+  $("tRep").innerHTML=`<table><tr>${th.map(h=>`<th>${h}</th>`).join("")}</tr>`+rp.map(x=>`<tr><td>${esc(x.g)}</td><td>${pct(x.pi,1)}</td><td>${pct(x.p,1)}</td><td><b>${f2(x.r)}</b> <span class="ci">[${f2(x.lo)}–${f2(x.hi)}]</span><br><span class="small muted">${isNaN(x.r)?"":t("rep_de")(Math.round(x.r*100))}</span></td><td>${chip(x.s)}</td></tr>`).join("")+`</table>`;
+  return rp;
+}
+// ---------- datos españoles reales (tablas publicadas: cociente descriptivo, sin intervalo)
+let ESP_VISTA="ecf";
+function plotRatios(filas, umbral, maxX, inv){ // filas: [{l, r, tipo:'acc'|'neg'}]
+  const W=760, lh=30, top=26, H=top+filas.length*lh+30, x0=250, x1=W-40, sx=v=>x0+(Math.min(v,maxX)/maxX)*(x1-x0);
+  let g=`<line x1="${sx(1)}" y1="${top-10}" x2="${sx(1)}" y2="${H-26}" stroke="#101828" stroke-width="1.4"/><text x="${sx(1)}" y="${top-14}" font-size="11" text-anchor="${inv?"end":"start"}" dx="${inv?-4:4}" fill="#475467">${L==="es"?"1 = igualdad":"1 = parity"}</text>`;
+  const uu=inv?1/umbral:umbral;
+  if(umbral) g+=`<line x1="${sx(uu)}" y1="${top-10}" x2="${sx(uu)}" y2="${H-26}" stroke="#c2410c" stroke-dasharray="4 3"/><text x="${sx(uu)}" y="${top-14}" font-size="11" text-anchor="${inv?"start":"end"}" dx="${inv?4:-4}" fill="#c2410c">${f2(uu)}</text>`;
+  for(let k=0;k<=maxX+1e-9;k+= maxX>2?0.5:0.2){ g+=`<text x="${sx(k)}" y="${H-8}" font-size="11" text-anchor="middle" fill="#667085">${f2(k)}</text><line x1="${sx(k)}" y1="${H-26}" x2="${sx(k)}" y2="${H-22}" stroke="#98a2b3"/>`; }
+  filas.forEach((f,i)=>{ const y=top+i*lh+12, bajo=f.tipo==="acc"?f.r<umbral:f.r>1/umbral, c=bajo?"#c2410c":"#0f766e";
+    g+=`<text x="${x0-10}" y="${y+4}" font-size="12.5" text-anchor="end" fill="#101828">${esc(f.l)}</text><line x1="${sx(1)}" y1="${y}" x2="${sx(f.r)}" y2="${y}" stroke="${c}" stroke-width="2.4" opacity=".55"/>`+
+       (f.rc!=null?`<circle cx="${sx(f.rc)}" cy="${y}" r="5" fill="#fff" stroke="${c}" stroke-width="1.6"/>`:"")+
+       `<circle cx="${sx(f.r)}" cy="${y}" r="6.5" fill="${c}"/><text x="${sx(f.r)+(f.r>=1?10:-10)}" y="${y-8}" font-size="12" font-weight="700" text-anchor="${f.r>=1?"start":"end"}" fill="${c}">${f2(f.r)}${f.tipo==="neg"?"×":""}</text>`; });
+  return `<div class="esp-plot"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="cocientes">${g}</svg></div>`;
+}
+function lectura(r,tipo,u){ return (tipo==="acc"? (r<u?t("lee_bajo"):t("lee_ok")) : (r>1/u?t("lee_alto"):t("lee_ok"))); }
+function dibujarEspana(){
+  const u=0.8, num=v=>parseFloat(v), kp=(v,l,alto)=>`<div class="kpi${alto?" alto":""}"><div class="v">${v}</div><div class="kl">${l}</div></div>`;
+  $("bECF").setAttribute("aria-pressed",ESP_VISTA==="ecf"); $("bEST").setAttribute("aria-pressed",ESP_VISTA==="est");
+  if(ESP_VISTA==="ecf"){
+    const fila=n=>ES_ECF.find(r=>r.indicador.startsWith(n)), R=(n,c1,c0)=>num(fila(n)[c1])/num(fila(n)[c0]);
+    const acc=[["Cuenta corriente","Cuenta corriente"],["Tarjeta de crédito","Tarjeta de crédito"],["Hipoteca","Hipoteca"]].map(([k,l])=>({l, r:R(k,"inmigrante_total","nativo_total"), rc:R(k,"inmigrante_comparable","nativo_comparable"), tipo:"acc", k}));
+    const neg=[["% que no lo solicita","No pide crédito por miedo al rechazo"],["% de rechazados","Crédito rechazado (últimos 2 años)"]].map(([k,l])=>({l, r:R(k,"inmigrante_total","nativo_total"), rc:R(k,"inmigrante_comparable","nativo_comparable"), tipo:"neg", k}));
+    const k=t("ecf_k"), d1=v=>dec(v.toFixed(1));
+    const filasT=[...acc,...neg].map(f=>{const x=fila(f.k); return `<tr><td>${esc(f.l)}</td><td class="n">${dec(num(x.inmigrante_total).toFixed(1))} %</td><td class="n">${dec(num(x.nativo_total).toFixed(1))} %</td><td class="n"><b>${f2(f.r)}${f.tipo==="neg"?"×":""}</b></td><td class="n">${f2(f.rc)}${f.tipo==="neg"?"×":""}</td><td>${lectura(f.r,f.tipo,u)}</td></tr>`;});
+    $("espOut").innerHTML=`<h3>${t("ecf_h")}</h3><div class="kpis">${kp(Math.round(acc[0].r*100),k[0][0]+" · "+k[0][1])}${kp(Math.round(acc[2].r*100),k[1][0]+" · "+k[1][1],true)}${kp(d1(neg[0].r)+"×",k[2][0]+" · "+k[2][1],true)}${kp(d1(neg[1].r)+"×",k[3][0]+" · "+k[3][1],true)}</div>
+      <div class="esp-lee">${t("ecf_lee")({cta:Math.round(acc[0].r*100), miedo:d1(neg[0].r)})}</div>
+      <p class="small muted">${t("ecf_g1")}</p>${plotRatios(acc,u,1.2)}<p class="small muted">${t("ecf_g2")}</p>${plotRatios(neg,u,3.5,true)}
+      <p class="small muted">● ${L==="es"?"total":"total"} · ○ ${L==="es"?"población comparable":"comparable population"}</p>
+      <table class="esp-tab"><tr>${t("ecf_th").map(h=>`<th>${h}</th>`).join("")}</tr>${filasT.join("")}</table><p class="small muted">${t("ecf_nota")}</p>`;
+  } else {
+    const v=(geo,txt)=>{const r=ES_EST.find(r=>r.geo.startsWith(geo)&&r.ind_type===txt); return r&&r.OBS_VALUE!==""?num(r.OBS_VALUE):NaN;};
+    const D="Disability (activity limitation) - ", A=a=>`Individuals aged ${a} with disability (activity limitation) - `;
+    const comps=[
+      {l:L==="es"?"Limitación no grave":"Limited, not severely", g:D+"limited, but not severely", ref:D+"not limited at all"},
+      {l:L==="es"?"Limitación grave":"Severely limited", g:D+"severely limited", ref:D+"not limited at all"},
+      {l:L==="es"?"55-74 años, sin limitación":"Aged 55-74, not limited", g:A("55 to 74")+"not limited at all", ref:A("25 to 54")+"not limited at all"},
+      {l:L==="es"?"55-74 años, limitación grave":"Aged 55-74, severely limited", g:A("55 to 74")+"severely limited", ref:A("25 to 54")+"not limited at all"}];
+    const refL=c=>c.ref.startsWith("Individuals")?(L==="es"?"25-54 años, sin limitación":"Aged 25-54, not limited"):(L==="es"?"Sin limitación":"Not limited");
+    comps.forEach(c=>{c.es=v("Spain",c.g); c.esr=v("Spain",c.ref); c.r=c.es/c.esr; c.rc=v("European",c.g)/v("European",c.ref); c.tipo="acc";});
+    const k=t("est_k");
+    $("espOut").innerHTML=`<h3>${t("est_h")}</h3><div class="kpis">${kp(Math.round(comps[1].r*100),k[0][0]+" · "+k[0][1],true)}${kp(Math.round(comps[2].r*100),k[1][0]+" · "+k[1][1],true)}${kp(Math.round(comps[3].r*100),k[2][0]+" · "+k[2][1],true)}</div>
+      <div class="esp-lee">${t("est_lee")({grave:Math.round(comps[1].r*100), comb:Math.round(comps[3].r*100)})}</div>
+      <p class="small muted">${t("est_g1")}</p>${plotRatios(comps,u,1.2)}<p class="small muted">● ${L==="es"?"España":"Spain"} · ○ ${L==="es"?"UE-27":"EU-27"}</p>
+      <table class="esp-tab"><tr>${t("est_th").map(h=>`<th>${h}</th>`).join("")}</tr>${comps.map(c=>`<tr><td>${esc(c.l)}</td><td class="n">${dec(c.es.toFixed(1))} %</td><td class="n">${dec(c.esr.toFixed(1))} %<br><span class="small muted">${refL(c)}</span></td><td class="n"><b>${f2(c.r)}</b></td><td class="n">${f2(c.rc)}</td><td>${lectura(c.r,"acc",u)}</td></tr>`).join("")}</table><p class="small muted">${t("est_nota")}</p>`;
+  }
+}
 let ULTIMO_R=null, ULTIMO_LABEL=null;
 function render(R, label, desplazar=true){
   ULTIMO_R=R; ULTIMO_LABEL=label;
   const {perfiles,emb,coc,diag,vistas,traz,causas,canal,canales,avisos,conCred,completo,umbral,nMin}=R;
   const lab = typeof label==="function" ? label() : label;
+  const peorCanal=p=>{let m=null; for(const c of canales){const v=canal[p][c]; if(!isNaN(v)&&(m===null||v<m[1])) m=[c,v];} return m;};
+  const causaPrin=p=>{ if(!completo||!causas[p]) return null; let m=null; for(const c of CAUSAS){const v=causas[p][c]; if(v>0&&(m===null||v>m[1])) m=[c,v];} return m;};
   $("srcLabel").innerHTML = `<b>${t("fuente")}</b> ${esc(lab)} <span class="pill">${completo?t("modo_c"):t("modo_b")}</span><span class="pill">${conCred?t("con_c"):t("sin_c")}</span><span class="pill">${t("umbral")} ${f2(umbral)}</span>`;
+  const enc=!!(FUENTE&&FUENTE.encuesta); $("wbCite").hidden=!enc; $("masInforme").style.display=enc?"none":""; $("bloqueNoAcc").style.display=enc?"none":""; $("bloqueRep").style.display=enc?"none":"";
+  if(enc) $("wbCiteTxt").innerHTML=CITA_WB;
   const vf = conCred?"acceso_efectivo":"acceso_cuenta", verbo = conCred?t("verbo_c"):t("verbo_b");
   let cc = Object.keys(diag).filter(p=>diag[p].length).map(p=>{
     const c=coc[p][vf], e=coc[p].aprobacion, k=diag[p][0]; let extra="";
     if(k==="alta" && e && e.s==="sin") extra=t("extra_alta"); else if(k==="datos") extra=t("extra_datos"); else if(k==="decision") extra=t("extra_decision");
     const d = t("donde")[k].toLowerCase();
-    return `<div class="concl">${t("concl")(esc(nom(p)),verbo,Math.round(c.r*100),Math.round(c.lo*100),Math.round(c.hi*100),esc(d),extra)}</div>`;});
-  if(!Object.keys(diag).length) cc=[`<div class="concl">${t("no_ref")}</div>`];
+    let na=""; if(!(FUENTE&&FUENTE.encuesta) && emb[REF]){ const sp=1-emb[p].acceso/emb[p].intentos, sr=1-emb[REF].acceso/emb[REF].intentos, pc=peorCanal(p), ca=causaPrin(p);
+      na=t("na_concl")(pct(sp), pct(sr), pc?(t("canales")[pc[0]]||pc[0]):null, ca?t("causas")[ca[0]].toLowerCase():null, pct(traz[p].escrita)); }
+    return `<div class="concl"><b>${esc(nom(p))}.</b> ${na}${t("concl")("",verbo,Math.round(c.r*100),Math.round(c.lo*100),Math.round(c.hi*100),esc(d),extra)}</div>`;});
+  // priorizar: menor acceso efectivo primero; mostrar 3 y plegar el resto
+  const orden=Object.keys(diag).filter(p=>diag[p].length).sort((x,y)=>coc[x][vf].r-coc[y][vf].r);
+  cc = orden.map(p=>cc[Object.keys(diag).filter(q=>diag[q].length).indexOf(p)]);
+  const ciegos=orden.filter(p=>diag[p][0]==="alta"&&coc[p].aprobacion&&coc[p].aprobacion.s==="sin").length;
+  if(cc.length>3) cc=[...cc.slice(0,3), `<details class="more"><summary>${t("mas_concl")(cc.length-3)}</summary>${cc.slice(3).join("")}</details>`];
+  if(conCred && ciegos) cc.push(`<p class="ciego">${t("ciego")(ciegos)}</p>`);
   else if(!cc.length) cc=[`<div class="concl ok">${t("ok_all")(f2(umbral))}</div>`];
   $("concl").innerHTML = cc.join("");
   const vs=["acceso_cuenta","llega_modelo","aprobacion"].filter(v=>vistas.includes(v));
   $("tCoc").innerHTML = `<table class="ctab"><tr><th>${t("th_perfil")}</th>${vs.map(v=>`<th style="text-align:left">${t("vistas")[v]}</th>`).join("")}<th style="text-align:left">${t("th_donde")}</th></tr>`+
-    Object.keys(coc).map(p=>`<tr><td><b>${esc(nom(p))}</b><br><span class="small muted">${miles(emb[p].intentos)} ${t("intentos")}</span></td>${vs.map(v=>{const c=coc[p][v];
-      return `<td class="cell" style="text-align:left">${mini(c,umbral)}<br><span class="v">${f2(c.r)}</span><span class="ci">[${f2(c.lo)}–${f2(c.hi)}]</span> ${chip(c.s)}</td>`;}).join("")}
+    Object.keys(coc).map(p=>`<tr><td><b>${esc(nom(p))}</b><br><span class="small muted">${miles(emb[p].intentos)} ${FUENTE&&FUENTE.encuesta?t("personas"):t("intentos")}</span></td>${vs.map(v=>{const c=coc[p][v];
+      return `<td class="cell" style="text-align:left"><span class="de100">${isNaN(c.r)?"—":t("de100")(Math.round(c.r*100))}</span><br>${mini(c,umbral)}<br><span class="ci">${f2(c.r)} [${f2(c.lo)}–${f2(c.hi)}]</span> ${chip(c.s)}</td>`;}).join("")}
       <td style="text-align:left;white-space:normal"><span class="where">${esc(dondeTxt(diag[p]))}</span></td></tr>`).join("")+`</table>`;
   $("legSig").innerHTML = ["clara","confirmar","sin"].map(chip).join("") + `<span class="small muted">${t("leg")(nMin)}</span>`;
   $("tCanal").innerHTML = `<table class="heat"><tr><th>${t("th_perfil")}</th>${canales.map(c=>`<th style="text-align:center">${t("canales")[c]||esc(c)}</th>`).join("")}</tr>`+
@@ -596,27 +1155,70 @@ function render(R, label, desplazar=true){
   const bar=v=>isNaN(v)?"—":`<span class="bar-in" style="width:${Math.round(v*60)}px"></span>${pct(v)}`;
   $("tEmb").innerHTML = `<table><tr><th>${t("th_perfil")}</th><th>${t("th_cuenta")}</th>${conCred?`<th>${t("th_llega")}</th><th>${t("th_credito")}</th><th>${t("th_llega_c")}</th><th>${t("th_apr_e")}</th>`:""}</tr>`+
     perfiles.map(p=>{const e=emb[p]; return `<tr><td>${esc(nom(p))}</td><td>${bar(e.acceso/e.intentos)}</td>${conCred?`<td>${bar(e.evaluados/e.intentos)}</td><td>${bar(e.aprobados/e.intentos)}</td><td class="small">${pct(e.acceso?e.evaluados/e.acceso:NaN)}</td><td class="small">${pct(e.evaluados?e.aprobados/e.evaluados:NaN)}</td>`:""}</tr>`;}).join("")+`</table>`;
-  $("tTraz").innerHTML = `<table><tr><th>${t("th_perfil")}</th><th>${t("th_sin")}</th><th>${t("th_escrita")}</th><th>${t("th_alt")}</th><th>${t("th_rev")}</th></tr>`+
-    perfiles.map(p=>{const x=traz[p]; return `<tr><td>${esc(nom(p))}</td><td>${miles(x.noAcceso)}</td><td>${pct(x.escrita)}</td><td>${pct(x.alternativa)}</td><td>${pct(x.reversion)}</td></tr>`;}).join("")+`</table>`;
+  $("tTraz").innerHTML = `<table><tr><th>${t("th_perfil")}</th><th>${t("th_sin")}</th><th>${t("th_recup")}</th><th>${t("th_escrita")}</th><th>${t("th_alt")}</th><th>${t("th_rev")}</th></tr>`+
+    perfiles.map(p=>{const x=traz[p]; return `<tr><td>${esc(nom(p))}</td><td>${miles(x.noAcceso)}</td><td>${pct(x.recup)}</td><td>${pct(x.escrita)}</td><td>${pct(x.alternativa)}</td><td>${pct(x.reversion)}</td></tr>`;}).join("")+`</table>`;
   if(completo){const cs=CAUSAS.filter(c=>perfiles.some(p=>causas[p]&&causas[p][c]>0));
     $("tCausas").innerHTML = `<table class="heat"><tr><th>${t("th_perfil")}</th>${cs.map(c=>`<th style="text-align:center;white-space:normal">${t("causas")[c]}</th>`).join("")}</tr>`+
-      perfiles.map(p=>`<tr><td>${esc(nom(p))}</td>${cs.map(c=>heatCell(causas[p][c])).join("")}</tr>`).join("")+`</table>`;}
+      perfiles.map(p=>`<tr><td>${esc(nom(p))}</td>${cs.map(c=>causas[p][c]>0?heatCell(causas[p][c]):`<td class="h"></td>`).join("")}</tr>`).join("")+`</table>`;}
   else $("tCausas").innerHTML = `<p class="small muted">${t("basico")}</p>`;
+  // resumen del no acceso: quién se quedó fuera, dónde, por qué y qué se hizo
+  { const filas=perfiles.map(p=>[p,1-emb[p].acceso/emb[p].intentos]), mx=Math.max(...filas.map(f=>f[1]),.1), ref=filas.find(f=>f[0]===REF);
+    $("gNoAcc").innerHTML = `<div class="hbar">`+filas.map(([p,v])=>`<div class="hrow${p===REF?" ref":""}"><span class="hl">${esc(nom(p))}</span><span class="ht"><span class="hb" style="width:${(v/mx*100).toFixed(1)}%"></span>${ref?`<span class="hr" style="left:${(ref[1]/mx*100).toFixed(1)}%"></span>`:""}</span><span class="hv">${pct(v)}</span></div>`).join("")+`</div><p class="small muted">${t("g_nota")}</p>`; }
+  { const no=perfiles.filter(p=>p!==REF), sum=(ps,f)=>ps.reduce((a,p)=>a+f(p),0);
+    const escN=sum(no,p=>traz[p].noAcceso*(isNaN(traz[p].escrita)?0:traz[p].escrita)), naN=sum(no,p=>isNaN(traz[p].escrita)?0:traz[p].noAcceso);
+    const er=traz[REF]?traz[REF].escrita:NaN;
+    $("claveEsc").innerHTML = (naN&&!isNaN(er)) ? t("clave_esc")(pct(escN/naN), pct(er)) : ""; }
+  $("tNoAcc").innerHTML = `<table class="natab"><tr><th>${t("th_perfil")}</th><th>${t("na_int")}</th><th>${t("na_sin")}</th><th>${t("na_canal")}</th><th>${t("na_causa")}</th><th>${t("th_escrita")}</th><th>${t("th_alt")}</th><th>${t("th_recup")}</th></tr>`+
+    perfiles.map(p=>{const e=emb[p], x=traz[p], sinC=e.intentos-e.acceso, pc=peorCanal(p), ca=causaPrin(p);
+      return `<tr${p===REF?' class="ref"':''}><td>${esc(nom(p))}${p===REF?`<br><span class="small muted">${t("na_ref")}</span>`:""}</td><td>${miles(e.intentos)}</td>
+        <td><b>${miles(sinC)}</b> <span class="small muted">(${pct(e.intentos?sinC/e.intentos:NaN)})</span></td>
+        <td>${pc?`${t("canales")[pc[0]]||esc(pc[0])} <span class="small muted">(${t("na_acc")} ${pct(pc[1])})</span>`:"—"}</td>
+        <td>${ca?`${t("causas")[ca[0]]} <span class="small muted">(${pct(ca[1])})</span>`:"—"}</td>
+        <td>${pct(x.escrita)}</td><td>${pct(x.alternativa)}</td><td>${pct(x.recup)}</td></tr>`;}).join("")+`</table>`;
   $("avisos").textContent = avisos.length ? t("calidad")+" "+avisos.map(([k,...a])=>{ if(k==="a_peq") a[0]=nom(a[0]); if(k==="a_sinc") a[1]=nom(a[1]); const f=t(k); return typeof f==="function"?f(...a):f; }).join(" ") : t("calidad_ok");
-  $("report").style.display="block"; if(desplazar) $("report").scrollIntoView({behavior:"smooth"});
+  dibujarRep(R);
+  $("report").style.display="block";
+  let k=0; document.querySelectorAll("#report .card h2 .n").forEach(n=>{ const vis=n.closest(".card").offsetParent!==null || n.closest("#masInforme"); n.textContent = vis ? String(++k).padStart(2,"0") : ""; });
+  if(desplazar) $("report").scrollIntoView({behavior:"smooth"});
 }
 
 // ---------- idioma
+// ---------- esquema visual del método (cifras ilustrativas por cada 100 intentos)
+const EJ = {ref:[100,96,77,42], per:[100,43,34,19]};
+function dibujarFunnel(){
+  const et=t("etapas"), sym=["n","a","e","c"], f=v=>String(v), r=(i)=>((EJ.per[i+1]/EJ.per[i])/(EJ.ref[i+1]/EJ.ref[i]));
+  const col=i=>`<div class="fst"><div class="fh">${et[i]} <i>${sym[i]}</i></div>
+    <div class="fb"><span class="b ref" style="width:${EJ.ref[i]}%"></span><b>${EJ.ref[i]}</b></div>
+    <div class="fb"><span class="b per" style="width:${EJ.per[i]}%"></span><b>${EJ.per[i]}</b></div></div>`;
+  const con=i=>{const v=r(i), s=v<.8; return `<div class="fcon${s?" sig":""}"><div class="fr"><i>R</i><sub>${i+1}</sub> = <span class="frac"><span><i>${sym[i+1]}</i><sub>p</sub>/<i>${sym[i]}</i><sub>p</sub></span><span><i>${sym[i+1]}</i><sub>r</sub>/<i>${sym[i]}</i><sub>r</sub></span></span></div>
+    <div class="fnum">= <span class="frac"><span>${EJ.per[i+1]}/${EJ.per[i]}</span><span>${EJ.ref[i+1]}/${EJ.ref[i]}</span></span> = <b>${f2(v)}</b></div><div class="fq">${t("fq")[i]}</div><div class="fsig">${s?t("sig").clara:t("sig").sin}</div></div>`;};
+  $("funnel").innerHTML = `<div class="fleg"><span><span class="sw ref"></span>${t("leg_ref")}</span><span><span class="sw per"></span>${t("leg_per")}</span><span class="muted">${t("ex_note")}</span></div>
+    <div class="fgrid">${col(0)}${con(0)}${col(1)}${con(1)}${col(2)}${con(2)}${col(3)}</div>
+    <div class="fbr"><div class="br all"><span>${t("ve_metodo")}</span></div><div class="br aud"><span>${t("ve_audit")}</span></div></div>`;
+}
+const GRUPOS = [["g_doc",["proteccion_internacional","nie_provisional","pasaporte_sin_chip"],false],["g_tec",["dispositivo_conectividad","asistencia_digital"],true],
+  ["g_acc",["accesibilidad"],true],["g_ter",["zona_sin_oficina","sin_domicilio"],true],["g_dat",["sin_historial"],true]];
+function dibujarCitas(){
+  $("citeSW").innerHTML = t("cite_txt"); $("citeWB").innerHTML = CITA_WB_SOLO;
+  $("citeBDE").innerHTML = CITA_BDE_SOLO; $("citeEST").innerHTML = CITA_EST_SOLO;
+  for(const [id,u] of [["dispSW","https://github.com/FernandaSVilla/AI-and-Data-Governance-Banking"],["dispWB",WB_URL],["dispBDE","https://doi.org/10.53479/43247"],["dispEST","https://ec.europa.eu/eurostat/databrowser/view/dsb_ictiu07/default/table"]]){ $(id).href=u; $(id).textContent=u; }
+}
+function dibujarGrupos(){
+  $("grupos").innerHTML = GRUPOS.map(([g,ps,dni])=>`<div class="grp"><div class="gh">${t(g)}${dni?`<span class="dni">${t("con_dni")}</span>`:""}</div>`+
+    ps.map(p=>{const [n,por,ej]=PERFILES[L][p]||PERFILES.es[p]; return `<div class="pc"><b>${esc(n)}</b><span>${esc(por)}</span><i>${esc(ej)}</i></div>`;}).join("")+`</div>`).join("");
+}
+
 function aplicarIdioma(lang){
   L = lang==="en" ? "en" : "es";
   document.documentElement.lang = L; document.title = t("title");
   document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=t(el.dataset.i18n); if(typeof v==="string") el.innerHTML=v; });
   $("lES").setAttribute("aria-pressed", L==="es"); $("lEN").setAttribute("aria-pressed", L==="en");
-  $("tPerfiles").innerHTML = Object.entries(PERFILES[L]).map(([k,[n,por,ej]])=>`<tr><td>${esc(n)}</td><td>${esc(por)}</td><td>${esc(ej)}</td></tr>`).join("");
+  dibujarFunnel(); dibujarGrupos(); dibujarCitas();
   $("tReg").innerHTML = `<table class="ptable"><tr><th>${t("reg")[0][0]}</th><th style="text-align:left">${t("reg")[0][1]}</th></tr>` + t("reg").slice(1).map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join("") + `</table>`;
   $("codPerf").textContent = Object.keys(PERFILES.es).join(" · ");
   $("codCaus").textContent = CAUSAS.join(" · ");
   if(ULTIMO_R) render(ULTIMO_R, ULTIMO_LABEL, false);
+  dibujarEspana();
   if(ACTUAL_K && !$("viewer").hidden) abrirRecurso(ACTUAL_K, false);
   try{ localStorage.setItem("evaluabilidad_idioma", L); }catch(e){}
 }
@@ -631,24 +1233,31 @@ let FUENTE=null; // {a,c,label}
 function recalcular(desplazar=true){ try{ const R = FUENTE ? calcular(FUENTE.a,FUENTE.c,umbral(),nMin(),FUENTE.err) : (()=>{const d=demo(); return calcular(d.altas,d.cred,umbral(),nMin());})();
   render(R, FUENTE ? FUENTE.label : ()=>t("demo_label"), desplazar); msg(""); } catch(e){ msgErr(e); } }
 $("bDemo").onclick=()=>{ FUENTE=null; recalcular(); };
+$("bDemo2").onclick=()=>$("bDemo").click();
+$("bECF").onclick=()=>{ESP_VISTA="ecf"; dibujarEspana();}; $("bEST").onclick=()=>{ESP_VISTA="est"; dibujarEspana();};
+$("bVer").onclick=()=>{ FUENTE={a:csvObjs(VERIF.altas),c:csvObjs(VERIF.cred),err:0,label:()=>t("ver_label")}; recalcular(); };
+$("bWB").onclick=()=>{ FUENTE={a:datosFindex(),c:null,err:0,encuesta:true,label:()=>t("wb_label")}; recalcular(); };
 $("bLoad").onclick=()=>$("upload").classList.toggle("show");
 $("bPrint").onclick=()=>{ if($("report").style.display==="none") $("bDemo").click(); setTimeout(()=>window.print(),400); };
 const parse=f=>new Promise((res,rej)=>Papa.parse(f,{header:true,skipEmptyLines:true,dynamicTyping:false,complete:r=>{r.data.err=r.errors.length; res(r.data);},error:rej}));
 $("bRun").onclick=async()=>{
-  const fa=$("fAltas").files[0], fc=$("fCred").files[0];
+  const fa=$("fAltas").files[0], fc=$("fCred").files[0], fr=$("fRep").files[0];
   if(!fa){msg(t("e_sel"),true);return;}
-  try{ const a=await parse(fa), c=fc?await parse(fc):null; FUENTE={a,c,err:a.err+(c?c.err:0),label:()=>t("tus")(fa.name, fc&&fc.name)}; recalcular(); }
+  try{ const a=await parse(fa), c=fc?await parse(fc):null, r=fr?await parse(fr):null; FUENTE={a,c,rep:r,err:a.err+(c?c.err:0),label:()=>t("tus")(fa.name, fc&&fc.name)}; recalcular(); }
   catch(e){ msgErr(e); }
 };
 $("umbral").onchange=$("nmin").onchange=()=>{ if($("report").style.display!=="none") recalcular(false); };
 
 const COLS=["id_intento","fecha","canal","producto","perfil_entrada","resultado","causa_no_acceso","alternativa_ofrecida","revision_humana","revertida_tras_revision","negativa_escrita","dias_resolucion"];
 const RECURSOS = {
-  tpl:   ()=>({titulo:t("r_tpl"), archivo:"plantilla_intentos_alta.csv", tipo:"text/csv", texto:COLS.join(",")+"\nI000001,2026-03-01,app,cuenta_ordinaria,estandar,alta_completada,,false,false,false,,0\nI000002,2026-03-01,app,cuenta_pago_basica,proteccion_internacional,no_acceso,documento_no_reconocido,false,true,true,false,12\nI000003,2026-03-02,oficina,cuenta_ordinaria,sin_domicilio,alternativa_aceptada,,true,false,false,,3\nI000004,2026-03-02,app,cuenta_ordinaria,asistencia_digital,no_acceso,fallo_tecnico,false,false,false,false,1\n"}),
+  tpl:   ()=>({titulo:t("r_tpl"), archivo:"plantilla_intentos_alta.csv", tipo:"text/csv", texto:COLS.join(",")+"\nI000001,2026-03-01,app,cuenta_ordinaria,estandar,alta_completada,,false,false,false,,0\nI000002,2026-03-01,app,cuenta_pago_basica,proteccion_internacional,no_acceso,documento_no_reconocido,false,true,true,false,12\nI000003,2026-03-02,oficina,cuenta_ordinaria,sin_domicilio,alternativa_aceptada,,true,false,false,,3\nI000004,2026-03-02,app,cuenta_ordinaria,dispositivo_conectividad,no_acceso,fallo_tecnico,false,false,false,false,1\n"}),
   tplc:  ()=>({titulo:t("r_tplc"), archivo:"plantilla_decisiones_credito.csv", tipo:"text/csv", texto:"id_intento,aprobado\nI000001,true\nI000003,false\n"}),
   schema:()=>({titulo:t("r_schema"), archivo:"registro_no_acceso.schema.json", tipo:"application/json", texto:JSON.stringify(SCHEMA,null,2)}),
   form:  ()=>{const d=DOCS[L].form||DOCS.es.form; return {titulo:d.titulo, archivo:d.archivo, tipo:"text/markdown", texto:d.md, html:d.html};},
   check: ()=>{const d=DOCS[L].check||DOCS.es.check; return {titulo:d.titulo, archivo:d.archivo, tipo:"text/markdown", texto:d.md, html:d.html};},
+  ver:   ()=>({titulo:t("r_ver"), archivo:"verificacion_altas.csv", tipo:"text/csv", texto:VERIF.altas, extra:{archivo:"verificacion_credito.csv", texto:VERIF.cred}}),
+  wb:    ()=>{const a=datosFindex(), c=["id_intento","fecha","canal","producto","perfil_entrada","resultado"];
+            return {titulo:t("r_wb"), cita:t("wb_fuente")+" "+CITA_WB, archivo:"findex2025_documento_registros.csv", tipo:"text/csv", texto:c.join(",")+"\n"+a.map(r=>c.map(k=>r[k]).join(",")).join("\n")};},
   demo:  ()=>{const d=demo(), e=v=>v==null?"":v; return {titulo:t("r_demo"), archivo:"altas_demo.csv", tipo:"text/csv",
             texto:COLS.join(",")+"\n"+d.altas.map(r=>COLS.map(c=>e(r[c])).join(",")).join("\n"), extra:{archivo:"credito_demo.csv", texto:"id_intento,aprobado\n"+d.cred.map(r=>r.id_intento+","+r.aprobado).join("\n")}};}
 };
@@ -661,7 +1270,7 @@ function descargar(nombre,texto,tipo){
 function abrirRecurso(k, desplazar=true){
   const r=RECURSOS[k](); ACTUAL=r; ACTUAL_K=k;
   $("vTitle").textContent=r.titulo+" · "+r.archivo+(r.extra?" + "+r.extra.archivo:"");
-  $("vBody").innerHTML = r.html ? r.html : `<pre>${esc(r.tipo==="text/csv"? r.texto.split("\n").slice(0,201).join("\n") : r.texto)}</pre>`;
+  $("vBody").innerHTML = (r.cita?`<p class="cite">${r.cita}</p>`:"") + (r.html ? r.html : `<pre>${esc(r.tipo==="text/csv"? r.texto.split("\n").slice(0,201).join("\n") : r.texto)}</pre>`);
   $("vMsg").textContent=""; $("viewer").hidden=false; if(desplazar) $("viewer").scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 document.querySelectorAll("[data-rec]").forEach(b=>b.onclick=()=>abrirRecurso(b.dataset.rec));
@@ -671,16 +1280,19 @@ $("vCopy").onclick=async()=>{ if(!ACTUAL) return;
   catch(e){const x=document.createElement("textarea"); x.value=ACTUAL.texto; document.body.appendChild(x); x.select();
     try{document.execCommand("copy"); $("vMsg").textContent=t("c_ok");}catch(_){ $("vMsg").textContent=t("c_no");} x.remove();}
 };
+document.querySelectorAll(".ccopy").forEach(b=>b.onclick=async()=>{ const el=$(b.dataset.copy), txt=el.innerText+" "+(el.parentElement.querySelector(".cav a")||{}).textContent;
+  try{await navigator.clipboard.writeText(txt.trim()); b.textContent=t("c_ok");}catch(e){b.textContent=t("c_no");} setTimeout(()=>b.textContent=t("b_copy"),1800); });
 $("vClose").onclick=()=>{$("viewer").hidden=true;};
-document.querySelectorAll("[data-ir]").forEach(a=>a.onclick=ev=>{ev.preventDefault(); const x=$(a.dataset.ir); if(x) x.scrollIntoView({behavior:"smooth"});});
+document.querySelectorAll("[data-ir]").forEach(a=>a.onclick=ev=>{ev.preventDefault(); const x=$(a.dataset.ir); if(x){ if(x.tagName==="DETAILS") x.open=true; x.scrollIntoView({behavior:"smooth"});}});
+let PLEG=[]; window.addEventListener("beforeprint",()=>{PLEG=[...document.querySelectorAll("#report details:not([open])")]; PLEG.forEach(d=>d.open=true);}); window.addEventListener("afterprint",()=>PLEG.forEach(d=>d.open=false));
 document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>aplicarIdioma(b.dataset.lang));
 
-// idioma inicial: ?lang=en|es, luego la preferencia guardada, luego el idioma del navegador
+// idioma inicial: español; inglés con ?lang=en
 (function(){ let ini=null;
   try{ ini=new URLSearchParams(location.search).get("lang"); }catch(e){}
-  if(!ini){ try{ ini=localStorage.getItem("evaluabilidad_idioma"); }catch(e){} }
-  if(!ini) ini = (navigator.language||"es").toLowerCase().startsWith("es") ? "es" : "en";
+  if(ini!=="en") ini="es";   // español por defecto; inglés sólo con ?lang=en
   aplicarIdioma(ini);
+  recalcular(false);         // el informe de ejemplo se muestra desplegado al abrir la página
 })();
 </script>
 </body>

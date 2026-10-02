@@ -8,8 +8,9 @@ from .perfiles import PERFILES, REFERENCIA
 from .metricas import (CAUSAS, UMBRAL, N_MINIMO, VISTAS, ETAPAS, preparar, validar, embudo, cocientes, diagnostico,
                        trazabilidad, causas_por_perfil, por_canal, calcular_todo, auditoria_convencional)
 from .informe import generar_informe
+from .representacion import representacion
 from . import encuestas
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __all__ = ["PERFILES", "REFERENCIA", "CAUSAS", "UMBRAL", "N_MINIMO", "VISTAS", "ETAPAS", "preparar", "validar", "embudo", "cocientes",
-           "diagnostico", "trazabilidad", "causas_por_perfil", "por_canal", "calcular_todo", "generar_informe"]
+           "diagnostico", "trazabilidad", "causas_por_perfil", "por_canal", "calcular_todo", "generar_informe", "representacion"]

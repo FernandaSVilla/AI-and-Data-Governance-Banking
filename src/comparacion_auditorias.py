@@ -1,11 +1,11 @@
-"""¿Qué auditoría detecta qué? Comparación con verdad conocida (tabla 11 del ensayo).
+"""¿Qué auditoría detecta qué? Comparación con verdad conocida (tabla C.3 del anexo C del ensayo).
 
 Se simulan registros agregados de un perfil de entrada y del perfil de referencia en las tres etapas del proceso
 (alta, llegada al modelo y decisión). En cada escenario se introduce una pérdida real en UNA etapa
 (cociente 0,7 o 0,6 frente a la referencia) o en ninguna, y se comprueba qué detecta cada auditoría:
 
 - Calidad de datos convencional (nulos, duplicados, dominios, formatos, rangos): revisa columnas, no compara
-  resultados entre perfiles, por lo que no puede detectar ninguna de estas pérdidas. Aplicada a los 40.000
+  resultados entre perfiles, por lo que no puede detectar ninguna de estas pérdidas. Aplicada a los 46.000
   intentos del ejemplo, sólo señala nulos estructurales (la causa de no acceso está vacía cuando hubo cuenta).
 - Equidad del modelo: la práctica habitual, que compara la aprobación entre quienes el modelo evalúa.
 - Kit: las tres vistas por etapa; se registra si detecta y si identifica la etapa correcta como primera señal.

@@ -128,3 +128,25 @@ def test_auditoria_convencional_no_ve_la_exclusion():
     inc = r[r.incidencias > 0]
     assert set(inc.control) == {"Valores nulos"}
     assert set(inc.columna) <= {"causa_no_acceso", "negativa_escrita"}
+
+
+def test_tasa_de_recuperacion():
+    r = calcular_todo(*_datos())
+    tr = r["trazabilidad"]
+    assert tr.loc["proteccion_internacional", "recuperacion"] == 0      # 3 sin acceso, ninguna alternativa aceptada
+    import math
+    assert math.isnan(tr.loc["estandar", "recuperacion"])               # nadie falló
+
+
+def test_archivo_de_verificacion():
+    """El archivo de 200 filas reproduce el ejemplo de la web: R1 = 0,45; R2 ≈ 0,99; R3 ≈ 1,02."""
+    import pathlib
+    import pandas as pd
+    from evaluabilidad.metricas import calcular_todo
+    d = pathlib.Path(__file__).resolve().parents[1] / "verificacion"
+    r = calcular_todo(pd.read_csv(d / "verificacion_altas.csv"), pd.read_csv(d / "verificacion_credito.csv"))
+    c = r["cocientes"].set_index("vista")
+    assert round(c.loc["acceso_cuenta", "cociente"], 2) == 0.45
+    assert c.loc["acceso_cuenta", "senal"] == "Señal clara"
+    assert round(c.loc["llega_modelo", "cociente"], 2) == 0.99
+    assert round(c.loc["aprobacion", "cociente"], 2) == 1.02

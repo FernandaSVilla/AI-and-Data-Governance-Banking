@@ -8,7 +8,7 @@ Comprueba, por simulación, tres propiedades de los cocientes que calcula la her
      o «A confirmar» por azar?
 
 Usa exactamente las funciones del paquete (cociente_ic y senal), no una reimplementación.
-Uso: python src/validacion_metodo.py  -> data/validacion_metodo.csv y figures/fig_validacion_metodo.png
+Uso: python src/validacion_metodo.py  -> data/validacion_metodo.csv (tabla 12 del ensayo)
 """
 import pathlib, sys
 import numpy as np
@@ -50,30 +50,8 @@ def main():
                                   cobertura_ic95=cob, prob_senal_clara=clara, prob_alguna_senal=alguna))
     df = pd.DataFrame(filas)
     df.to_csv(raiz / "data" / "validacion_metodo.csv", index=False)
-    figura(df)
     return df
 
-
-def figura(df):
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False})
-    fig, axs = plt.subplots(1, 2, figsize=(10, 3.6), sharey=True)
-    colores = {1.0: "#98a2b3", 0.9: "#9cc2ee", 0.8: "#5b9be0", 0.7: "#2a78d6", 0.6: "#123a66", 0.5: "#0a2240"}
-    for ax, (vista, d) in zip(axs, df.groupby("vista", sort=False)):
-        for r, g in d.groupby("cociente_real"):
-            ax.plot(g.intentos_perfil, g.prob_senal_clara * 100, marker="o", ms=4, lw=2, color=colores[r],
-                    label=f"{r:.1f}".replace(".", ","))
-        ax.set_xscale("log"); ax.set_xticks(N_PERFIL, [str(n) for n in N_PERFIL])
-        ax.set_ylim(-3, 103); ax.yaxis.grid(True, color="#e4e7ec"); ax.set_axisbelow(True)
-        ax.set_title(vista, loc="left", fontsize=9, fontweight="bold")
-        ax.set_xlabel("Intentos del perfil analizado")
-    axs[0].set_ylabel("% de simulaciones con «Señal clara»")
-    h, l = axs[0].get_legend_handles_labels()
-    fig.legend(h, l, title="Cociente real", loc="center right", frameon=False, fontsize=8, title_fontsize=8)
-    fig.tight_layout(rect=(0, 0, 0.9, 1))
-    fig.savefig(raiz / "figures" / "fig_validacion_metodo.png", dpi=200)
 
 
 if __name__ == "__main__":

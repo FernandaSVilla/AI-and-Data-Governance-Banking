@@ -9,7 +9,9 @@
 | NIE en trámite o resguardo | [ ] El proceso admite documentos provisionales y define qué verificación adicional aplica. |
 | Pasaporte de fuera de la UE sin chip | [ ] Si falla la lectura NFC, existe una verificación alternativa (lectura óptica, videollamada, oficina). |
 | Sin domicilio fijo o sin justificante | [ ] Se admiten alternativas al justificante (declaración responsable, certificado de un servicio social o de un albergue). |
-| Necesita asistencia en la verificación digital | [ ] Si falla el selfie, el vídeo o el SMS, se ofrece ayuda o una cita presencial, no un error genérico. |
+| Móvil o conexión insuficientes para la verificación | [ ] Si falla el selfie, el NFC, el vídeo o el SMS, se ofrece otra vía (videollamada, código por otro medio, cita presencial), no un error genérico. |
+| Necesita ayuda para completar el proceso digital | [ ] Hay asistencia humana (teléfono, chat u oficina) y el formulario usa lenguaje claro. |
+| Necesita un ajuste de accesibilidad | [ ] El canal funciona con lector de pantalla y no depende sólo de instrucciones visuales o sonoras; se registra el ajuste requerido y si estaba disponible, nunca un diagnóstico (Directiva (UE) 2019/882). |
 | Sin historial crediticio | [ ] Se conoce cuántas personas con cuenta no llegan a ser evaluables y se valora el uso de datos alternativos lícitos. |
 
 - [ ] La lista de documentos admitidos está publicada y es coherente entre web, app y oficina.

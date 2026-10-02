@@ -1,5 +1,5 @@
 """Genera un informe HTML autocontenido para anexar a la DPIA (RGPD art. 35),
-la FRIA (Reglamento de IA art. 27) o la vigilancia poscomercialización (art. 72)."""
+la FRIA (Reglamento de IA art. 27) o la supervisión del responsable del despliegue (art. 26.5), que puede alimentar la vigilancia poscomercialización del proveedor (art. 72)."""
 from __future__ import annotations
 import base64, io, datetime, html
 import matplotlib
@@ -101,8 +101,19 @@ table.t th{background:#f7f9fb;font-size:.78rem;text-transform:uppercase;letter-s
 
 
 def generar_informe(altas: pd.DataFrame, credito: pd.DataFrame | None = None, entidad: str = "Entidad",
-                    ruta: str | None = None, umbral: float = UMBRAL, n_min: int = N_MINIMO) -> str:
+                    ruta: str | None = None, umbral: float = UMBRAL, n_min: int = N_MINIMO,
+                    representacion: pd.DataFrame | None = None) -> str:
     r = calcular_todo(altas, credito, umbral, n_min)
+    sec_rep = ""
+    if representacion is not None:
+        from .representacion import representacion as _rep
+        rp = _rep(representacion, umbral, n_min)
+        sec_rep = ("<h2>8 bis. ¿Quién ni siquiera lo intenta? Representación frente a la población</h2>"
+                   "<p><small>Proporción del grupo en los intentos / proporción en la población adulta del área de servicio (1 = igualdad). "
+                   "Una menor representación es una señal, no una prueba: puede deberse a menor demanda.</small></p>"
+                   + _tabla_html([(html.escape(str(x.grupo)), pc(x.poblacion_pct, 1), pc(x.cuota_intentos, 1),
+                                   f"{f2(x.cociente)} <small>[{f2(x.ic_inf)}-{f2(x.ic_sup)}]</small>", _chip(x.senal)) for x in rp.itertuples()],
+                                 ["Grupo", "En la población", "En los intentos", "Representación", "Señal"]))
     emb, coc, diag, tr = r["embudo"], r["cocientes"], r["diagnostico"], r["trazabilidad"]
     # 1. conclusiones en lenguaje llano (señales observadas, no causas)
     concl = []
@@ -159,17 +170,17 @@ def generar_informe(altas: pd.DataFrame, credito: pd.DataFrame | None = None, en
     ca = r["causas"]
     t_cau = _tabla_html([[html.escape(nombre(p))] + [pc(ca.loc[p, c]) for c in ca.columns] for p in ca.index],
                         ["Perfil"] + [NOMBRES_CAUSA.get(c, c) for c in ca.columns]) if len(ca) else "<p><small>Modo básico: el registro no incluye causas de no acceso.</small></p>"
-    t_tr = _tabla_html([(html.escape(nombre(p)), int(x.no_acceso), pc(x.con_causa_registrada), pc(x.negativa_escrita), pc(x.alternativa_ofrecida),
+    t_tr = _tabla_html([(html.escape(nombre(p)), int(x.no_acceso), pc(x.recuperacion), pc(x.con_causa_registrada), pc(x.negativa_escrita), pc(x.alternativa_ofrecida),
                          pc(x.reversion_tras_revision), "—" if pd.isna(x.dias_resolucion_mediana) else f"{x.dias_resolucion_mediana:.0f}")
                         for p, x in tr.iterrows()],
-                       ["Perfil", "Sin acceso", "Con causa registrada", "Negativa por escrito", "Alternativa ofrecida", "Revertidas tras revisión", "Días (mediana)"])
+                       ["Perfil", "Sin acceso", "Recuperación tras fallo", "Con causa registrada", "Negativa por escrito", "Alternativa ofrecida", "Revertidas tras revisión", "Días (mediana)"])
     avisos = "".join(f"<li>{html.escape(a)}</li>" for a in r["avisos"]) or "<li>Sin incidencias de calidad de datos.</li>"
     hoy = datetime.date.today().isoformat()
     modo = "completo" if r["modo"] == "completo" else "básico (sin causas de no acceso)"
     doc = f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Informe de evaluabilidad</title><style>{CSS}</style></head><body>
 <h1>Informe de evaluabilidad y gobernanza del no acceso</h1>
-<p class="sub">{html.escape(entidad)} · generado el {hoy} · kit «evaluabilidad» v0.3 · modo {modo} · umbral de revisión {f2(umbral)}</p>
+<p class="sub">{html.escape(entidad)} · generado el {hoy} · kit «evaluabilidad» v0.4 · modo {modo} · umbral de revisión {f2(umbral)}</p>
 <h2>1. Conclusiones</h2>{''.join(concl)}
 <h2>2. Perfiles de entrada analizados</h2><p><small>Un perfil describe la credencial o la situación del intento de alta, no a la persona. Cada perfil se compara con el de referencia.</small></p>{t_perf}
 <h2>3. En qué etapa aparece la diferencia</h2>
@@ -179,7 +190,7 @@ def generar_informe(altas: pd.DataFrame, credito: pd.DataFrame | None = None, en
 <h2>4. Acceso por canal</h2><p><small>% de intentos que terminan con cuenta.</small></p><img alt="Acceso por perfil y canal" src="data:image/png;base64,{img_can}">
 <h2>5. Embudo por perfil</h2>{t_emb}
 <h2>6. Causas de no acceso</h2><p><small>% de los casos sin acceso de cada perfil.</small></p>{t_cau}
-<h2>7. Trazabilidad y proporcionalidad</h2>{t_tr}
+<h2>7. Trazabilidad y proporcionalidad</h2><p><small>Recuperación tras fallo: de los intentos que no terminaron en un alta ordinaria, porcentaje que obtuvo una cuenta por una vía alternativa. Que la tecnología falle es inevitable; la señal de gobernanza es que no exista una vía proporcional para recuperar a la persona.</small></p>{t_tr}
 <h2>8. Dónde incorporar cada resultado</h2>
 {_tabla_html([("Perfiles con señal en el alta o al llegar al modelo", "FRIA, Reglamento (UE) 2024/1689, art. 27 (categorías de personas afectadas); DPIA, RGPD art. 35"),
               ("Representatividad de los datos de entrada que controla la entidad", "Reglamento de IA art. 26.4 (responsable del despliegue)"),
@@ -190,8 +201,9 @@ def generar_informe(altas: pd.DataFrame, credito: pd.DataFrame | None = None, en
               ("Negativas por escrito y causas registradas", "Real Decreto-ley 19/2017, art. 5; RGPD arts. 15 y 22"),
               ("Revisión humana y reversión", "Reglamento de IA arts. 14 y 86; Directiva (UE) 2023/2225, art. 18")],
              ["Resultado", "Dónde se incorpora"], alinear_izq=2)}
+{sec_rep}
 <h2>9. Calidad de los datos</h2><ul>{avisos}</ul>
-<h2>10. Límites</h2><p><small>El informe mide asociaciones agregadas, no causalidad ni discriminación. Indica en qué etapa se observa una diferencia, no por qué se produce. Requiere registros comparables de cada etapa (intento, cuenta, evaluación, decisión) enlazados por un identificador. El umbral de revisión (por defecto 0,80, referencia convencional de «cuatro quintos») es una regla práctica, no un criterio jurídico de la UE, y puede ajustarse. Un perfil describe la credencial o la situación del intento, no a la persona; el registro no debe incorporar nacionalidad ni categorías especiales de datos. Cualquier análisis adicional con esas categorías requiere base jurídica propia (RGPD; Reglamento de IA art. 10.5).</small></p>
+<h2>10. Límites</h2><p><small>El informe mide asociaciones agregadas, no causalidad ni discriminación. Indica en qué etapa se observa una diferencia, no por qué se produce. Requiere registros comparables de cada etapa (intento, cuenta, evaluación, decisión) enlazados por un identificador. El umbral de revisión (por defecto 0,80, referencia convencional de «cuatro quintos») es una regla práctica, no un criterio jurídico de la UE, y puede ajustarse. Un perfil describe la credencial o la situación del intento, no a la persona; el registro no debe incorporar nacionalidad ni categorías especiales de datos. Cualquier análisis adicional con esas categorías requiere base jurídica propia (RGPD; Reglamento de IA, art. 4 bis, antes art. 10.5, que sólo cubre la detección de sesgos en los sistemas de IA).</small></p>
 </body></html>"""
     if ruta:
         with open(ruta, "w", encoding="utf-8") as f:

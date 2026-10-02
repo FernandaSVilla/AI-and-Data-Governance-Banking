@@ -1,4 +1,4 @@
-"""Perfiles de entrada: situaciones en las que el proceso de alta puede no reconocer bien a una persona.
+"""Perfiles de entrada (condiciones de entrada): situaciones en las que el proceso de alta puede no reconocer bien a una persona.
 
 Un perfil describe la credencial o la situación del intento de alta, no a la persona:
 no recoge nacionalidad, edad exacta ni otras categorías especiales de datos.
@@ -34,10 +34,25 @@ PERFILES = {
         "El proceso exige una prueba de dirección que la persona no puede aportar.",
         "Persona que vive en un albergue o en un alquiler informal.",
     ),
+    "dispositivo_conectividad": (
+        "Móvil o conexión insuficientes para la verificación",
+        "La cámara no enfoca el documento, el móvil no tiene NFC, la videollamada se corta o el SMS no llega.",
+        "Cliente con DNI y solvente, con un móvil antiguo o mala cobertura.",
+    ),
     "asistencia_digital": (
-        "Necesita asistencia en la verificación digital",
-        "Falla el selfie, la videoidentificación o el SMS, o la persona no puede completarlos sola.",
-        "Persona mayor o sin smartphone reciente.",
+        "Necesita ayuda para completar el proceso digital",
+        "No puede completar sola el formulario o los pasos de verificación: lectura, comprensión o experiencia digital.",
+        "Persona con baja alfabetización, persona mayor o sin experiencia con apps.",
+    ),
+    "accesibilidad": (
+        "Necesita un ajuste de accesibilidad",
+        "El canal no funciona con lector de pantalla, la biometría falla o las instrucciones son sólo visuales o sonoras.",
+        "Persona con discapacidad visual o motora. Se registra el ajuste requerido, nunca un diagnóstico.",
+    ),
+    "zona_sin_oficina": (
+        "Sin oficina accesible (zona rural o movilidad reducida)",
+        "El alta exige un paso presencial (firma, entrega de tarjeta, verificación) y no hay oficina cercana o la persona no puede desplazarse.",
+        "Persona mayor con DNI en un municipio sin sucursal, o persona que no puede salir de casa.",
     ),
     "sin_historial": (
         "Sin historial crediticio",

@@ -74,10 +74,12 @@ def simulate(r_b, seed, p=PARAMS):
     df.loc[test, "approved"] = df.loc[test, "pd_hat"] < p["pd_cutoff"]
 
     # para la vista de población completa se usa la mitad de test de los evaluables
-    # y la totalidad de los no evaluables (que no obtienen crédito del modelo)
+    # y una mitad aleatoria de los no evaluables (que no obtienen crédito del modelo),
+    # de modo que ambos tipos de persona se muestrean con la misma probabilidad
     in_scope = np.zeros(n, bool)
     in_scope[test] = True
-    in_scope[~evaluable] = True
+    no_ev = np.where(~evaluable)[0]
+    in_scope[no_ev[rng.random(len(no_ev)) < 0.5]] = True
     return df[in_scope].copy()
 
 

@@ -60,7 +60,7 @@ def wilson(x: int, n: int) -> tuple[float, float]:
 
 
 RESULTADOS = ["alta_completada", "alternativa_aceptada", "no_acceso"]
-CANALES = ["oficina", "web", "app", "videollamada", "telefono", "intermediario"]
+CANALES = ["oficina", "web", "app", "videollamada", "telefono", "intermediario", "no_consta"]
 
 
 def cociente_ic(x1: int, n1: int, x0: int, n0: int) -> tuple[float, float, float]:
@@ -231,8 +231,11 @@ def trazabilidad(a: pd.DataFrame) -> pd.DataFrame:
         x = a[a.perfil_entrada == p]
         na = x[x.resultado == "no_acceso"]
         rev = x[x.revision_humana.astype(str).str.lower().isin(["true", "1"])] if "revision_humana" in x else x.iloc[0:0]
+        fallo = x[x.resultado.isin(["no_acceso", "alternativa_aceptada"])]
         filas.append(dict(
             perfil=p, no_acceso=len(na),
+            # recuperación: de quienes no completaron el alta ordinaria, cuántos obtuvieron cuenta por una vía alternativa
+            recuperacion=(fallo.resultado == "alternativa_aceptada").mean() if len(fallo) else float("nan"),
             con_causa_registrada=na.causa_no_acceso.notna().mean() if len(na) and "causa_no_acceso" in na else float("nan"),
             negativa_escrita=media(na.negativa_escrita) if "negativa_escrita" in na else float("nan"),
             alternativa_ofrecida=media(na.alternativa_ofrecida) if "alternativa_ofrecida" in na else float("nan"),
